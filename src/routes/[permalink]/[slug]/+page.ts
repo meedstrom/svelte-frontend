@@ -1,1 +1,0 @@
-/home/kept/pub/svelte-frontend/src/routes/[permalink]/+page.ts

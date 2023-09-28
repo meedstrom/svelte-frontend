@@ -10,6 +10,7 @@
     <!-- TODO: only show the counter if javascript is active -->
     <a href="/all">All (seen {$seen.size} of {$posts.length})</a>
     <a href="/random">Random</a>
+    <a href="/nexus">Nexus</a>
     <a href="/login">Login</a>
 </nav>
 
@@ -35,7 +36,7 @@
      width: 100%;
  }
  nav a {
-     font-size: 1.2em;
+     font-size: 1.1em;
      padding: 1em;
      display: inline-block;
      text-align: center;

@@ -86,6 +86,33 @@ p {
 //   bottom: 0;
 // }
 
+a.private {
+  color: red;
+}
+
+// Indicate unlocked links
+a.eyes_therapist:after,
+a.eyes_partner:after,
+a.eyes_friend:after {
+  content: "🗝";
+}
+
+// Indicate external links
+a[href^="http://"]:after,
+a[href^="https://"]:after {
+  content: "↗️";
+}
+
+.easylink {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+main a,
+main a:hover {
+  border-bottom: 1px solid $color-blossom;
+}
+
 p,
 blockquote p {
   margin-bottom: 1em;
@@ -100,24 +127,8 @@ li {
   margin-bottom: .5em;
 }
 
-main a,
-main a:hover {
-border-bottom: 1px solid $color-blossom;
-}
-
 footer {
   background-color: $color-bg-alt;
-}
-
-// Indicate external links
-a[href^="http://"]:after,
-a[href^="https://"]:after {
-  content: "↗️";
-}
-
-.easylink {
-  text-decoration: none;
-  border-bottom: none;
 }
 
 // I would let these rules be scoped to the relevant pages, but because

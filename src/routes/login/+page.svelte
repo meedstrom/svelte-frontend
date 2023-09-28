@@ -4,56 +4,15 @@
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
  import { get } from 'svelte/store'
- import { posts, publicPosts,  } from '$lib/stores'
+ import { posts, publicPosts, rewriteAllLinks } from '$lib/stores'
+ import type { Post } from '$lib/stores'
  
  let username = ''
  let pass = ''
 
- type Post = {
-     title: string
-     slug: string
-     permalink: string
-     content: string
-     wordcount: number
-     tags: string[]
-     links: number
-     created: string
-     updated: string
- }
-
- function rewriteAllLinks(posts) {
-     posts.forEach((post) => {
-         // post.content = post.content.replaceAll(new RegExp("(<a class=\"\" href=\")"), )
-     })
- }
-
- async function myDecrypt( ciphertext: Uint8Array
-                         , iv: Uint8Array
-                         , postKey: CryptoKey | null) {
-     if (!postKey) {
-         console.log('postKey undefined')
-         return
-     }
-     let bytes: ArrayBuffer | null = null
-     try {
-         bytes = await subtle.decrypt({ name: 'AES-GCM', iv }, postKey, ciphertext)
-     }
-     catch (e) {
-         console.log(e)
-         alert(e)
-     }
-     if (!bytes) {
-         console.log('Decryption failed')
-         return
-     }
-     const decompressed = await new Response(bytes)
-         .body.pipeThrough(new DecompressionStream('gzip'))
-     return await new Response(decompressed).text()
- }
-
  const handleSubmit = async () => {
      // Yes it's a bit... crude... but I trust my friends not to elevate their
-     // access level, like they wouldn't peek into a physical diary ;-)
+     // access level, same as they wouldn't peek into a physical diary ;-)
      // Everyone else is missing a key in the first place.
      const perms = {
          'therapist': ['eyes_friend', 'eyes_partner', 'eyes_therapist'],
@@ -61,7 +20,7 @@
          'friend':  ['eyes_friend'],
      }
      if (!Object.keys(perms).includes(username)) return alert('Unknown user')
-     const allowedTags = new Set<string>(perms[username])
+     const allowedTags = perms[username]
 
      let error
      const maybeKey = pass.trim().slice(1)
@@ -85,19 +44,15 @@
      const plaintext = await new Response(decompressed).text()
      const privatePosts: Post[] = JSON.parse(plaintext)
 
-     // const privatePosts: Post[] = await myDecrypt(ciphertext, iv, postKey).then(x => JSON.parse(x))
-
-     // OK, seems rock solid
-     // console.log(privatePosts)
-
-     const subset = privatePosts.filter((post: Post) => post.tags.find(tag => allowedTags.has(tag)))
+     const subset = privatePosts.filter((post: Post) =>
+         post.tags.find(tag => allowedTags.includes(tag))
+     )
      const newCollection = [...subset, ...get(publicPosts)].sort(
          // order most recently created on top
          (a, b) => b.created.localeCompare(a.created)
      )
 
-     // console.log(newCollection)
-     $posts = newCollection
+     $posts = rewriteAllLinks(newCollection, allowedTags)
 
      goto('/all')
  }
