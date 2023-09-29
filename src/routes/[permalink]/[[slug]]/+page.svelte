@@ -11,6 +11,23 @@
 	<title>{data.post.title}</title>
 </svelte:head>
 
-<main>
+<article>
+
+    <!-- <table style="width: 15em;">
+         <tr>
+         <td>Created</td> <td><time className='dt-published'>{data.post.created}</time></td>
+         </tr>
+         <tr>
+         <td>Updated</td> <td><time className='dt-updated'>{data.post.updated}</time></td>
+         </tr>
+         </table>
+    -->
     {@html data.post.content}
-</main>
+</article>
+<!--
+     <style>
+     table {
+     width: 15em;
+     border: 1px solid;
+     }
+     </style> -->

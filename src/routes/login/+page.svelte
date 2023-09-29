@@ -74,9 +74,9 @@
         <button type="submit" >Unlock extra posts</button>
     </form>
 </main>
-
-<style>
- button {
+<!--
+     <style>
+     button {
      padding: 1em;
- }
-</style>
+     }
+     </style> -->

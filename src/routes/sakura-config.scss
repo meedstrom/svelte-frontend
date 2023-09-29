@@ -1,11 +1,13 @@
 @import 'sakura.css/css/normalize.css';
-$font-family-base: Palatino, Georgia, serif;
-  $font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-@media only screen and (max-resolution: 200dpi) {}
+// $font-family-base: Palatino, Georgia, serif;
+// $font-size-base: 1.6rem;
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+$font-size-base: 1.4rem;
+
+// @media only screen and (max-resolution: 200dpi) {}
 // @media only screen and (max-resolution: 72dpi) {some bitmap font}
 
 $font-family-heading: $font-family-base;
-$font-size-base: 1.6rem;
 
 // @media only screen and (prefers-color-scheme: dark)
 
@@ -16,40 +18,64 @@ $color-bg: #ffe4f5;
 $color-bg-alt: #f8d2e9;
 $color-text: #49002d;
 
-// an attempt at sepia
-// see more palettes at https://icolorpalette.com/sepia
+
+
+$color-fade: #765542;
+$color-blossom: #d24363;
+$color-bg: #e7cb8d;
+$color-bg-alt: #b59472;
+$color-text: #6d3711;
+
 $color-fade: #765542;
 $color-blossom: #0000cc;
 $color-bg: #ffdfcf;
 $color-bg-alt: #f0cbbb;
 $color-text: #492d00;
 
-// sakura vader
-$color-fade: #DA4453;
-$color-blossom: lighten($color-fade, 20%);
-$color-bg: lighten(#120c0e, 10%);
-// $color-bg-alt: #40363a // too bright
-$color-bg-alt: lighten($color-bg, 9%);
-$color-text: #d9d8dc;
 
+$color-fade:    #d8985f;
+$color-blossom: #6d3711;
+$color-bg:      #e3e3ec;
+$color-bg-alt:  #dcd4d6;
+$color-text:    #272328;
+
+
+// edited sakura default
+$color-blossom: #485fc7;
+$color-fade: #982c61;
+$color-bg: #f9f9f9;
+$color-bg-alt: #f1f1f1;
+$color-text: #000;
+
+@media only screen and (prefers-color-scheme: dark) {
+  // sakura vader
+  $color-fade: #CA3443;
+  $color-blossom: lighten($color-fade, 25%);
+  $color-bg: lighten(#120c0e, 10%);
+  // $color-bg-alt: #40363a // too bright
+  $color-bg-alt: lighten($color-bg, 9%);
+  $color-text: #d9d8dc;
+}
+
+
+
+// $color-fade:
+// $color-blossom:
+// $color-bg:
+// $color-bg-alt:
+// $color-text:
 
 @import "sakura.css/scss/main";
 
 // ----------------------------------------------------------------------------
-// BASIC FIXES FOR SAKURA CSS
+// Undo some surprising Sakura CSS defaults
 
 // Centered viewports are nice, but the rule shouldn't be on <body>, but a
-// container like <main> so it's optional.
-body {
-  max-width: unset;
-}
-main {
-  margin: auto;
-  max-width: 38em;
-}
+// container like <main> so it's optional.  
+body { max-width: unset; }
 
 // Don't change font size on different devices!  Bigger devices fit more info
-// on-screen and that's nice.  Rules like that essentially ban modding
+// on-screen and that's nice.  "Responsive" font size essentially bans modding
 // $base-font-size; try setting it to 1.4rem, it turns unreadable on the phone.
 // You're locked at 1.8rem as if it was hardcoded.
 body {
@@ -59,17 +85,145 @@ body {
 
 // Don't justify text in a table... it'll look bad in a cell with a sentence
 // wrapping over two lines.
-table {
-  text-align: unset;
+table { text-align: unset; }
+
+a, a:hover {
+  text-decoration: underline;
+  border-bottom: none;
 }
 
-p {
-  // use em units, not rem
-  margin-bottom: 2.5em;
-}
-
+body { padding: unset; }
 
 // ----------------------------------------------------------------------------
+// OK, we're in business
+
+@import './tables.scss';
+@import './links.scss';
+
+// // Attach the footer to the bottom
+html, body {
+  height: 100%;
+}
+#mandatory-wrapper {
+  display: flex;
+  flex-flow: column;
+  min-height: 100%;
+  header, main, footer {
+    // uhh
+    flex: 0 1 auto;
+  }
+}
+
+
+// // Attach the footer to the bottom
+// html { height: 100%; }
+// body, #mandatory-wrapper { min-height: 100%; }
+// footer {
+//   position: relative;
+//   bottom: 0;
+// }
+
+body {
+  line-height: 1.35;
+  text-rendering: optimizelegibility;
+  font-weight: 400;
+}
+
+header, main {
+  margin: auto;
+  max-width: 38em;
+}
+
+header > nav {
+  display: flex;
+  justify-content: space-between;
+  // font-size: 1.2em;
+  a {
+    padding: 1em .7em;
+    text-decoration: none;
+    // border-top: 2px solid $color-bg;
+    // border-bottom: 2px solid $color-bg;
+  }
+  a:hover {
+    text-decoration: none;
+    // color: $color-blossom;
+    cursor: pointer;
+    // border-bottom: 2px solid $color-blossom;
+    // border-top:    2px solid $color-blossom;
+  }
+}
+
+article {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+footer {
+  background-color: $color-bg-alt;
+  text-align: center;
+  padding: 2em;
+}
+
+a:visited {
+  color: $color-blossom;
+  // color: darken($color-blossom, 25%)
+}
+
+p, blockquote p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+td a {
+    text-decoration: none;
+}
+
+ul {
+  margin-bottom: 1em;
+}
+
+li + li {
+  margin-top: .25em;
+  margin-bottom: .25em;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  font-weight: normal;
+  font-size: 1.5em;
+}
+
+summary {
+  display: block;
+  margin-bottom: .5em;
+  cursor: pointer;
+  h1,h2,h3,h4,h5,h6 { display: inline; }
+}
+details {
+  border-bottom: 1px solid $color-bg-alt;
+  // border-bottom: 1px solid $color-fade;
+  margin-top: .2em;
+  // margin-bottom: 1em;
+}
+details[open] + details {
+  margin-top: 1em;
+}
+
+details > details {
+  margin-top: 1em;
+  margin-left: 1.5em;
+  body {
+    @media only screen and (max-width: 684px) { margin-left: .8em; }
+    @media only screen and (max-width: 382px) { margin-left: 0; }
+  }
+}
+
+
+
+code, pre { font-size: 0.8em; }
+pre.src {
+  padding: 0;
+  // background: #404040;
+}
 
 
 // to get the arrow on the same line as the heading, do this
@@ -85,54 +239,3 @@ p {
 //   position: relative;
 //   bottom: 0;
 // }
-
-a.private {
-  color: red;
-}
-
-// Indicate unlocked links
-a.eyes_therapist:after,
-a.eyes_partner:after,
-a.eyes_friend:after {
-  content: "🗝";
-}
-
-// Indicate external links
-a[href^="http://"]:after,
-a[href^="https://"]:after {
-  content: "↗️";
-}
-
-.easylink {
-  text-decoration: none;
-  border-bottom: none;
-}
-
-main a,
-main a:hover {
-  border-bottom: 1px solid $color-blossom;
-}
-
-p,
-blockquote p {
-  margin-bottom: 1em;
-}
-
-body {
-  line-height: 1.3;
-  padding: unset;
-}
-
-li {
-  margin-bottom: .5em;
-}
-
-footer {
-  background-color: $color-bg-alt;
-}
-
-// I would let these rules be scoped to the relevant pages, but because
-// ./all/+page.svelte renders a black-box component SvelteTable, the rules won't
-// apply there.  So I must apply them globally.
-@import './compactTable.scss';
-

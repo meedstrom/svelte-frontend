@@ -1,8 +1,10 @@
-
-
 tr:nth-child(even) {
     background-color: $color-bg-alt;
 }
+
+// tr {
+//     border-bottom: 1px solid $color-fade;
+// }
 
 th {
     text-align: left;
@@ -14,10 +16,3 @@ td {
 // first column a bit more left-padded
 // tr > td
 //   padding-left: .3em
-
-
-// no underlined links in a table
-td a {
-    text-decoration: none;
-    border-bottom: 0;
-}

@@ -1,21 +1,26 @@
 <script lang="ts">
  import './global.scss'
  import github from '$lib/images/github.svg'
- import aboutIcon from '$lib/information-mark-circle-outline-icon.svg'
+ import aboutIcon from '$lib/images/information-mark-circle-outline-icon.svg'
  import { seen, posts } from '$lib/stores'
 </script>
 
-<nav>
-    <a href="/about"><img id="about-button" src={aboutIcon} alt="Go to the About-page" width="24px" height="24px"/></a>
-    <!-- TODO: only show the counter if javascript is active -->
-    <a href="/all">All (seen {$seen.size} of {$posts.length})</a>
-    <a href="/random">Random</a>
-    <a href="/nexus">Nexus</a>
-    <a href="/login">Login</a>
-</nav>
+<header>
+    <nav>
+        <!-- <a href="/about"><img id="about-button" src={aboutIcon} alt="Go to the About-page" width="24px" height="24px"/></a> -->
+        <!-- TODO: only show the counter if javascript is active -->
+        <a href="/all">All (seen {$seen.size} of {$posts.length})</a>
+        <a href="/random">Random</a>
+        <a href="/nexus">Nexus</a>
+        <a href="/about">About</a>
+        <a href="/login">Login</a>
+    </nav>
+</header>
 
-<!-- like react Outlet -->
-<slot posts={$posts} />
+<main>
+    <!-- like react Outlet -->
+    <slot />
+</main>
 
 <footer>
     Martin Edström
@@ -30,20 +35,23 @@
          filter: invert(1);
      }
  }
+ /* nav a {
+    padding: 1em;
+    } */
 
- nav {
-     height: 6em;
-     width: 100%;
- }
- nav a {
-     font-size: 1.1em;
-     padding: 1em;
-     display: inline-block;
-     text-align: center;
-     vertical-align: middle;
- }
- footer {
-     text-align: center;
-     padding: 2em;
- }
+ /* nav {
+    height: 6em;
+    width: 100%;
+    }
+    nav a {
+    font-size: 1.1em;
+    padding: 1em;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    } */
+ /* footer {
+    text-align: center;
+    padding: 2em;
+    } */
  </style>

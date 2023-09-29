@@ -1,12 +1,9 @@
 <script lang="ts">
  import { posts } from '$lib/stores'
+ import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
 
- // Bam, store updated from the fetch in the loader!
- if ($posts.length === 0) {
-     $posts = data.posts
- }
-     const columns = [
+ const columns = [
      {
          key: "title",
          title: "Note",
@@ -48,4 +45,4 @@
 	<title>All posts</title>
 </svelte:head>
 
-<SvelteTable columns="{columns}" rows="{$posts}"></SvelteTable>
+<SvelteTable columns="{columns}" rows="{get(posts)}"></SvelteTable>
