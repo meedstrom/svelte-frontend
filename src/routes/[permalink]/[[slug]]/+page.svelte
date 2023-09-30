@@ -12,7 +12,7 @@
 </svelte:head>
 
 <article>
-
+    <div class="right">Created <time className='dt-published'>{data.post.created}</time></div>
     <!-- <table style="width: 15em;">
          <tr>
          <td>Created</td> <td><time className='dt-published'>{data.post.created}</time></td>
@@ -24,10 +24,15 @@
     -->
     {@html data.post.content}
 </article>
-<!--
-     <style>
-     table {
+
+
+<style>
+div.right {
+    text-align: right;
+ }
+
+ table {
      width: 15em;
      border: 1px solid;
-     }
-     </style> -->
+ }
+</style>

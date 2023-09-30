@@ -1,3 +1,4 @@
+export const ssr = false
 import extra from '$lib/extraPosts.bin'
 
 export async function load({ fetch }) {

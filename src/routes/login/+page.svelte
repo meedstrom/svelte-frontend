@@ -1,11 +1,11 @@
 <script lang="ts">
- export let data
- const { subtle } = globalThis.crypto
+ export let data // has extraBlob
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
  import { get } from 'svelte/store'
  import { posts, publicPosts, rewriteAllLinks } from '$lib/stores'
  import type { Post } from '$lib/stores'
+ const { subtle } = globalThis.crypto
  
  let username = ''
  let pass = ''
@@ -30,16 +30,17 @@
          ,'AES-GCM'
          ,true
          ,['encrypt', 'decrypt']
-     ).catch(x => error = x)
-     if (error) {
-         console.log(error)
-         alert(error)
+     ).catch(error => alert(error))
+     if (!postKey) {
+         alert('The passphrase did not work (were you given an old one?)')
          return
      }
+
      const iv = new Uint8Array(data.extraBlob.slice(0, 16))
      const ciphertext = new Uint8Array(data.extraBlob.slice(16))
 
      const decrypted = await subtle.decrypt({ name: 'AES-GCM', iv }, postKey, ciphertext)
+                                   .catch(error => alert(error))
      const decompressed = await new Response(decrypted).body.pipeThrough(new DecompressionStream('gzip'))
      const plaintext = await new Response(decompressed).text()
      const privatePosts: Post[] = JSON.parse(plaintext)
@@ -74,6 +75,30 @@
         <button type="submit" >Unlock extra posts</button>
     </form>
 </main>
+<style>
+ /* main {
+    width: 100%;
+    } */
+ form {
+     /* position: relative; */
+     margin-left: auto;
+     /* right: 0; */
+     padding: 2em;
+     width: 12em;
+     display: flex;
+     flex-direction: column;
+ }
+ label {
+     /* margin-bottom: .5em; */
+ }
+ input {
+     margin-top: .4em;
+ }
+ button {
+     padding: 1em;
+     margin-top: 1em;
+ }
+</style>
 <!--
      <style>
      button {

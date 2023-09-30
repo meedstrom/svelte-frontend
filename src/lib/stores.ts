@@ -15,20 +15,22 @@ export type Post = {
  }
 
 
-// may not handle <a> tags within <a> tags, but that doesn't happen in my html
+export const privateTags = new Set(
+     ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
+)
+
 export function rewriteAllLinks(fnord: Post[]
                                 , allowedTags: string[] | undefined) {
      if (!fnord || fnord.length === 0) {
           console.log('posts not defined yet')
           return fnord
      }
-     let willUnlink = new Set(
-          ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
-     )
+     let willUnlink = privateTags
      if (allowedTags) {
           allowedTags.forEach(tag => willUnlink.delete(tag))
      }
      const willUnlinkRegex = [...willUnlink].join('|')
+     // would mess it up if my html has nested <a> tags, but it doesn't
      const re = new RegExp(
           '<a +?class="(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
           'gs'
@@ -39,7 +41,10 @@ export function rewriteAllLinks(fnord: Post[]
      })
 }
 
-// Track which pages the visitor has seen
+// Track which pages the visitor has seen, and persist that
+// 
+// TODO: actually, for the sake of eww/lynx, try first to save it in a
+// cookie... then if JS is available, stop trying to use a cookie, because it's slow.
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
 const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
 

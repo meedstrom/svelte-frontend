@@ -44,7 +44,7 @@ $color-text:    #272328;
 $color-blossom: #485fc7;
 $color-fade: #982c61;
 $color-bg: #f9f9f9;
-$color-bg-alt: #f1f1f1;
+$color-bg-alt: darken(#f1f1f1, 5%);
 $color-text: #000;
 
 @media only screen and (prefers-color-scheme: dark) {
@@ -101,18 +101,18 @@ body { padding: unset; }
 @import './links.scss';
 
 // // Attach the footer to the bottom
-html, body {
-  height: 100%;
-}
-#mandatory-wrapper {
-  display: flex;
-  flex-flow: column;
-  min-height: 100%;
-  header, main, footer {
-    // uhh
-    flex: 0 1 auto;
-  }
-}
+// html, body {
+//   height: 100%;
+// }
+// #mandatory-wrapper {
+//   display: flex;
+//   flex-flow: column;
+//   min-height: 100%;
+//   header, main, footer {
+//     // uhh
+//     flex: 0 1 auto;
+//   }
+// }
 
 
 // // Attach the footer to the bottom
@@ -127,12 +127,14 @@ body {
   line-height: 1.35;
   text-rendering: optimizelegibility;
   font-weight: 400;
+  // background: $color-bg-alt;
 }
 
 header, main {
   margin: auto;
   max-width: 38em;
 }
+
 
 header > nav {
   display: flex;
@@ -162,10 +164,12 @@ footer {
   background-color: $color-bg-alt;
   text-align: center;
   padding: 2em;
+  // margin-top: 2em;
+  
 }
 
 a:visited {
-  color: $color-blossom;
+  color: $color-fade;
   // color: darken($color-blossom, 25%)
 }
 
@@ -201,13 +205,12 @@ summary {
 details {
   border-bottom: 1px solid $color-bg-alt;
   // border-bottom: 1px solid $color-fade;
-  margin-top: .2em;
+  margin-top: .3em;
   // margin-bottom: 1em;
 }
 details[open] + details {
   margin-top: 1em;
 }
-
 details > details {
   margin-top: 1em;
   margin-left: 1.5em;
@@ -239,3 +242,37 @@ pre.src {
 //   position: relative;
 //   bottom: 0;
 // }
+
+// details[open] summary ~ * {
+//   animation: sweep .5s ease-in-out;
+// }
+
+
+// @keyframes sweep {
+//   0%    {opacity: 0; transform: translateX(-10px)}
+//   100%  {opacity: 1; transform: translateX(0)}
+// }
+
+// summary:before {
+//   content: '';
+//   border-width: .4rem;
+//   border-style: solid;
+//   border-color: transparent transparent transparent #000;
+//   position: absolute;
+//   top: 1.3rem;
+//   left: 1rem;
+//   transform: rotate(0);
+//   transform-origin: .2rem 50%;
+//   transition: .25s transform ease;
+// }
+// details[open] > summary::before { transform: rotate(90deg); }
+
+// // details summary {
+// //   cursor: pointer;
+// //   transition: margin 350ms ease-out;
+// // }
+// // details[open] summary {
+// //   margin-bottom: 10px;
+// // }
+
+// @import './pico-accordion.scss';

@@ -1,11 +1,13 @@
+export const prerender = false
 import { redirect } from '@sveltejs/kit'
 import { get } from 'svelte/store'
 import { posts, seen } from '$lib/stores'
 
 export function load() {
-    // TODO: Maybe it's ok to visit the stubs
     let nonStubLinks = new Set<string>(
-        get(posts).filter(x => !x.tags.includes('stub'))
+        // TODO: Maybe it's ok to visit the stubs
+        get(posts)
+            .filter(x => !x.tags.includes('stub'))
             .map(x => x.permalink)
     )
     // NOTE: set-difference is coming to JS

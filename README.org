@@ -1,3 +1,3 @@
 This is the code behind https://edstrom.dev, a personal website built with SvelteKit 4.
 
-An old version was written in React.js, archived at https://github.com/meedstrom/edstrom.dev.
+An old version was written in React.js, which code is archived at https://github.com/meedstrom/edstrom.dev.
