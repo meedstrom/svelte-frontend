@@ -22,7 +22,6 @@
      if (!Object.keys(perms).includes(username)) return alert('Unknown user')
      const allowedTags = perms[username]
 
-     let error
      const maybeKey = pass.trim().slice(1)
      const postKey = await subtle.importKey(
          'raw'
@@ -31,16 +30,17 @@
          ,true
          ,['encrypt', 'decrypt']
      ).catch(error => alert(error))
-     if (!postKey) {
-         alert('The passphrase did not work (were you given an old one?)')
-         return
-     }
+     if (!postKey) return
 
      const iv = new Uint8Array(data.extraBlob.slice(0, 16))
      const ciphertext = new Uint8Array(data.extraBlob.slice(16))
 
      const decrypted = await subtle.decrypt({ name: 'AES-GCM', iv }, postKey, ciphertext)
-                                   .catch(error => alert(error))
+                                   .catch(error => console.log(error))
+     if (!decrypted) {
+         alert('The passphrase did not work (were you given an old one?)')
+         return
+     }
      const decompressed = await new Response(decrypted).body.pipeThrough(new DecompressionStream('gzip'))
      const plaintext = await new Response(decompressed).text()
      const privatePosts: Post[] = JSON.parse(plaintext)

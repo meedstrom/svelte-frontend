@@ -1,13 +1,66 @@
-<!--
+<script lang="ts">
+ import { posts, privateTags } from '$lib/stores'
+ import type { Post } from '$lib/stores'
+ import { get } from 'svelte/store'
+ import SvelteTable from "svelte-table"
 
-     Not sure if it's possible, but if we could disable SSR and enable
-     prerendering, then the <noscript> here should stay visible and +page.ts
-     won't redirect us to /all.  Thus saving on server resources?
+ // make an actual new variable, not just a new reference
+ // const newPosts = JSON.parse(JSON.stringify(get(posts)))
+ //
+ // $: postsForTable =
+ //         newPosts.map((post: Post) => {
+ //         // post.tags.find(tag => console.log(privateTags.has(tag)))
+ //         if (post.locked === 'true') {
+ //             post.title = `${post.title}🗝`
+ //         }
+ //         return post
+ //     })
 
--->
+ const columns = [
+     {
+         key: "title",
+         title: "Note",
+         value: v => v.title,
+         sortable: true,
+         // case-insensitive search
+         searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
+         renderValue: v => {
+             // TODO: simply return the "locking-tag" as the value of locked, so it's easy to print
+             if (v.locked === 'true')
+                 return `<a class="eyes_therapist" href="${v.permalink}/${v.slug}">${v.title}</a>`
+             else return `<a href="${v.permalink}/${v.slug}">${v.title}</a>`
+         },
+         parseHTML: true,
+     },
+     {
+         key: "links",
+         title: "Links",
+         value: v => v.links,
+         sortable: true,
+     },
+     {
+         key: "wordcount",
+         title: "Words",
+         value: v => v.wordcount,
+         sortable: true,
+     },
+     {
+         key: "created",
+         title: "Created",
+         value: v => v.created.replaceAll('-', '‑'),
+         sortable: true,
+     },
+     {
+         key: "updated",
+         title: "Updated",
+         value: v => v.updated.replaceAll('-', '‑'),
+         sortable: true,
+     }
+ ]
 
+</script>
 <svelte:head>
-    <noscript>
-        <!-- <SvelteTable></SvelteTable> -->
-    </noscript>
+	<title>All posts</title>
 </svelte:head>
+
+<SvelteTable columns="{columns}" rows="{get(posts)}"></SvelteTable>

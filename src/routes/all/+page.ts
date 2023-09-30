@@ -1,1 +1,5 @@
-export const prerender = true
+// export const prerender = true
+import { redirect } from '@sveltejs/kit'
+export function load() {
+    throw redirect(307, '/')
+}

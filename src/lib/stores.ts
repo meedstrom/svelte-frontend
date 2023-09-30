@@ -11,6 +11,7 @@ export type Post = {
      tags: string[]
      links: number
      created: string
+     hidden: string | null
      updated: string
  }
 
@@ -21,10 +22,7 @@ export const privateTags = new Set(
 
 export function rewriteAllLinks(fnord: Post[]
                                 , allowedTags: string[] | undefined) {
-     if (!fnord || fnord.length === 0) {
-          console.log('posts not defined yet')
-          return fnord
-     }
+     if (!fnord || fnord.length === 0) return
      let willUnlink = privateTags
      if (allowedTags) {
           allowedTags.forEach(tag => willUnlink.delete(tag))
@@ -37,6 +35,9 @@ export function rewriteAllLinks(fnord: Post[]
      )
      return fnord.map(post => {
           post.content = post.content.replaceAll(re, '$1')
+          // Bonus: give 'unlocked' posts a key emoji in /all
+          // if (post.locked === "true")
+          //     post.title = `${post.title}🗝`
           return post
      })
 }
@@ -45,6 +46,8 @@ export function rewriteAllLinks(fnord: Post[]
 // 
 // TODO: actually, for the sake of eww/lynx, try first to save it in a
 // cookie... then if JS is available, stop trying to use a cookie, because it's slow.
+// we will have to allocate around 2-3 cookies bc each one is 4kb max
+// so it's really a hack for niche purposes
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
 const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
 

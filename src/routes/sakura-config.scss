@@ -1,8 +1,8 @@
-@import 'sakura.css/css/normalize.css';
+@import 'normalize.css/normalize.css';
 // $font-family-base: Palatino, Georgia, serif;
 // $font-size-base: 1.6rem;
 $font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-$font-size-base: 1.4rem;
+$font-size-base: 1.5rem;
 
 // @media only screen and (max-resolution: 200dpi) {}
 // @media only screen and (max-resolution: 72dpi) {some bitmap font}
@@ -70,8 +70,8 @@ $color-text: #000;
 // ----------------------------------------------------------------------------
 // Undo some surprising Sakura CSS defaults
 
-// Centered viewports are nice, but the rule shouldn't be on <body>, but a
-// container like <main> so it's optional.  
+// Centered viewports are nice (on desktop), but the rule shouldn't be on
+// <body>, but a container like <main> so it's optional.
 body { max-width: unset; }
 
 // Don't change font size on different devices!  Bigger devices fit more info
@@ -128,13 +128,21 @@ body {
   text-rendering: optimizelegibility;
   font-weight: 400;
   // background: $color-bg-alt;
+  background: darken($color-bg-alt, 10%);
+  
 }
 
 header, main {
   margin: auto;
   max-width: 38em;
+  box-shadow: black 1em 1em;
 }
 
+nav, main { background: $color-bg; }
+
+// #backdrop {
+//   padding: 2em;
+// }
 
 header > nav {
   display: flex;
@@ -224,8 +232,9 @@ details > details {
 
 code, pre { font-size: 0.8em; }
 pre.src {
-  padding: 0;
-  // background: #404040;
+  padding: 2px;
+  color: #ccc;
+  background: #444;
 }
 
 
