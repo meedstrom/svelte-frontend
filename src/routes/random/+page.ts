@@ -4,18 +4,15 @@ import { get } from 'svelte/store'
 import { posts, seen } from '$lib/stores'
 
 export function load() {
-    let nonStubLinks = new Set<string>(
-        // TODO: Maybe it's ok to visit the stubs
-        get(posts)
-            .filter(x => !x.tags.includes('stub'))
-            .map(x => x.permalink)
+    let links = new Set<string>(
+        get(posts).map(x => x.permalink)
     )
     // NOTE: set-difference is coming to JS
     // https://github.com/tc39/proposal-set-methods
     for (const link of get(seen)) {
-        nonStubLinks.delete(link)
+        links.delete(link)
     }
-    const unseen = [...nonStubLinks]
+    const unseen = [...links]
     const randomPermalink = unseen[Math.floor(Math.random() * unseen.length)]
     const randomPost = get(posts).find(x => x.permalink === randomPermalink)
     const slug = randomPost ? randomPost.slug : ''

@@ -76,32 +76,23 @@
     </form>
 </main>
 <style>
- /* main {
-    width: 100%;
-    } */
  form {
-     /* position: relative; */
      margin-left: auto;
+     margin-right: 1em;
      /* right: 0; */
      padding: 2em;
-     width: 12em;
+     width: 15em;
+     /* text-align: left; */
      display: flex;
      flex-direction: column;
  }
- label {
-     /* margin-bottom: .5em; */
- }
  input {
      margin-top: .4em;
+     /* margin-left: 1em; */
+
  }
  button {
      padding: 1em;
      margin-top: 1em;
  }
 </style>
-<!--
-     <style>
-     button {
-     padding: 1em;
-     }
-     </style> -->

@@ -1,3 +1,6 @@
+// This exists foremostly so I can type a link manually without looking up
+// its page ID.
+
 import { get } from 'svelte/store'
 import { posts } from '$lib/stores'
 import { redirect } from '@sveltejs/kit'

@@ -1,8 +1,8 @@
-a.private {
-  color: red;
-}
+a { color: $color-blossom; }
+a:visited { color: darken($color-blossom, 10%); }
+a:hover, a:visited:hover { color: $color-fade; }
 
-// Indicate unlocked links
+// Indicate "unlocked" links
 a.eyes_therapist:after,
 a.eyes_partner:after,
 a.eyes_friend:after {
@@ -18,8 +18,4 @@ a[href^="https://"]:after {
 a.easylink {
   text-decoration: none;
   border-bottom: none;
-}
-
-td a {
-    text-decoration: none;
 }

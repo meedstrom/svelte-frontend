@@ -16,6 +16,11 @@
  //         return post
  //     })
 
+ // TODO: switch to https://github.com/mattiash/svelte-tablesort
+
+ // well, the search bar is good for people who don't know how to search a page
+ // in their phones...
+
  const columns = [
      {
          key: "title",
@@ -23,7 +28,7 @@
          value: v => v.title,
          sortable: true,
          // case-insensitive search
-         searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
+         // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
          renderValue: v => {
              // TODO: simply return the "locking-tag" as the value of locked, so it's easy to print
              if (v.locked === 'true')
@@ -63,4 +68,11 @@
 	<title>All posts</title>
 </svelte:head>
 
-<SvelteTable columns="{columns}" rows="{get(posts)}"></SvelteTable>
+<div id="the-big-table">
+    <SvelteTable columns="{columns}"
+                 rows="{get(posts).filter(post => !post.tags.includes('stub'))}"
+                 sortBy="created"
+                 sortOrder=-1
+    >
+    </SvelteTable>
+</div>
