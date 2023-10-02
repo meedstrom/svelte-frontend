@@ -3,41 +3,37 @@ import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
 
 export type Post = {
-     title: string
      slug: string
      permalink: string
-     content: string
-     wordcount: number
-     tags: string[]
-     links: number
+     title: string
      created: string
-     hidden: string | null
+     created_fancy: string
      updated: string
+     updated_fancy: string
+     wordcount: number
+     links: number
+     tags: string[]
+     hidden: string | null
+     content: string
  }
 
-
-export const privateTags = new Set(
-     ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
-)
-
-export function rewriteAllLinks(fnord: Post[]
+export function rewriteAllLinks(givenPosts: Post[]
                                 , allowedTags: string[] | undefined) {
-     if (!fnord || fnord.length === 0) return
-     let willUnlink = privateTags
-     if (allowedTags) {
-          allowedTags.forEach(tag => willUnlink.delete(tag))
-     }
+     if (!givenPosts || givenPosts.length === 0) return
+     let willUnlink = new Set(["private",
+                               "eyes_therapist",
+                               "eyes_partner",
+                               "eyes_friend"])
+     // JS doesn't have set-difference methods yet, it's coming
+     if (allowedTags) allowedTags.forEach(tag => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
-     // would mess it up if my html has nested <a> tags, but it doesn't
+     // My html has no nested <a> tags, so this regex is satisfactory
      const re = new RegExp(
-          '<a +?class="(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
+          '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
           'gs'
      )
-     return fnord.map(post => {
+     return givenPosts.map(post => {
           post.content = post.content.replaceAll(re, '$1')
-          // Bonus: give 'unlocked' posts a key emoji in /all
-          // if (post.locked === "true")
-          //     post.title = `${post.title}🗝`
           return post
      })
 }
@@ -45,9 +41,14 @@ export function rewriteAllLinks(fnord: Post[]
 // Track which pages the visitor has seen, and persist that
 // 
 // TODO: actually, for the sake of eww/lynx, try first to save it in a
-// cookie... then if JS is available, stop trying to use a cookie, because it's slow.
-// we will have to allocate around 2-3 cookies bc each one is 4kb max
-// so it's really a hack for niche purposes
+// cookie... then if JS is available, stop trying to use a cookie, because it's
+// slow.  We will have to allocate around 2-3 cookies, bc cookies max at 4kb
+// each so it's really a hack for niche purposes. The alternative is to simply
+// set a tracking id and let the server track who has seen what, but...  Or we
+// can try to compress the array, but given the random characters it may not be
+// so compressible.  Anyway, there's an interesting criterion for how long
+// should be the page IDs: sufficiently few characters that ~1000 IDs add up
+// to less than 4kB.
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
 const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
 

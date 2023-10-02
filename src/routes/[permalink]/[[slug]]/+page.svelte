@@ -40,16 +40,27 @@
             {#if prev}
                 <a href="/{prev.permalink}/{prev.slug}">← {prev.slug}</a>
             {/if}
-
         </div>
         <div>
             {#if next}
                 <a href="/{next.permalink}/{next.slug}">{next.slug} →</a>
             {/if}
         </div>
-        <div><small>Created <time class="dt-published">{data.post.created}</time> ({daysSince(data.post.created)})</small>
+        <div>
+            <small>Created
+                <time datetime={data.post.created} class="dt-published hideOnPhone">
+                    {data.post.created_fancy},
+                </time>
+                {daysSince(data.post.created)}
+            </small>
             <br>
-            <small>Updated <time class="dt-updated">{data.post.updated}</time></small></div>
+            <small class="hideOnPhone">Updated
+                <time datetime={data.post.updated} class="dt-updated hideOnPhone">
+                    {data.post.updated_fancy},
+                </time>
+                {daysSince(data.post.updated)}
+            </small>
+        </div>
     </div>
     <h1>{data.post.title}</h1>
     {@html data.post.content}
@@ -57,9 +68,15 @@
 
 
 <style>
+ .hideOnPhone {
+     @media (max-width: 684px) {
+         display: none;
+     }
+ }
  div.row {
      display: flex;
      justify-content: space-between;
-     align-items: center;
+     /* align-items: center; */
  }
+ /* h1 { margin-top: 0; } */
 </style>

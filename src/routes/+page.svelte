@@ -1,5 +1,5 @@
 <script lang="ts">
- import { posts, privateTags } from '$lib/stores'
+ import { posts } from '$lib/stores'
  import type { Post } from '$lib/stores'
  import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
@@ -29,12 +29,7 @@
          sortable: true,
          // case-insensitive search
          // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: v => {
-             // TODO: simply return the "locking-tag" as the value of locked, so it's easy to print
-             if (v.locked === 'true')
-                 return `<a class="eyes_therapist" href="${v.permalink}/${v.slug}">${v.title}</a>`
-             else return `<a href="${v.permalink}/${v.slug}">${v.title}</a>`
-         },
+         renderValue: v => `<a class="${v.hidden}" href="${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {

@@ -55,7 +55,7 @@
 
      $posts = rewriteAllLinks(newCollection, allowedTags)
 
-     goto('/all')
+     goto('/')
  }
 </script>
 <svelte:head>
@@ -65,14 +65,14 @@
 <main>
     <form on:submit|trusted|self|preventDefault={handleSubmit}>
         <label>User
-            <input bind:value={username} type="text" />
+            <input bind:value={username} type="text" autofocus />
         </label>
 
         <label>Passphrase
             <input bind:value={pass} type="password" />
         </label>
 
-        <button type="submit" >Unlock extra posts</button>
+        <button type="submit">Unlock extra posts</button>
     </form>
 </main>
 <style>

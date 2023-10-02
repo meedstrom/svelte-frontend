@@ -18,8 +18,9 @@ export function load({ params }) {
         post: post,
     }
     else {
-        // If a known permalink wasn't found, seek among known slugs.
-        // Super convenient if I want to type a link manually!
+        // If a known permalink wasn't found, most likely I typed the URL
+        // skipping the page ID altogether, so seek among known slugs.  Super
+        // convenient!
         const otherPost = get(posts).find((post) => post.slug === params.permalink)
         if (otherPost)
             throw redirect(307, `/${otherPost.permalink}/${otherPost.slug}`)
