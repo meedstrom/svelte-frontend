@@ -60,6 +60,10 @@ body {
     // font-weight: 400;
 }
 
+article {
+    overflow-wrap: anywhere;
+}
+
 // The "central column" on desktops, which hopefully disappears on mobile
 #central-column {
     background: var(--color-bg);
@@ -134,15 +138,6 @@ footer {
     margin-top: auto;
 }
 
-
-// ??
-@mixin word-wrap() {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    -ms-word-break: break-all;
-    word-break: break-word;
-}
-
 h1, h2, h3, h4, h5, h6 {
     // line-height: 1.1;
     // font-weight: 700;
@@ -150,7 +145,6 @@ h1, h2, h3, h4, h5, h6 {
     // margin-bottom: 1.5rem;
     font-weight: normal;
     font-size: 1.5em;
-    @include word-wrap;
 }
 
 .logseq {
@@ -384,6 +378,9 @@ a.easylink {
   border-bottom: none;
 }
 
+.toc a {
+    text-decoration: none;
+}
 
 
 
