@@ -1,24 +1,47 @@
 @import 'normalize.css/normalize.css';
 
-// @media only screen and (max-resolution: 200dpi) {}
-// @media only screen and (max-resolution: 72dpi) {some bitmap font}
 
 // edited sakura default
-$color-blossom: #485fc7;
-$color-fade: #982c61;
-$color-bg: #f9f9f9;
-$color-bg-alt: darken(#f1f1f1, 5%);
-$color-text: #000;
+$lightcolor-blossom: #485fc7;
+$lightcolor-dark-blossom: darken(#485fc7, 10%);
+$lightcolor-fade: #982c61;
+$lightcolor-bg: #f9f9f9;
+$lightcolor-bg-alt: darken(#f1f1f1, 5%);
+$lightcolor-text: #000000;
 
 
-// // sakura vader
-// $color-fade: #CA3443;
-// $color-blossom: lighten($color-fade, 25%);
-// $color-bg: lighten(#120c0e, 10%);
-// // $color-bg-alt: #40363a // too bright
-// $color-bg-alt: lighten($color-bg, 9%);
-// $color-text: #d9d8dc;
+// sakura vader
+$darkcolor-fade: #CA3443;
+$darkcolor-blossom: lighten($darkcolor-fade, 25%);
+$darkcolor-dark-blossom: darken($darkcolor-blossom, 10%);
+$darkcolor-bg: lighten(#120c0e, 10%);
+// $darkcolor-bg-alt: #40363a // too bright
+$darkcolor-bg-alt: lighten($darkcolor-bg, 9%);
+$darkcolor-text: #d9d8dc;
 
+
+:root {
+    --color-blossom      : #{$lightcolor-blossom};
+    --color-dark-blossom : #{$lightcolor-dark-blossom};
+    --color-fade         : #{$lightcolor-fade};
+    --color-bg           : #{$lightcolor-bg};
+    --color-bg-alt       : #{$lightcolor-bg-alt};
+    --color-text         : #{$lightcolor-text};
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-fade         : #{$darkcolor-fade};
+        --color-dark-blossom : #{$darkcolor-dark-blossom};
+        --color-blossom      : #{$darkcolor-blossom};
+        --color-bg           : #{$darkcolor-bg};
+        --color-bg-alt       : #{$darkcolor-bg-alt};
+        --color-text         : #{$darkcolor-text};
+    }
+}
+
+// @media only screen and (max-resolution: 200dpi) {}
+// @media only screen and (max-resolution: 72dpi) {some bitmap font}
 
 /* Body */
 
@@ -29,9 +52,9 @@ html {
 body {
     line-height: 1.35;
 //    margin: auto;
-    color: $color-text;
-    background-color: $color-bg-alt;
-    // background-color: darken($color-bg, 10%);
+    color: var(--color-text);
+    background-color: var(--color-bg-alt);
+    // background-color: darken(var(--color-bg, 10%));
 
     // text-rendering: optimizelegibility;
     // font-weight: 400;
@@ -39,7 +62,7 @@ body {
 
 // The "central column" on desktops, which hopefully disappears on mobile
 #central-column {
-    background: $color-bg;
+    background: var(--color-bg);
 }
 
 @media (max-width: 684px) {
@@ -96,16 +119,16 @@ header > nav {
         text-align: center;
         padding: 1em .7em;
         text-decoration: none;
-        // border-top: 2px solid $color-bg;
-        // border-bottom: 2px solid $color-bg;
+        // border-top: 2px solid var(--color-bg);
+        // border-bottom: 2px solid var(--color-bg);
     }
     a:hover {
-        outline: $color-fade solid 2px;
+        outline: var(--color-fade) solid 2px;
     }
 }
 
 footer {
-    background-color: $color-bg-alt;
+    background-color: var(--color-bg-alt);
     text-align: center;
     padding: 2em;
     margin-top: auto;
@@ -150,8 +173,8 @@ summary {
 }
 
 details {
-    border-bottom: 1px solid $color-bg-alt;
-    // border-bottom: 1px solid $color-fade;
+    border-bottom: 1px solid var(--color-bg-alt);
+    // border-bottom: 1px solid var(--color-fade);
     margin-top: .3em;
     // margin-bottom: 1em;
 }
@@ -174,7 +197,7 @@ small, sub, sup {
 }
 
 hr {
-    border-color: $color-blossom;
+    border-color: var(--color-blossom);
 }
 
 td a {
@@ -209,9 +232,9 @@ blockquote {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
     padding-right: 0.8em;
-    border-left: 5px solid $color-blossom;
+    border-left: 5px solid var(--color-blossom);
     // margin-bottom: 2.5rem;
-    background-color: $color-bg-alt;
+    background-color: var(--color-bg-alt);
 }
 
 img, video {
@@ -230,7 +253,7 @@ img, video {
 code, pre { font-size: 0.8em; }
 
 pre {
-    background-color: $color-bg-alt;
+    background-color: var(--color-bg-alt);
     display: block;
     padding: 1em;
     overflow-x: auto;
@@ -240,7 +263,7 @@ pre {
 
 code, kbd, samp {
     padding: 0 0.5em;
-    background-color: $color-bg-alt;
+    background-color: var(--color-bg-alt);
     white-space: pre-wrap;
 }
 
@@ -262,16 +285,16 @@ table {
 
 td, th {
     padding: 0.5em;
-    border-bottom: 1px solid $color-bg-alt;
+    border-bottom: 1px solid var(--color-bg-alt);
 }
 
 /* Buttons, forms and input */
 
 input, textarea {
-    border: 1px solid $color-text;
+    border: 1px solid var(--color-text);
 
     &:focus {
-        border: 1px solid $color-blossom;
+        border: 1px solid var(--color-blossom);
     }
 }
 
@@ -286,10 +309,10 @@ textarea {
     text-decoration: none;
     white-space: nowrap;
 
-    background-color: $color-blossom;
-    color: $color-bg;
+    background-color: var(--color-blossom);
+    color: var(--color-bg);
     border-radius: 1px;
-    border: 1px solid $color-blossom;
+    border: 1px solid var(--color-blossom);
     cursor: pointer;
     box-sizing: border-box;
 
@@ -299,8 +322,8 @@ textarea {
     }
 
     &:hover {
-        background-color: $color-fade;
-        color: $color-bg;
+        background-color: var(--color-fade);
+        color: var(--color-bg);
         outline: 0;
     }
 
@@ -311,23 +334,23 @@ textarea {
 }
 
 textarea, select, input {
-    color: $color-text;
+    color: var(--color-text);
     padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
     margin-bottom: 10px;
-    background-color: $color-bg-alt;
-    border: 1px solid $color-bg-alt;
+    background-color: var(--color-bg-alt);
+    border: 1px solid var(--color-bg-alt);
     border-radius: 4px;
     box-shadow: none;
     box-sizing: border-box;
 
     &:focus {
-        border: 1px solid $color-blossom;
+        border: 1px solid var(--color-blossom);
         outline: 0;
     }
 }
 
 input[type="checkbox"]:focus {
-    outline: 1px dotted $color-blossom;
+    outline: 1px dotted var(--color-blossom);
 }
 
 label, legend, fieldset {
@@ -338,3 +361,52 @@ label, legend, fieldset {
 
 @import './tables.scss';
 @import './links.scss';
+
+a { color: var(--color-blossom);}
+a:visited { color: var(--color-dark-blossom); }
+a:hover, a:visited:hover { color: var(--color-fade); }
+
+// Indicate "unlocked" links
+a.eyes_therapist:after,
+a.eyes_partner:after,
+a.eyes_friend:after {
+  content: "🗝";
+}
+
+// Indicate external links
+a[href^="http://"]:after,
+a[href^="https://"]:after {
+  content: "↗️";
+}
+
+a.easylink {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+
+
+
+
+
+// make it scrollable so it doesn't mess up layout on the phone
+#the-big-table { overflow-x: auto; }
+
+tr:nth-child(even) {
+    background-color: var(--color-bg-alt);
+}
+
+// tr {
+//     border-bottom: 1px solid $color-fade;
+// }
+
+th {
+    text-align: left;
+}
+
+td {
+    padding: .25em .5em;
+ }
+// first column a bit more left-padded
+// tr > td
+//   padding-left: .3em
