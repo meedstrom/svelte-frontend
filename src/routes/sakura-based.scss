@@ -29,7 +29,7 @@ $darkcolor-text: #d9d8dc;
     --color-text         : #{$lightcolor-text};
 }
 
-@media (prefers-color-scheme: dark) {
+@media only screen and (prefers-color-scheme: dark) {
     :root {
         --color-fade         : #{$darkcolor-fade};
         --color-dark-blossom : #{$darkcolor-dark-blossom};
