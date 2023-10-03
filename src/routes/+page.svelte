@@ -63,7 +63,7 @@
 	<title>All posts</title>
 </svelte:head>
 
-<div id="the-big-table">
+<div id="the-big-index">
     <SvelteTable columns="{columns}"
                  rows="{get(posts).filter(post => !post.tags.includes('stub'))}"
                  sortBy="created"

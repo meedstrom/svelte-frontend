@@ -69,7 +69,7 @@
 
 <style>
  .hideOnPhone {
-     @media (max-width: 684px) {
+     @media (max-width: 600px) {
          display: none;
      }
  }
