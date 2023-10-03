@@ -1,3 +1,4 @@
 // export const prerender = true
 
-// prerendering throws error for the permalink posts bc they can't find the images
+// FIXME: prerendering throws error for the permalink posts bc they can't find
+// the images.  to fix, strip or include the images.
