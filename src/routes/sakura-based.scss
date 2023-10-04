@@ -1,16 +1,14 @@
 @import 'normalize.css/normalize.css';
 
 .theme-auto {
-    .theme-sepia {
-        --color-blossom      : #a00;
-        --color-fade         : #700;
-        // --color-bg           : #dcb;
-        // --color-bg-alt       : #fec;
-        --color-bg           : #dcb;
-        //--color-bg           : #dba;
-        --color-bg-alt       : #cba;
-        --color-text         : #000;
-    }
+    --color-blossom      : #a00;
+    --color-fade         : #700;
+    // --color-bg           : #dcb;
+    // --color-bg-alt       : #fec;
+    --color-bg           : #dcb;
+    //--color-bg           : #dba;
+    --color-bg-alt       : #cba;
+    --color-text         : #000;
     @media (prefers-color-scheme: dark) {
         --color-blossom      : #d86672;
         --color-fade         : #ca3443;
@@ -409,8 +407,6 @@ label, legend, fieldset {
     font-weight: 600;
 }
 
-@import './tables.scss';
-@import './links.scss';
 
 a {
     color: var(--color-blossom);
