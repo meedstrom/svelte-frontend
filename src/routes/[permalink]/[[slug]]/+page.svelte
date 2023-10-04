@@ -65,7 +65,7 @@
             </small>
         </div>
     </div>
-    <h1>{data.post.title}</h1>
+    <h1 id={data.post.permalink}>{data.post.title}</h1>
     {@html data.post.content}
 </article>
 

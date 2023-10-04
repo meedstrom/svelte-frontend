@@ -10,10 +10,10 @@
             <nav>
                 <a href="/login">Login</a>
                 <a href="/about">About</a>
-                <a href="/central-nexus">Nexus</a>
+                <a href="/nexus">Nexus</a>
                 <a href="/random">Random</a>
                 <!-- TODO: only show the counter if javascript is active -->
-                <a href="/all">All (seen {$seen.size} of {$posts.length})</a>
+                <a href="/">All (seen {$seen.size} of {$posts.length})</a>
             </nav>
         </header>
 

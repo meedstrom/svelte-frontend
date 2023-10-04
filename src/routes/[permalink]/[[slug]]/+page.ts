@@ -1,4 +1,4 @@
-// export const prerender = true
+export const prerender = true
 
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
