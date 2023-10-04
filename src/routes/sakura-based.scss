@@ -3,10 +3,7 @@
 .theme-auto {
     --color-blossom      : #a00;
     --color-fade         : #700;
-    // --color-bg           : #dcb;
-    // --color-bg-alt       : #fec;
     --color-bg           : #dcb;
-    //--color-bg           : #dba;
     --color-bg-alt       : #cba;
     --color-text         : #000;
     @media (prefers-color-scheme: dark) {
@@ -38,8 +35,8 @@
 .theme-dark-green {
     --color-blossom      : #3a0;
     --color-fade         : #370;
-    --color-bg           : #110;
-    --color-bg-alt       : #220;
+    --color-bg           : #220;
+    --color-bg-alt       : #110;
     --color-text         : #8a5;
 }
 
@@ -61,7 +58,6 @@
 //     --color-bg-alt       : #fec;
 //     --color-text         : #000;
 // }
-
 
 
 .theme-pink {
