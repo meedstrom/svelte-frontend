@@ -17,13 +17,14 @@ export type Post = {
      content: string
  }
 
+export const privateTags = new Set(
+     ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
+)
+
 export function rewriteAllLinks(givenPosts: Post[]
                                 , allowedTags: string[] | undefined) {
      if (!givenPosts || givenPosts.length === 0) return
-     let willUnlink = new Set(["private",
-                               "eyes_therapist",
-                               "eyes_partner",
-                               "eyes_friend"])
+     let willUnlink = new Set([...privateTags])
      // JS doesn't have set-difference methods yet, it's coming
      if (allowedTags) allowedTags.forEach(tag => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
