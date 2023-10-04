@@ -1,4 +1,4 @@
-export const prerender = true
+// export const prerender = true
 
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
@@ -16,11 +16,11 @@ export function load({ params }) {
     // const next = dailySlugs ? dailies.toReversed().find(post =>
     //     dailySlugs.indexOf(post.slug) < dailySlugs.indexOf(data.post.slug)) : null
 
-    if (post && post.hidden) {
-        // Redirect to non-prerendered subdir
-        throw redirect(307, `/${post.permalink}/private/${post.slug}`)
-    }
-    else if (post) {
+    // if (post && post.hidden) {
+    //     // Redirect to non-prerendered subdir
+    //     throw redirect(307, `/${post.permalink}/private/${post.slug}`)
+    // }
+    if (post) {
         return {
             post: post,
         }

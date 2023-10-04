@@ -1,3 +1,6 @@
+<!-- NOTE: This file has two names! (hard link) -->
+<!-- I don't think it's meant to be done this way... I'd like to figure out some
+     solution with <slot> -->
 <script lang="ts">
  export let data
  import { get } from 'svelte/store'
