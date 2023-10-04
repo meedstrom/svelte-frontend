@@ -10,7 +10,17 @@ export function load() {
             .filter(x => !x.tags.includes('stub'))
             .map(x => x.permalink)
     )
-    // NOTE: set-difference is coming to JS:
+    // maybe reset once seen all
+    if (links.size <= get(seen).size) {
+        // TODO: Check if there are public pages not yet in seen (because visitor had
+        // also seen unlocked posts in the past, or posts deleted, or stubs, or...)
+        // if (!links.find(link => !get(seen).has(link))) {
+            alert('Congrats, you\'ve seen all public pages that aren\'t stubs! Counter reset.')
+            seen.set(new Set<string>([]))
+        // }
+    }
+
+    // NOTE: set-difference coming to JS:
     // https://github.com/tc39/proposal-set-methods
     for (const seenLink of get(seen)) {
         links.delete(seenLink)

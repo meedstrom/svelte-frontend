@@ -1,54 +1,88 @@
 @import 'normalize.css/normalize.css';
 
-
-// edited sakura default
-$lightcolor-blossom: #485fc7;
-$lightcolor-dark-blossom: darken(#485fc7, 10%);
-$lightcolor-fade: #982c61;
-$lightcolor-bg: #f9f9f9;
-$lightcolor-bg-alt: darken(#f1f1f1, 5%);
-$lightcolor-text: #000000;
-
-
-// sakura vader
-$darkcolor-fade: #CA3443;
-$darkcolor-blossom: lighten($darkcolor-fade, 25%);
-$darkcolor-dark-blossom: darken($darkcolor-blossom, 10%);
-$darkcolor-bg: lighten(#120c0e, 10%);
-// $darkcolor-bg-alt: #40363a // too bright
-$darkcolor-bg-alt: lighten($darkcolor-bg, 9%);
-$darkcolor-text: #d9d8dc;
-
-
-:root {
-    --color-blossom      : #{$lightcolor-blossom};
-    --color-dark-blossom : #{$lightcolor-dark-blossom};
-    --color-fade         : #{$lightcolor-fade};
-    --color-bg           : #{$lightcolor-bg};
-    --color-bg-alt       : #{$lightcolor-bg-alt};
-    --color-text         : #{$lightcolor-text};
-}
-
-@media (prefers-color-scheme: dark) {
-    :root {
-        --color-fade         : #{$darkcolor-fade};
-        --color-dark-blossom : #{$darkcolor-dark-blossom};
-        --color-blossom      : #{$darkcolor-blossom};
-        --color-bg           : #{$darkcolor-bg};
-        --color-bg-alt       : #{$darkcolor-bg-alt};
-        --color-text         : #{$darkcolor-text};
+.theme-auto {
+    .theme-sepia {
+        --color-blossom      : #a00;
+        --color-fade         : #700;
+        // --color-bg           : #dcb;
+        // --color-bg-alt       : #fec;
+        --color-bg           : #dcb;
+        //--color-bg           : #dba;
+        --color-bg-alt       : #cba;
+        --color-text         : #000;
+    }
+    @media (prefers-color-scheme: dark) {
+        --color-blossom      : #d86672;
+        --color-fade         : #ca3443;
+        --color-bg           : #2f1f24;
+        --color-bg-alt       : #462e36;
+        --color-text         : #d9d8dc;
     }
 }
+
+.theme-light {
+    --color-blossom      : #485fc7 ;
+    --color-fade         : #982c61 ;
+    --color-bg           : #f9f5f3 ;
+    --color-bg-alt       : #dddbd9 ;
+    --color-text         : #000000 ;
+}
+
+.theme-dark-red {
+    --color-blossom      : #d86672;
+    --color-fade         : #ca3443;
+    --color-bg           : #2f1f24;
+    --color-bg-alt       : #462e36;
+    --color-text         : #d9d8dc;
+}
+
+// lol
+.theme-dark-green {
+    --color-blossom      : #3a0;
+    --color-fade         : #370;
+    --color-bg           : #110;
+    --color-bg-alt       : #220;
+    --color-text         : #8a5;
+}
+
+.theme-sepia {
+    --color-blossom      : #a00;
+    --color-fade         : #700;
+    // --color-bg           : #dcb;
+    // --color-bg-alt       : #fec;
+    --color-bg           : #dcb;
+    //--color-bg           : #dba;
+    --color-bg-alt       : #cba;
+    --color-text         : #000;
+}
+
+// .theme-sepia {
+//     --color-blossom      : #45f;
+//     --color-fade         : #926;
+//     --color-bg           : #dcb;
+//     --color-bg-alt       : #fec;
+//     --color-text         : #000;
+// }
+
+
+
+.theme-pink {
+    --color-blossom      : #980255;
+    --color-fade         : #753851;
+    --color-bg           : #ffe4f5;
+    --color-bg-alt       : #f8d2e9;
+    --color-text         : #49002d;
+}
+
+
 
 // @media only screen and (max-resolution: 200dpi) {}
 // @media only screen and (max-resolution: 72dpi) {some bitmap font}
 
-
-
 // Font
 
 @font-face {
-    font-family: "M1 Plus";
+    font-family: "M+1M";
     font-display: swap;
     src: url("$lib/mplus-1m-regular.ttf")
 }
@@ -62,23 +96,28 @@ html {
 // line lengths.  No declarative way to specify that in CSS, since there's no
 // font-width property.  The font-size property is about height, and the width
 // depends on the family.  So em, ex, px, pt... the unit doesn't matter as
-// you'll still need to find the right size for each font.
+// you'll still need to find the right size for each font by trial & error.
 code, pre {
-    font-family: "M1 Plus", monospace;
+    font-family: "M+1M", monospace;
     font-size: 14px;
 }
 
-/* Body */
+
+#theme-container {
+    color: var(--color-text);
+    background-color: var(--color-bg-alt);
+}
+
+html, body, #mandatory-wrapper {
+    height: 100%;
+}
+#theme-container {
+    min-height: 100%;
+}
 
 body {
     line-height: 1.35;
-//    margin: auto;
-    color: var(--color-text);
-    background-color: var(--color-bg-alt);
-    // background-color: darken(var(--color-bg, 10%));
-
-    // text-rendering: optimizelegibility;
-    // font-weight: 400;
+    text-rendering: optimizelegibility;
 }
 
 article {
@@ -114,6 +153,7 @@ article {
 header > nav {
     display: flex;
     flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
     // flex-wrap: wrap;
     // justify-content: space-between;
     // align-items: center;
@@ -123,11 +163,12 @@ header > nav {
         text-align: center;
         padding: 1em .7em;
         text-decoration: none;
+        border-bottom: none;
         // border-top: 2px solid var(--color-bg);
         // border-bottom: 2px solid var(--color-bg);
     }
-    a:hover {
-        outline: var(--color-fade) solid 2px;
+    a:visited {
+        color: var(--color-blossom);
     }
 }
 
@@ -144,15 +185,25 @@ h1, h2, h3, h4, h5, h6 {
     // margin-top: 3rem;
     // margin-bottom: 1.5rem;
     font-weight: normal;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
+
+h1 { font-size: 1.7em; }
+// h2 { font-size: 1.4em; }
+// h3 { font-size: 1.3em; }
+// h4 { font-size: 1.25em; }
+// h5 { font-size: 1.2em; }
+// h6 { font-size: 1.15em; }
 
 .logseq {
     h2, h3, h4, h5, h6 {
         font-size: 1em;
         display: list-item;
     }
-    h3, h4, h5, h6 { margin-bottom: .3em; margin-top: .3em; }
+    h3, h4, h5, h6 {
+        margin-bottom: .3em;
+        margin-top: .3em;
+    }
     h3 { margin-left: 1em; }
     h4 { margin-left: 2em; }
     h5 { margin-left: 3em; }
@@ -168,20 +219,32 @@ summary {
 
 details {
     border-bottom: 1px solid var(--color-bg-alt);
-    // border-bottom: 1px solid var(--color-fade);
     margin-top: .3em;
-    // margin-bottom: 1em;
 }
 
 details[open] + details {
     margin-top: 1em;
 }
 
+// Old version
+// details > details {
+//     margin-top: 1em;
+//     margin-left: 1.5em;
+//     @media (max-width: 599px) { margin-left: .8em; }
+// }
+
+// "Card-like" version
 details > details {
+    padding-top: .8em;
+    padding-left: 1.5em;
+    @media (max-width: 599px) { padding-left: .8em; }
+    
+    box-shadow: 0 0 .7em black;
+}
+
+// heading with no text, just direct subheading, should have more room
+summary + details {
     margin-top: 1em;
-    margin-left: 1.5em;
-    @media (max-width: 599px) { margin-left: 0; }
-    // @media only screen and (min-width: 600px) { margin-left: .8em; }
 }
 
 
@@ -191,7 +254,7 @@ small, sub, sup {
 }
 
 hr {
-    border-color: var(--color-blossom);
+    border-color: var(--color-bg-alt);
 }
 
 td a {
@@ -349,9 +412,15 @@ label, legend, fieldset {
 @import './tables.scss';
 @import './links.scss';
 
-a { color: var(--color-blossom);}
-a:visited { color: var(--color-dark-blossom); }
-a:hover, a:visited:hover { color: var(--color-fade); }
+a {
+    color: var(--color-blossom);
+    border-bottom: 1px solid;
+    text-decoration: none;
+}
+
+a:visited { color: var(--color-fade); }
+a:focus, a:hover { outline: var(--color-fade) solid 2px; }
+
 
 // Indicate "unlocked" links
 a.eyes_therapist:after,
@@ -371,16 +440,22 @@ a.easylink {
   border-bottom: none;
 }
 
-.toc a {
-    text-decoration: none;
+
+
+
+
+#the-big-index {
+    // make it horizontal-scrollable so it doesn't mess up layout on the phone
+    overflow-x: auto;
+    th:hover {
+        background: var(--color-bg-alt);
+        cursor: pointer;
+    }
 }
-
-
-
-
-
-// make it scrollable so it doesn't mess up layout on the phone
-#the-big-index { overflow-x: auto; }
+#the-big-index th {
+    // border-style: groove;
+    // border-width: 1px;
+}
 
 tr:nth-child(even) {
     background-color: var(--color-bg-alt);
@@ -410,6 +485,12 @@ article {
 }
 
 @media (min-width: 600px) {
+    #central-column {
+        margin: auto;
+        max-width: 38em; // just slightly over 600px
+        border-radius: .5em;
+        box-shadow: 0 0 1em black;
+    }
     article {
         padding-left: 1em;
         padding-right: 1em;
@@ -422,12 +503,7 @@ article {
     #the-big-index tr:last-child {
         padding-right: .6em
     }
-    #central-column {
-        margin: auto;
-        max-width: 38em; // just slightly over 600px
-        border-radius: .5em;
-        box-shadow: 0 0 1em black;
-    }
+
 }
 @media (min-width: 900px) {
     #central-column {

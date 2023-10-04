@@ -13,16 +13,16 @@
      const days = Math.round((unixNow - unixThen) / (1000 * 60 * 60 * 24))
      return (days === 1) ? 'yesterday'
           : (days === 0) ? 'today'
-          : (days > 550) ? `${Math.round(days/365)} years ago`
+          : (days > 547) ? `${Math.round(days/365)} years ago`
           : (days > 45) ? `${Math.round(days/30)} months ago`
-          : (days > 25) ? 'a month ago'
+          : (days > 10) ? `${Math.round(days/7)} weeks ago`
           : `${days} days ago`
  }
 
  const dailies = get(posts).filter(post => post.tags.includes('daily'))
  const dailySlugs = dailies.map(post => post.slug)
  $: isDaily = data.post.tags.includes('daily') ? true : false
- // INFO: They're pre-sorted by creation-date, so that lower index = newer.
+ // INFO: They're pre-sorted by creation-date, so that smaller index = newer.
  $: prev = isDaily ? dailies.find(post =>
      dailySlugs.indexOf(post.slug) > dailySlugs.indexOf(data.post.slug)) : null
  $: next = isDaily ? dailies.toReversed().find(post =>
