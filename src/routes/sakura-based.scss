@@ -81,6 +81,25 @@ html, body, #mandatory-wrapper {
     background-color: var(--color-bg-alt);
 }
 
+// input.theme-switch:focus ~ #theme-container {
+#theme-pink:focus ~ #theme-container {
+    --color-blossom: #980255;
+    --color-fade   : #753851;
+    --color-bg     : #ffe4f5;
+    --color-bg-alt : #f8d2e9;
+    --color-text   : #49002d;
+}
+
+
+#theme-dark-amber:focus ~ #theme-container {
+    --color-blossom      : #fa0;
+    --color-fade         : #a50;
+    --color-bg           : #210;
+    --color-bg-alt       : #320;
+    --color-text         : #da7;
+}
+
+
 
 // Font
 
@@ -143,6 +162,11 @@ header > nav {
         color: var(--color-blossom);
     }
 }
+
+ .row {
+     display: flex;
+     justify-content: space-between;
+ }
 
 footer {
     background-color: var(--color-bg-alt);

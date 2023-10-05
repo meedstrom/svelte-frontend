@@ -76,10 +76,6 @@
          display: none;
      }
  }
- div.row {
-     display: flex;
-     justify-content: space-between;
-     /* align-items: center; */
- }
+
  /* h1 { margin-top: 0; } */
 </style>
