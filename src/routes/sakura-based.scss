@@ -45,19 +45,19 @@
     --color-fade         : #700;
     // --color-bg           : #dcb;
     // --color-bg-alt       : #fec;
-    --color-bg           : #dcb;
-    //--color-bg           : #dba;
+    // --color-bg           : #dcb;
+    --color-bg           : #dca;
     --color-bg-alt       : #cba;
     --color-text         : #000;
 }
 
-// .theme-sepia {
-//     --color-blossom      : #45f;
-//     --color-fade         : #926;
-//     --color-bg           : #dcb;
-//     --color-bg-alt       : #fec;
-//     --color-text         : #000;
-// }
+.theme-dark-amber {
+    --color-blossom      : #fa0;
+    --color-fade         : #a50;
+    --color-bg           : #210;
+    --color-bg-alt       : #320;
+    --color-text         : #da7;
+}
 
 
 .theme-pink {
@@ -69,10 +69,19 @@
 }
 
 
+// Make things themeable
 
-// @media only screen and (max-resolution: 200dpi) {}
-// @media only screen and (max-resolution: 72dpi) {some bitmap font}
+html, body, #mandatory-wrapper {
+    height: 100%;
+}
 
+#theme-container {
+    min-height: 100%;
+    color: var(--color-text);
+    background-color: var(--color-bg-alt);
+}
+
+
 // Font
 
 @font-face {
@@ -96,70 +105,39 @@ code, pre {
     font-size: 14px;
 }
 
+
 
-#theme-container {
-    color: var(--color-text);
-    background-color: var(--color-bg-alt);
-}
-
-html, body, #mandatory-wrapper {
-    height: 100%;
-}
-#theme-container {
-    min-height: 100%;
+// The "central column", the edges of which disappear on mobile
+#central-column {
+    background-color: var(--color-bg);
 }
 
 body {
     line-height: 1.35;
-    text-rendering: optimizelegibility;
+    text-rendering: optimizeLegibility;
 }
 
 article {
+    // Don't ever let long lines break out of the bounds of the container
     overflow-wrap: anywhere;
+    // Give tables horizontal scroll, which also lets us undo the above, a bad
+    // idea in tables: breaks long numbers in narrow columns
+    .table-container {
+        overflow-x: auto;
+        overflow-wrap: normal;
+    }
 }
-
-// The "central column" on desktops, which hopefully disappears on mobile
-#central-column {
-    background: var(--color-bg);
-}
-
-// Breakpoints.  This approach has merits, from
-// https://www.freecodecamp.org/news/the-100-correct-way-to-do-css-breakpoints-88d6a5ba1862/
-// @mixin for-phone-only {
-//   @media (max-width: 599px) { @content; }
-// }
-// @mixin for-tablet-portrait-up {
-//   @media (min-width: 600px) { @content; }
-// }
-// @mixin for-tablet-landscape-up {
-//   @media (min-width: 900px) { @content; }
-// }
-// @mixin for-desktop-up {
-//   @media (min-width: 1200px) { @content; }
-// }
-// @mixin for-big-desktop-up {
-//   @media (min-width: 1800px) { @content; }
-// }
-
-
-
 
 header > nav {
     display: flex;
     flex-wrap: wrap-reverse;
     flex-direction: row-reverse;
-    // flex-wrap: wrap;
-    // justify-content: space-between;
-    // align-items: center;
     a {
         flex-grow: 5;
-        // align-self: center;
         text-align: center;
         padding: 1em .7em;
         text-decoration: none;
         border-bottom: none;
-        // border-top: 2px solid var(--color-bg);
-        // border-bottom: 2px solid var(--color-bg);
     }
     a:visited {
         color: var(--color-blossom);
@@ -174,10 +152,6 @@ footer {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    // line-height: 1.1;
-    // font-weight: 700;
-    // margin-top: 3rem;
-    // margin-bottom: 1.5rem;
     font-weight: normal;
     font-size: 1.3em;
 }
@@ -198,6 +172,7 @@ h1 { font-size: 1.7em; }
         margin-bottom: .3em;
         margin-top: .3em;
     }
+    h2 { margin-left: 0; }
     h3 { margin-left: 1em; }
     h4 { margin-left: 2em; }
     h5 { margin-left: 3em; }
@@ -227,18 +202,22 @@ details[open] + details {
 //     @media (max-width: 599px) { margin-left: .8em; }
 // }
 
-// "Card-like" version
+// "Hovering cards" version
 details > details {
     padding-top: .8em;
     padding-left: 1.5em;
     @media (max-width: 599px) { padding-left: .8em; }
-    
-    box-shadow: 0 0 .7em black;
+    border-radius: 3px;
+    box-shadow: 2px 2px 7px black;
 }
 
 // heading with no text, just direct subheading, should have more room
 summary + details {
     margin-top: 1em;
+}
+summary + :not(details):last-of-type {
+    margin-bottom: 2em;
+
 }
 
 
@@ -266,11 +245,6 @@ li {
     margin-bottom: .3em;
 }
 
-// li + li {
-//     margin-top: .3em;
-//     margin-bottom: .3em;
-// }
-
 // any diff between this selector and just ul?
 ul:last-child {
     margin-bottom: .6em;
@@ -295,11 +269,7 @@ img, video {
     margin-bottom: 2.5rem;
 }
 
-
-
 /* Pre and Code */
-
-//
 
 pre {
     background-color: var(--color-bg-alt);
@@ -411,7 +381,7 @@ a {
 }
 
 a:visited { color: var(--color-fade); }
-a:focus, a:hover { outline: var(--color-fade) solid 2px; }
+a:focus, a:hover { outline: var(--color-blossom) solid 2px; }
 
 
 // Indicate "unlocked" links
@@ -427,26 +397,19 @@ a[href^="https://"]:after {
   content: "↗️";
 }
 
+// The headline permalinks that look like 🔗
 a.easylink {
   text-decoration: none;
   border-bottom: none;
 }
 
 
-
-
-
 #the-big-index {
-    // make it horizontal-scrollable so it doesn't mess up layout on the phone
     overflow-x: auto;
     th:hover {
         background: var(--color-bg-alt);
         cursor: pointer;
     }
-}
-#the-big-index th {
-    // border-style: groove;
-    // border-width: 1px;
 }
 
 tr:nth-child(even) {
@@ -465,11 +428,6 @@ th {
 td {
     padding: .25em .4em;
  }
-// first column a bit more left-padded
-// tr > td
-//   padding-left: .3em
-
-
 
 article {
     padding-left: 5px;
@@ -489,13 +447,18 @@ article {
         padding-bottom: 1em;
         margin-bottom: 2em;
     }
-    #the-big-index tr > td {
-        padding-left: .6em
+    // slight extra left-pad in first column
+    #the-big-index tr > td:first-child {
+        padding-left: .6em;
     }
-    #the-big-index tr:last-child {
-        padding-right: .6em
+    #the-big-index tr > td:last-child {
+        padding-right: .6em;
     }
-
+    // ensure there's space for the sorting-arrow in the Created & Updated
+    // headers
+    th:last-child, th:nth-last-child(2) {
+        padding-right: 0;
+    }
 }
 @media (min-width: 900px) {
     #central-column {

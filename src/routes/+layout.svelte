@@ -41,6 +41,7 @@
             <option value="theme-pink">Pink</option>
             <option value="theme-dark-red">Dark red</option>
             <option value="theme-dark-green">Dark green</option>
+            <option value="theme-dark-amber">Dark amber</option>
             <option value="theme-auto">Auto</option>
         </select>
     </footer>
