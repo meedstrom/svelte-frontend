@@ -1,78 +1,91 @@
 @charset "utf-8";
 @import 'normalize.css/normalize.css';
 
+// Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
+// Check on https://coolors.co/contrast-checker
+// TODO: fix
+
 .theme-auto {
-    --color-blossom      : #a00;
-    --color-fade         : #700;
-    --color-bg           : #dca;
-    --color-bg-alt       : #cba;
-    --color-text         : #000;
+    // same as off-white
+    --blossom : #45c ;
+    --fade    : #a36 ;
+    --text    : #222 ;
+    --bg      : #f9f5f3 ;
+    --bg-alt  : #ddd ;
     @media (prefers-color-scheme: dark) {
-        --color-blossom      : #d86672;
-        --color-fade         : #ca3443;
-        --color-bg           : #2f1f24;
-        --color-bg-alt       : #462e36;
-        --color-text         : #d9d8dc;
+        --blossom : #f66;
+        --fade    : #c99;
+        --text    : #d9d8dc;
+        --bg      : #2f1f24;
+        --bg-alt  : #433;
     }
 }
 
 .theme-white {
-    --color-blossom      : #55f;
-    --color-fade         : #a36;
-    --color-bg           : #ffffff;
-    --color-bg-alt       : #eee;
-    --color-text         : #000;
-}
-
-.theme-off-white {
-    --color-blossom      : #485fc7 ;
-    --color-fade         : #982c61 ;
-    --color-bg           : #f9f5f3 ;
-    --color-bg-alt       : #dddbd9 ;
-    --color-text         : #000000 ;
+    --blossom : #45c ;
+    --fade    : #a36 ;
+    --text    : #222 ;
+    --bg      : #f9f5f3 ;
+    --bg-alt  : #ddd ;
 }
 
 .theme-dark-red {
-    --color-blossom      : #d86672;
-    --color-fade         : #ca3443;
-    --color-bg           : #2f1f24;
-    --color-bg-alt       : #462e36;
-    --color-text         : #d9d8dc;
+    --blossom : #f66;
+    --fade    : #c99;
+    --text    : #d9d8dc;
+    --bg      : #2f1f24;
+    --bg-alt  : #433;
 }
 
-// lol
-.theme-dark-green {
-    --color-blossom      : #3a0;
-    --color-fade         : #370;
-    --color-bg           : #220;
-    --color-bg-alt       : #110;
-    --color-text         : #8a5;
-}
-
-
-.theme-sepia {
-    --color-blossom      : #a00;
-    --color-fade         : #700;
-    --color-bg           : #dca;
-    --color-bg-alt       : #cba;
-    --color-text         : #000;
+.theme-tan {
+    --blossom : #900;
+    --fade    : #502;
+    --text    : #000;
+    --bg      : #dca;
+    --bg-alt  : #cba;
 }
 
 .theme-dark-amber {
-    --color-blossom      : #fa0;
-    --color-fade         : #a50;
-    --color-bg           : #210;
-    --color-bg-alt       : #320;
-    --color-text         : #da7;
+    --blossom : #ea0;
+    --fade    : #a50; // too low contrast
+    --text    : #da7;
+    --bg      : #210;
+    --bg-alt  : #320;
+}
+
+.theme-pink {
+    --blossom : #980255;
+    --fade    : #753851;
+    --text    : #49002d;
+    --bg      : #ffe4f5;
+    --bg-alt  : #f8d2e9;
 }
 
 
-.theme-pink {
-    --color-blossom      : #980255;
-    --color-fade         : #753851;
-    --color-bg           : #ffe4f5;
-    --color-bg-alt       : #f8d2e9;
-    --color-text         : #49002d;
+// unused ------------------
+
+.theme-dark-green {
+    --blossom : #3a0;
+    --fade    : #370;
+    --text    : #ab7;
+    --bg      : #220;
+    --bg-alt  : #110;
+}
+
+.theme-green {
+    --blossom : #390;
+    --fade    : #360;
+    --text    : #020;
+    --bg      : #dea;
+    --bg-alt  : #cdc;
+}
+
+.theme-earth {
+    --blossom : #c26c49;
+    --fade    : #bd8869;
+    --text    : #310;
+    --bg      : #d8e3dd;
+    --bg-alt  : #e8c3a8;
 }
 
 
@@ -84,8 +97,8 @@ html, body, #mandatory-wrapper {
 
 #theme-container {
     min-height: 100%;
-    color: var(--color-text);
-    background-color: var(--color-bg-alt);
+    color: var(--text);
+    background-color: var(--bg-alt);
 }
 
 
@@ -94,7 +107,7 @@ html, body, #mandatory-wrapper {
 @font-face {
     font-family: "M+1M";
     font-display: swap;
-    src: url("$lib/mplus-1m-regular.ttf")
+    src: url("$lib/mplus-1m-regular.ttf");
 }
 
 html {
@@ -116,7 +129,7 @@ code, pre {
 
 // The "central column", the edges of which disappear on mobile
 #central-column {
-    background-color: var(--color-bg);
+    background-color: var(--bg);
 }
 
 body {
@@ -147,7 +160,7 @@ header > nav {
         border-bottom: none;
     }
     a:visited {
-        color: var(--color-blossom);
+        color: var(--blossom);
     }
 }
 
@@ -157,42 +170,53 @@ header > nav {
  }
 
  footer {
-     background-color: var(--color-bg-alt);
+     background-color: var(--bg-alt);
      text-align: center;
      padding: 2em;
      padding-right: 0.2em;
+     padding-bottom: 0;
      margin-top: auto;
-     label {
-         background-color: var(--color-bg);
-         padding: 0.3em;
-         margin: 0;
-         cursor: pointer;
-         // display: inline;
-     }
-     // /* Hides the radio buttons */
-     input {
-         position: absolute !important;
-         height: 1px;
-         width: 1px;
-         overflow: hidden;
-         clip: rect(1px, 1px, 1px, 1px);
-     }
 
-     label:focus-within {
-         background-color: var(--color-fade);
-     }
-     label:hover {
-         outline: var(--color-blossom) 2px solid;
-     }
      @media (min-width: 600px) {
          padding-right: 2em;
      }
+
+     #theme-picker {
+         label {
+             background-color: var(--bg);
+             padding: 10px;
+             margin: 0;
+             cursor: pointer;
+             // display: inline;
+
+             border-style: groove;
+             border-width: 3px;
+
+         }
+         // /* Hide the radio buttons */
+         input {
+             position: absolute !important;
+             height: 1px;
+             width: 1px;
+             overflow: hidden;
+             clip: rect(1px, 1px, 1px, 1px);
+         }
+
+
+         //  Highlight currently enabled theme
+         .theme-true, label:focus-within { border-color: var(--fade); }
+
+         label:hover {
+             outline: var(--blossom) 2px solid;
+         }
+     }
+
  }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: normal;
-    font-size: 1.3em;
-}
+ h1, h2, h3, h4, h5, h6 {
+     font-weight: normal;
+     font-size: 1.3em;
+ }
 
 h1 { font-size: 1.7em; }
 // h2 { font-size: 1.4em; }
@@ -225,7 +249,7 @@ summary {
 }
 
 details {
-    border-bottom: 1px solid var(--color-bg-alt);
+    border-bottom: 1px solid var(--bg-alt);
     margin-top: .2em;
 }
 
@@ -269,7 +293,7 @@ small, sub, sup {
 }
 
 hr {
-    border-color: var(--color-bg-alt);
+    border-color: var(--bg-alt);
 }
 
 ul,ol {
@@ -295,9 +319,19 @@ blockquote {
     padding-top: 0.8em;
     padding-bottom: 0.8em;
     padding-right: 0.8em;
-    border-left: 5px solid var(--color-blossom);
+    border-left: 5px solid var(--blossom);
     // margin-bottom: 2.5rem;
-    background-color: var(--color-bg-alt);
+    background-color: var(--bg-alt);
+
+}
+
+// Add a fancy big quote symbol
+blockquote > p:first-child:before {
+    font-size: 4em;
+    content: '“';
+    line-height: 0;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
 }
 
 img, video {
@@ -310,7 +344,7 @@ img, video {
 /* Pre and Code */
 
 pre {
-    background-color: var(--color-bg-alt);
+    background-color: var(--bg-alt);
     display: block;
     padding: 1em;
     overflow-x: auto;
@@ -320,7 +354,7 @@ pre {
 
 code, kbd, samp {
     padding: 0 0.5em;
-    background-color: var(--color-bg-alt);
+    background-color: var(--bg-alt);
     white-space: pre-wrap;
 }
 
@@ -332,21 +366,13 @@ pre.src {
     background: #172030;
 }
 
-/* Tables */
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 2em;
-}
-
 /* Buttons, forms and input */
 
 input, textarea {
-    border: 1px solid var(--color-text);
+    border: 1px solid var(--text);
 
     &:focus {
-        border: 1px solid var(--color-blossom);
+        border: 1px solid var(--blossom);
     }
 }
 
@@ -361,10 +387,10 @@ textarea {
     text-decoration: none;
     white-space: nowrap;
 
-    background-color: var(--color-blossom);
-    color: var(--color-bg);
+    background-color: var(--blossom);
+    color: var(--bg);
     border-radius: 1px;
-    border: 1px solid var(--color-blossom);
+    border: 1px solid var(--blossom);
     cursor: pointer;
     box-sizing: border-box;
 
@@ -374,8 +400,8 @@ textarea {
     }
 
     &:hover {
-        background-color: var(--color-fade);
-        color: var(--color-bg);
+        background-color: var(--fade);
+        color: var(--bg);
         outline: 0;
     }
 
@@ -386,23 +412,23 @@ textarea {
 }
 
 textarea, select, input {
-    color: var(--color-text);
+    color: var(--text);
     padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
     margin-bottom: 10px;
-    background-color: var(--color-bg-alt);
-    border: 1px solid var(--color-bg-alt);
+    background-color: var(--bg-alt);
+    border: 1px solid var(--bg-alt);
     border-radius: 4px;
     box-shadow: none;
     box-sizing: border-box;
 
     &:focus {
-        border: 1px solid var(--color-blossom);
+        border: 1px solid var(--blossom);
         outline: 0;
     }
 }
 
 input[type="checkbox"]:focus {
-    outline: 1px dotted var(--color-blossom);
+    outline: 1px dotted var(--blossom);
 }
 
 label, legend, fieldset {
@@ -412,14 +438,17 @@ label, legend, fieldset {
 }
 
 
+
+// Links
+
 a {
-    color: var(--color-blossom);
+    color: var(--blossom);
     border-bottom: 1px solid;
     text-decoration: none;
 }
 
-a:visited { color: var(--color-fade); }
-a:focus, a:hover { outline: var(--color-blossom) solid 2px; }
+a:visited { color: var(--fade); }
+a:focus, a:hover { outline: var(--blossom) solid 2px; }
 
 
 // Indicate "unlocked" links
@@ -441,17 +470,28 @@ a.easylink {
   border-bottom: none;
 }
 
+
+// Tables
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2em;
+}
 
 #the-big-index {
     overflow-x: auto;
-    th:hover {
-        background: var(--color-bg-alt);
+    a { border-bottom: none; }
+    th > input { width: 100%; }
+    tr:nth-child(2) > th:hover {
+        background-color: var(--bg);
         cursor: pointer;
     }
 }
 
+
 tr:nth-child(even) {
-    background-color: var(--color-bg-alt);
+    background-color: var(--bg-alt);
 }
 
 // tr {
@@ -463,8 +503,14 @@ th {
     text-align: left;
 }
 
+// th > input {
+//     width: 100%;
+// }
+
+// .5em is insane, but it's a tap-target optimization for mobile
+//  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
 td {
-    padding: .25em .4em;
+    padding: .5em .4em;
  }
 
 article {
@@ -472,19 +518,25 @@ article {
     padding-right: 5px;
 }
 
-// ensure there's space for the sorting-arrow in the Created & Updated
-// headers
-th:last-child, th:nth-last-child(2) {
+// ensure there's space for the sorting-arrow in the Created header
+th:last-child {
     padding-right: 0;
 }
 
+
+
+// Breakpoints
 
 @media (min-width: 600px) {
     #central-column {
         margin: auto;
         max-width: 38em; // just slightly over 600px
         border-radius: .5em;
-        box-shadow: 0 0 1em black;
+        box-shadow: -2px 2px 1em black;
+    }
+    footer {
+        max-width: 38em;
+        margin: auto;
     }
     article {
         padding-left: 1em;
@@ -498,6 +550,11 @@ th:last-child, th:nth-last-child(2) {
     }
     #the-big-index tr > td:last-child {
         padding-right: .6em;
+    }
+    td {
+        // undo tap-target optimization
+        padding-top: .25em;
+        padding-bottom: .25em;
     }
 
 }

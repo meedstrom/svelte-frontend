@@ -1,11 +1,10 @@
-export const prerender = true
+// export const prerender = true
 
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
 import { posts } from '$lib/stores'
 
 export function load({ params }) {
-
     const post = get(posts).find((post) => post.permalink === params.permalink)
 
     // const dailies: Post[] = post.tags.includes('daily') ? get(posts).filter(post =>
@@ -29,10 +28,15 @@ export function load({ params }) {
         // If a known permalink wasn't found, most likely I typed the URL
         // skipping the page ID altogether, so seek a match among known slugs.
         // Love this convenience.
+        // FIXME: Does not work with prerendering, if a link doesn't already
+        // exist somewhere (such as for About and Nexus).  Can I selectively not-prerender?
         const otherPost = get(posts).find((post) => post.slug === params.permalink)
         if (otherPost)
             throw redirect(307, `/${otherPost.permalink}/${otherPost.slug}`)
         else
-            throw error(404, 'Not found')
+            throw error(404, {
+                message: 'Not found',
+                urlparam: params.permalink
+            })
     }
 }
