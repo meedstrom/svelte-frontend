@@ -3,24 +3,25 @@
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
  import { get } from 'svelte/store'
- import { posts, publicPosts, rewriteAllLinks } from '$lib/stores'
+ import { posts, publicPosts, rewriteAllLinks, allowedTags } from '$lib/stores'
  import type { Post } from '$lib/stores'
  const { subtle } = globalThis.crypto
  
  let username = ''
  let pass = ''
 
+ // Yes it's a bit... crude... but I trust my friends not to elevate their
+ // access level, same as they wouldn't peek into a physical diary ;-)
+ // Everyone else is missing a key in the first place.
+ const perms = {
+     'therapist': ['eyes_friend', 'eyes_partner', 'eyes_therapist'],
+     'partner':  ['eyes_friend', 'eyes_partner'],
+     'friend':  ['eyes_friend'],
+ }
+
  const handleSubmit = async () => {
-     // Yes it's a bit... crude... but I trust my friends not to elevate their
-     // access level, same as they wouldn't peek into a physical diary ;-)
-     // Everyone else is missing a key in the first place.
-     const perms = {
-         'therapist': ['eyes_friend', 'eyes_partner', 'eyes_therapist'],
-         'partner':  ['eyes_friend', 'eyes_partner'],
-         'friend':  ['eyes_friend'],
-     }
      if (!Object.keys(perms).includes(username)) return alert('Unknown user')
-     const allowedTags = perms[username]
+     $allowedTags = perms[username]
 
      const maybeKey = pass.trim().slice(1)
      const postKey = await subtle.importKey(
@@ -37,23 +38,22 @@
 
      const decrypted = await subtle.decrypt({ name: 'AES-GCM', iv }, postKey, ciphertext)
                                    .catch(error => console.log(error))
-     if (!decrypted) {
-         alert('The passphrase did not work (were you given an old one?)')
-         return
-     }
+     if (!decrypted) return alert('Passphrase did not work (old?)')
+
      const decompressed = await new Response(decrypted).body.pipeThrough(new DecompressionStream('gzip'))
      const plaintext = await new Response(decompressed).text()
      const privatePosts: Post[] = JSON.parse(plaintext)
 
      const subset = privatePosts.filter((post: Post) =>
-         post.tags.find(tag => allowedTags.includes(tag))
+         post.tags.find(tag => $allowedTags.includes(tag))
      )
      const newCollection = [...subset, ...get(publicPosts)].sort(
          // order most recently created on top
          (a, b) => b.created.localeCompare(a.created)
      )
 
-     $posts = rewriteAllLinks(newCollection, allowedTags)
+     // $posts = rewriteAllLinks(newCollection, allowedTags)
+     $posts = newCollection
 
      goto('/')
  }

@@ -1,3 +1,4 @@
+// TODO: import the json only in the login page
 import json from '$lib/posts.json'
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
@@ -39,6 +40,8 @@ export function rewriteAllLinks(givenPosts: Post[]
      })
 }
 
+export const allowedTags = writable([])
+
 // Track which pages the visitor has seen, and persist that
 // 
 // TODO: actually, for the sake of eww/lynx, try first to save it in a
@@ -53,7 +56,7 @@ export function rewriteAllLinks(givenPosts: Post[]
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
 const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
 
-export const seen: string[] = writable(initSeen)
+export const seen = writable(initSeen)
 
 seen.subscribe(value => {
     if (browser) window.localStorage.setItem('seen', JSON.stringify([...value]))
@@ -61,5 +64,5 @@ seen.subscribe(value => {
 
 // Even the posts need to be a store bc afaik, I can't access a prop from within
 // load() in +page.ts, props are available only to a .svelte file.
-export const publicPosts: Post[] = writable(json) // TODO: make it read-only
-export const posts: Post[] = writable(rewriteAllLinks(json))
+export const publicPosts = writable(json) // TODO: make it read-only
+export const posts = writable(rewriteAllLinks(json))

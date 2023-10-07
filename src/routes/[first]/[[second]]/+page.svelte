@@ -4,11 +4,29 @@
 <script lang="ts">
  export let data
  import { get } from 'svelte/store'
- import { seen, posts } from '$lib/stores'
+ import { seen, posts, allowedTags, privateTags } from '$lib/stores'
  import { afterNavigate } from '$app/navigation'
- afterNavigate(() =>
+ let content
+ afterNavigate(() => {
      seen.update(x => x.add(data.post.permalink))
- )
+     content = rewriteAllLinks(data.post.content, get(allowedTags))
+ })
+ //
+ //  onMount(() => {
+ //      document.getElementsByTagName
+ //  })
+ //
+ function rewriteAllLinks(content, showTags) {
+     let willUnlink = new Set([...privateTags])
+     showTags.forEach(tag => willUnlink.delete(tag))
+     const willUnlinkRegex = [...willUnlink].join('|')
+     // Expected safe regex, my html has no nested <a> tags
+     const re = new RegExp(
+         '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
+         'gs'
+     )
+     return content.replaceAll(re, '$1')
+ }
 
  function daysSince(then: string): string {
      const unixNow = new Date().getTime()
@@ -49,26 +67,28 @@
                 <a href="/{next.permalink}/{next.slug}">{next.slug} →</a>
             {/if}
         </div>
+    </div>
+    <h1 id={data.post.permalink}>{data.post.title}</h1>
+    {@html content}
+    <div class="row">
+        <div></div>
         <div>
             <small>Created
-                <time datetime={data.post.created} class="dt-published hideOnPhone">
-                    {data.post.created_fancy},
+                <time datetime={data.post.created} class="dt-published">
+                    {data.post.created_fancy}
                 </time>
-                {daysSince(data.post.created)}
+                ({daysSince(data.post.created)})
             </small>
             <br>
-            <small class="hideOnPhone">Updated
-                <time datetime={data.post.updated} class="dt-updated hideOnPhone">
-                    {data.post.updated_fancy},
+            <small>Updated
+                <time datetime={data.post.updated} class="dt-updated">
+                    {data.post.updated_fancy}
                 </time>
-                {daysSince(data.post.updated)}
+                ({daysSince(data.post.updated)})
             </small>
         </div>
     </div>
-    <h1 id={data.post.permalink}>{data.post.title}</h1>
-    {@html data.post.content}
 </article>
-
 
 <style>
  .hideOnPhone {

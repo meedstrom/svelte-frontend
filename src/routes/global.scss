@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import 'normalize.css/normalize.css';
+@import './export-colors-doom-zenburn.scss';
 
 // Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
 // Check on https://coolors.co/contrast-checker
@@ -282,6 +283,7 @@ details > details {
     padding-top: .8em;
     padding-left: 1.5em;
     @media (max-width: 599px) { padding-left: .8em; }
+    padding-right: 0.5em;
     border-radius: 3px;
     box-shadow: -2px 2px 7px black;
 }
@@ -358,12 +360,9 @@ code, kbd, samp {
     white-space: pre-wrap;
 }
 
-// Code blocks exported from Org-babel.  Get foreground and background from the
-// Emacs theme.
+// Code blocks exported from Org-babel.  See also ./export-colors-doom-zenburn.scss.
 pre.src {
     padding: 6px 2px;
-    color: #FAFFF6;
-    background: #172030;
 }
 
 /* Buttons, forms and input */
@@ -494,9 +493,9 @@ tr:nth-child(even) {
     background-color: var(--bg-alt);
 }
 
-// tr {
-//     border-bottom: 1px solid $color-fade;
-// }
+tr:hover {
+    filter: invert(1);
+}
 
 th {
     padding: .75em .25em;
