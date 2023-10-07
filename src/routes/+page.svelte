@@ -28,8 +28,12 @@
          value: v => v.title,
          sortable: true,
          // case-insensitive search
-         // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: v => `<a class="${v.hidden}" href="${v.permalink}/${v.slug}">${v.title}</a>`,
+         searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
+         renderValue: v => {
+             if (v.hidden)
+                 return `<a class="${v.hidden}" href="${v.permalink}/${v.slug}">${v.title}</a>`
+             else return `<a href="${v.permalink}/${v.slug}">${v.title}</a>`
+         },
          parseHTML: true,
      },
      {
@@ -50,17 +54,12 @@
          value: v => v.created.replaceAll('-', '‑'),
          sortable: true,
      },
-     {
-         key: "updated",
-         title: "Updated",
-         value: v => v.updated.replaceAll('-', '‑'),
-         sortable: true,
-     }
  ]
 
 </script>
 <svelte:head>
 	<title>All posts</title>
+    <meta name="description" content="List of blog posts.">
 </svelte:head>
 
 <div id="the-big-index">
