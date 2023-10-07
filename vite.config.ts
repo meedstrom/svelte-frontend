@@ -3,5 +3,6 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [sveltekit()],
-    assetsInclude: ['**/*.gz', '**/*.bin']
+    assetsInclude: ['**/*.bin'],
+    build: { sourcemap: true, },
 });
