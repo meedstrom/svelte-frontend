@@ -1,5 +1,5 @@
 <script lang="ts">
- import { postsMetadata } from '$lib/stores'
+ import { posts, postsMetadata } from '$lib/stores'
  import type { Post } from '$lib/stores'
  import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
@@ -17,11 +17,10 @@
          sortable: true,
          // case-insensitive search
          searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: v => {
-             if (v.hidden)
-                 return `<a class="${v.hidden}" href="${v.permalink}/${v.slug}">${v.title}</a>`
-             else return `<a href="${v.permalink}/${v.slug}">${v.title}</a>`
-         },
+         renderValue: v => 
+             '<a' +
+              (v.hidden ? ` class="${v.hidden}"` : '') +
+             ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {
@@ -44,9 +43,28 @@
      },
  ]
 
- // TODO: is this recalculated every access, or does Svelte cache the result?
- $: rows = []
- ;(async () => rows = get(postsMetadata).filter(post => !post.tags.includes('stub')))()
+
+ const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
+ let rows = copy.filter(post => !post.tags.includes('stub'))
+                .map(post => {
+                    if (get(posts).length > 0)
+                    post.permalink = `unlocked/${post.permalink}`
+                    return post
+                })
+
+
+ //
+ //  // TODO: is this recalculated every access, or does Svelte cache the result?
+ //  $: rows = []
+ //  ;(async () => {
+ //      const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
+ //      rows = copy.filter(post => !post.tags.includes('stub'))
+ //                 .map(post => {
+ //                     post.permalink = `/hidden/{$post.permalink}`
+ //                     return post
+ //                 })
+ //  })()
+ //
 
 </script>
 <svelte:head>

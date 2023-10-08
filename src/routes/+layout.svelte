@@ -1,18 +1,15 @@
 <script lang="ts">
  import './global.scss'
- // TODO: avoid importing posts, so users who don't log in don't need to download the json...
- // I guess it could work if the root page uses a separate variable that just contains
- // the metadata but not the .content.
  import { seen, postsMetadata } from '$lib/stores'
  let theme = 'auto'
  const colors = [
      "white",
-     // "earth",
      "tan",
      "pink",
+     // "earth",
      // "green",
-     "dark-red",
      // "dark-green",
+     "dark-red",
      "dark-amber",
      "auto"
  ]
@@ -26,7 +23,7 @@
                 <a href="/about">About</a>
                 <a href="/nexus">Nexus</a>
                 <a href="/random">Random</a>
-                <!-- Pre-sized to eliminate CLS -->
+                <!-- Pre-size to eliminate CLS -->
                 <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {$postsMetadata.length})</a>
             </nav>
         </header>
