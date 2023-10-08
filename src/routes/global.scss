@@ -1,6 +1,5 @@
 @charset "utf-8";
-// @import 'normalize.css/normalize.css';
-@import 'csstools/normalize.css';
+@import '@csstools/normalize.css/normalize.css';
 @import './export-colors-doom-zenburn.scss';
 
 // Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
@@ -136,6 +135,7 @@ code, pre {
 }
 
 body {
+    margin: 0;
     line-height: 1.35;
     text-rendering: optimizeLegibility;
 }
@@ -369,6 +369,7 @@ pre.src {
 
 input, textarea {
     border: 1px solid var(--text);
+    font-size: 100%;
 
     &:focus {
         border: 1px solid var(--blossom);
@@ -385,6 +386,7 @@ textarea {
     text-align: center;
     text-decoration: none;
     white-space: nowrap;
+    font-size: 100%;
 
     background-color: var(--blossom);
     color: var(--bg);
