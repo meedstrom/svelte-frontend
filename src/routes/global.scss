@@ -43,6 +43,7 @@
     --fade    : #502;
     --text    : #000;
     --bg      : #dca;
+    // --bg      : #b96;
     --bg-alt  : #cba;
 }
 
@@ -186,12 +187,10 @@ header > nav {
          label {
              background-color: var(--bg);
              padding: 10px;
-             margin: 0;
+             margin: 3px;
              cursor: pointer;
-             // display: inline;
-
-             border-style: groove;
-             border-width: 3px;
+             // border-style: groove;
+             // border-width: 3px;
 
          }
          // /* Hide the radio buttons */
@@ -205,7 +204,7 @@ header > nav {
 
 
          //  Highlight currently enabled theme
-         .theme-true, label:focus-within { border-color: var(--fade); }
+         .theme-true, label:focus-within { outline: var(--fade) 2px solid; }
 
          label:hover {
              outline: var(--blossom) 2px solid;
@@ -235,11 +234,11 @@ h1 { font-size: 1.7em; }
         margin-bottom: .3em;
         margin-top: .3em;
     }
-    h2 { margin-left: 0; }
-    h3 { margin-left: 1em; }
-    h4 { margin-left: 2em; }
-    h5 { margin-left: 3em; }
-    h6 { margin-left: 4em; }
+    h2 { margin-left: 1em; }
+    h3 { margin-left: 2em; }
+    h4 { margin-left: 4em; }
+    h5 { margin-left: 6em; }
+    h6 { margin-left: 8em; }
 }
 
 summary {
@@ -488,14 +487,23 @@ table {
     }
 }
 
-
+// Zebra striping
 tr:nth-child(even) {
     background-color: var(--bg-alt);
 }
 
+// Because of the zebra striping, I can't just swap out the bg color. It could
+// be ok if I also changed the bg color on the row above and below, but there's
+// no CSS selector to reach the one above the cursor until Firefox implements
+// tr:has(+ tr:hover).
 tr:hover {
-    filter: invert(1);
+    // No go, I don't like it.  Maybe if the entire row were clickable.
+    // outline: 1px solid var(--fade);
 }
+
+// #the-big-index:focus-within  tr {
+//     background-color: var(--bg) !important;
+// }
 
 th {
     padding: .75em .25em;
@@ -515,6 +523,7 @@ td {
 article {
     padding-left: 5px;
     padding-right: 5px;
+    padding-bottom: 5px;
 }
 
 // ensure there's space for the sorting-arrow in the Created header

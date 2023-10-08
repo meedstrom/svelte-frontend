@@ -2,10 +2,10 @@ export const prerender = true
 
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
-import { posts } from '$lib/stores'
+import { publicPosts } from '$lib/stores'
 
 export function load({ params }) {
-    const post = get(posts).find((post) => post.permalink === params.permalink)
+    const post = get(publicPosts).find((post) => post.permalink === params.permalink)
 
     // const dailies: Post[] = post.tags.includes('daily') ? get(posts).filter(post =>
     //     post.tags.includes('daily')) : null
@@ -19,9 +19,5 @@ export function load({ params }) {
         return {
             post: post,
         }
-    else
-        throw error(404, {
-            message: 'Not found',
-            urlparam: params.permalink
-        })
+    else throw error(404, 'Not found')
 }

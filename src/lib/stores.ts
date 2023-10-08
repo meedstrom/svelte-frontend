@@ -1,4 +1,3 @@
-// TODO: import the json only in the login page
 import json from '$lib/posts.json'
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
@@ -22,28 +21,20 @@ export const privateTags = new Set(
      ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
 )
 
-export function rewriteAllLinks(givenPosts: Post[]
-                                , allowedTags: string[] | undefined) {
-     if (!givenPosts || givenPosts.length === 0) return
-     let willUnlink = new Set([...privateTags])
-     // JS doesn't have set-difference methods yet, it's coming
-     if (allowedTags) allowedTags.forEach(tag => willUnlink.delete(tag))
-     const willUnlinkRegex = [...willUnlink].join('|')
-     // My html has no nested <a> tags, so this regex is satisfactory
-     const re = new RegExp(
-          '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
-          'gs'
-     )
-     return givenPosts.map(post => {
-          post.content = post.content.replaceAll(re, '$1')
-          return post
-     })
-}
+let initMetadata = JSON.parse(JSON.stringify(json))
+// console.log(initMetadata)
+initMetadata = initMetadata.map(post => {
+     post.content = 'Error, sorry'
+     return post
+})
 
 export const allowedTags = writable([])
+export const publicPosts = writable(json)
+export const posts = writable([])
+export const postsMetadata = writable(initMetadata)
 
 // Track which pages the visitor has seen, and persist that
-// 
+//
 // TODO: actually, for the sake of eww/lynx, try first to save it in a
 // cookie... then if JS is available, stop trying to use a cookie, because it's
 // slow.  We will have to allocate around 2-3 cookies, bc cookies max at 4kb
@@ -51,8 +42,13 @@ export const allowedTags = writable([])
 // set a tracking id and let the server track who has seen what, but...  Or we
 // can try to compress the array, but given the random characters it may not be
 // so compressible.  Anyway, there's an interesting criterion for how long
-// should be the page IDs: sufficiently few characters that ~1000 IDs add up
-// to less than 4kB.
+// should be the page IDs: sufficiently few characters that ~2000 IDs add up to
+// less than 4kB.
+//
+// In theory, 4-character IDs would lead me to expect around 1
+// page ID collision per 1000 pages, manageable.  Then if I encode the array as
+// a string sans any quotes signs or commas, and compress or base64-encode it,
+// around 1300 IDs should fit comfortably in 1 cookie.
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
 const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
 
@@ -61,8 +57,3 @@ export const seen = writable(initSeen)
 seen.subscribe(value => {
     if (browser) window.localStorage.setItem('seen', JSON.stringify([...value]))
 })
-
-// Even the posts need to be a store bc afaik, I can't access a prop from within
-// load() in +page.ts, props are available only to a .svelte file.
-export const publicPosts = writable(json) // TODO: make it read-only
-export const posts = writable(rewriteAllLinks(json))

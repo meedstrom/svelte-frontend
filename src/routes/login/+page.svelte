@@ -1,9 +1,8 @@
 <script lang="ts">
- export let data // has extraBlob
+ export let data // has extraBlob and publicPosts
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
- import { get } from 'svelte/store'
- import { posts, publicPosts, rewriteAllLinks, allowedTags } from '$lib/stores'
+ import { posts, postsMetadata, allowedTags } from '$lib/stores'
  import type { Post } from '$lib/stores'
  const { subtle } = globalThis.crypto
  
@@ -47,13 +46,19 @@
      const subset = privatePosts.filter((post: Post) =>
          post.tags.find(tag => $allowedTags.includes(tag))
      )
-     const newCollection = [...subset, ...get(publicPosts)].sort(
+     const newCollection = [...subset, ...data.publicPosts].sort(
          // order most recently created on top
          (a, b) => b.created.localeCompare(a.created)
      )
 
-     // $posts = rewriteAllLinks(newCollection, allowedTags)
      $posts = newCollection
+
+     let newMetadata = JSON.parse(JSON.stringify(newCollection))
+     newMetadata = newMetadata.map(post => {
+         post.content = null
+         return post
+     })
+     $postsMetadata = newMetadata
 
      goto('/')
  }

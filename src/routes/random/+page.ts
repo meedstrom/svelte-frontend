@@ -1,12 +1,11 @@
 export const prerender = false
 import { redirect } from '@sveltejs/kit'
 import { get } from 'svelte/store'
-import { posts, seen } from '$lib/stores'
+import { postsMetadata, seen } from '$lib/stores'
 
 export function load() {
     let links = new Set<string>(
-        // Filter out stub pages
-        get(posts)
+        get(postsMetadata)
             .filter(x => !x.tags.includes('stub'))
             .map(x => x.permalink)
     )
@@ -27,7 +26,7 @@ export function load() {
     }
     const unseen = [...links] // convert to array
     const randomPermalink = unseen[Math.floor(Math.random() * unseen.length)]
-    const randomPost = get(posts).find(x => x.permalink === randomPermalink)
+    const randomPost = get(postsMetadata).find(x => x.permalink === randomPermalink)
     const slug = randomPost ? randomPost.slug : ''
     throw redirect(307, `/${randomPermalink}/${slug}`)
 }

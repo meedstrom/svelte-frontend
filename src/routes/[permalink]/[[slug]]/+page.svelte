@@ -5,18 +5,39 @@
  export let data
  import { get } from 'svelte/store'
  import { seen, posts, allowedTags, privateTags } from '$lib/stores'
- import { afterNavigate } from '$app/navigation'
- let content
+ import { page } from '$app/stores'
+ import { onNavigate, afterNavigate } from '$app/navigation'
+ import { onMount } from 'svelte'
+ import { browser } from '$app/environment'
  afterNavigate(() => {
      seen.update(x => x.add(data.post.permalink))
-     content = rewriteAllLinks(data.post.content, get(allowedTags))
+
+
  })
- //
- //  onMount(() => {
- //      document.getElementsByTagName
- //  })
- //
- function rewriteAllLinks(content, showTags) {
+
+ // If visitor has logged in to unlock some hidden posts, then renew the DOM to
+ // activate any links that may point to a hidden post.  In the prerendered
+ // HTML, such links are absent.
+ onNavigate(() => {
+     // console.log('posts:')
+     // console.log(get(posts))
+     // console.log('allowedTags:')
+     // console.log(get(allowedTags))
+     // console.log('data.post.permalink:')
+     // console.log(data.post.permalink)
+
+          if (browser && get(posts) && get(allowedTags).length > 0) {
+         let elm = document.getElementById('contentDiv')
+         elm.innerHTML = stripLinksToHidden(
+             get(posts).find(post => post.permalink === $page.params.permalink).content,
+             get(allowedTags)
+         )
+          }
+
+
+ })
+
+ function stripLinksToHidden(markup, showTags) {
      let willUnlink = new Set([...privateTags])
      showTags.forEach(tag => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
@@ -25,7 +46,7 @@
          '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
          'gs'
      )
-     return content.replaceAll(re, '$1')
+     return markup.replaceAll(re, '$1')
  }
 
  function daysSince(then: string): string {
@@ -52,10 +73,13 @@
 </script>
 
 <svelte:head>
-	<title>{data.post.title}</title>
+    <title>{data.post.title}</title>
+    <!-- TODO: Grab a description from data.post.subtitle when available -->
+    <meta name="description" content="A note.">
 </svelte:head>
 
 <article>
+    {#if isDaily}
     <div class="row">
         <div>
             {#if prev}
@@ -68,8 +92,11 @@
             {/if}
         </div>
     </div>
+    {/if}
     <h1 id={data.post.permalink}>{data.post.title}</h1>
-    {@html content}
+    <div id="contentDiv">
+    {@html stripLinksToHidden(data.post.content, [])}
+    </div>
     <div class="row">
         <div></div>
         <div>
@@ -89,13 +116,3 @@
         </div>
     </div>
 </article>
-
-<style>
- .hideOnPhone {
-     @media (max-width: 600px) {
-         display: none;
-     }
- }
-
- /* h1 { margin-top: 0; } */
-</style>

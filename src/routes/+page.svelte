@@ -1,20 +1,7 @@
 <script lang="ts">
- import { posts } from '$lib/stores'
- import type { Post } from '$lib/stores'
+ import { postsMetadata } from '$lib/stores'
  import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
-
- // make an actual new variable, not just a new reference
- // const newPosts = JSON.parse(JSON.stringify(get(posts)))
- //
- // $: postsForTable =
- //         newPosts.map((post: Post) => {
- //         // post.tags.find(tag => console.log(privateTags.has(tag)))
- //         if (post.locked === 'true') {
- //             post.title = `${post.title}🗝`
- //         }
- //         return post
- //     })
 
  // TODO: switch to https://github.com/mattiash/svelte-tablesort
 
@@ -64,7 +51,7 @@
 
 <div id="the-big-index">
     <SvelteTable columns="{columns}"
-                 rows="{get(posts).filter(post => !post.tags.includes('stub'))}"
+                 rows="{get(postsMetadata).filter(post => !post.tags.includes('stub'))}"
                  sortBy="created"
                  sortOrder=-1
     >
