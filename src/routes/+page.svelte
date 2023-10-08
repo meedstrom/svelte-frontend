@@ -1,5 +1,6 @@
 <script lang="ts">
  import { postsMetadata } from '$lib/stores'
+ import type { Post } from '$lib/stores'
  import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
 
@@ -43,6 +44,10 @@
      },
  ]
 
+ // TODO: is this recalculated every access, or does Svelte cache the result?
+ $: rows = []
+ ;(async () => rows = get(postsMetadata).filter(post => !post.tags.includes('stub')))()
+
 </script>
 <svelte:head>
 	<title>All posts</title>
@@ -51,7 +56,7 @@
 
 <div id="the-big-index">
     <SvelteTable columns="{columns}"
-                 rows="{get(postsMetadata).filter(post => !post.tags.includes('stub'))}"
+                 rows="{rows}"
                  sortBy="created"
                  sortOrder=-1
     >
