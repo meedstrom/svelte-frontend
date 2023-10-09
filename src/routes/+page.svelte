@@ -43,7 +43,7 @@
      },
  ]
 
-
+// TODO: just pre-calc this in encrypt10.js, too... and then update in the login page
  const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
  let rows = copy.filter(post => !post.tags.includes('stub'))
                 .map(post => {

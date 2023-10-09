@@ -1,3 +1,5 @@
+// An old redirect because pages used to start with /posts (until Sep 2023)
+
 export const prerender = false
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'

@@ -1,3 +1,6 @@
+// TODO: pre-generate postsMetadata in my encrypt10.js.  that way, we don't
+// need to generate it here, and that may do the trick for letting the visitor
+// avoid downloading the JSON.
 import json from '$lib/posts.json'
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
@@ -28,6 +31,7 @@ initMetadata = initMetadata.map(post => {
      return post
 })
 
+// export const slugAssocs = new Map()
 export const allowedTags = writable([])
 export const publicPosts = writable(json)
 export const posts = writable([])
