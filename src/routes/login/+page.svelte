@@ -1,10 +1,14 @@
 <script lang="ts">
- export let data // has extraBlob and publicPosts
+ export let data // has extraBlob
+ // TODO: to avoid sveltekit's data preloading (which usually we like), load it
+ // here instead of in +page.ts.
+ // import extra from '$lib/privPosts.bin'
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
- import { posts, postsMetadata, allowedTags } from '$lib/stores'
- import type { Post } from '$lib/stores'
- const { subtle } = globalThis.crypto
+ import { privMeta, pubMeta, allowedTags, sitemapRows } from '$lib/stores'
+ import { get } from 'svelte/store'
+ import { privPosts } from '$lib/postContents'
+ import origPrivMeta from '$lib/privMeta.json'
  
  let username = ''
  let pass = ''
@@ -23,7 +27,7 @@
      $allowedTags = perms[username]
 
      const maybeKey = pass.trim().slice(1)
-     const postKey = await subtle.importKey(
+     const postKey = await crypto.subtle.importKey(
          'raw'
          ,new Uint8Array(Buffer.from(maybeKey, 'base64'))
          ,'AES-GCM'
@@ -35,39 +39,41 @@
      const iv = new Uint8Array(data.extraBlob.slice(0, 16))
      const ciphertext = new Uint8Array(data.extraBlob.slice(16))
 
-     const decrypted = await subtle.decrypt({ name: 'AES-GCM', iv }, postKey, ciphertext)
-                                   .catch(error => console.log(error))
+     const decrypted = await crypto.subtle.decrypt(
+         { name: 'AES-GCM', iv }, postKey, ciphertext
+     ).catch(error => console.log(error))
      if (!decrypted) return alert('Passphrase did not work (old?)')
 
-     const decompressed = await new Response(decrypted).body.pipeThrough(new DecompressionStream('gzip'))
+     const decompressed = await new Response(decrypted)
+         .body.pipeThrough(new DecompressionStream('gzip'))
      const plaintext = await new Response(decompressed).text()
-     const privatePosts: Post[] = JSON.parse(plaintext)
+     let unlocked = new Map(Object.entries(JSON.parse(plaintext)))
 
-     const subset = privatePosts.filter((post: Post) =>
-         post.tags.find(tag => $allowedTags.includes(tag))
-     )
-     const newCollection = [...subset, ...data.publicPosts].sort(
-         // order most recently created on top
-         (a, b) => b.created.localeCompare(a.created)
-     )
+     $privMeta = origPrivMeta.filter(post => post.tags.find(
+         tag => $allowedTags.includes(tag)
+     ))
 
-     $posts = newCollection
-
-     let newMetadata = JSON.parse(JSON.stringify(newCollection))
-     newMetadata = newMetadata.map(post => {
-         post.content = null
-         return post
+     unlocked.forEach((_, id, map) => {
+         if (!$privMeta.find(post => post.permalink === id))
+             map.delete(id)
      })
-     $postsMetadata = newMetadata
+
+     $privPosts = unlocked
+     // $privMeta = origPrivMeta.filter(post => unlocked.has(post.permalink))
+
+     // order most recently created on top
+     $sitemapRows = [...get(pubMeta), ...$privMeta]
+         .filter(post => !post.tags.includes('stub'))
+         .sort((a, b) => b.created.localeCompare(a.created))
 
      goto('/')
  }
 </script>
 <svelte:head>
     <title>Log in</title>
+    <meta name="description" content="Log-in page">
 </svelte:head>
 
-<main>
     <form on:submit|trusted|self|preventDefault={handleSubmit}>
         <label>User
             <input bind:value={username} type="text" autofocus />
@@ -79,7 +85,7 @@
 
         <button type="submit">Unlock extra posts</button>
     </form>
-</main>
+
 <style>
  form {
      margin-left: auto;

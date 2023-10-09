@@ -1,6 +1,5 @@
 <script lang="ts">
- import { posts, postsMetadata } from '$lib/stores'
- import type { Post } from '$lib/stores'
+ import { sitemapRows } from '$lib/stores'
  import { get } from 'svelte/store'
  import SvelteTable from "svelte-table"
 
@@ -17,9 +16,8 @@
          sortable: true,
          // case-insensitive search
          searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: v => 
-             '<a' +
-              (v.hidden ? ` class="${v.hidden}"` : '') +
+         renderValue: v =>
+              (v.hidden ? `<a class="${v.hidden}"` : '<a') +
              ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
@@ -44,14 +42,14 @@
  ]
 
 // TODO: just pre-calc this in encrypt10.js, too... and then update in the login page
- const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
- let rows = copy.filter(post => !post.tags.includes('stub'))
-                .map(post => {
-                    if (get(posts).length > 0)
-                    post.permalink = `unlocked/${post.permalink}`
-                    return post
-                })
-
+ // const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
+ // let rows = copy.filter(post => !post.tags.includes('stub'))
+ //                .map(post => {
+ //                    if (get(privPosts).size > 0)
+ //                    post.permalink = `unlocked/${post.permalink}`
+ //                    return post
+ //                })
+ //
 
  //
  //  // TODO: is this recalculated every access, or does Svelte cache the result?
@@ -74,7 +72,7 @@
 
 <div id="the-big-index">
     <SvelteTable columns="{columns}"
-                 rows="{rows}"
+                 rows="{get(sitemapRows)}"
                  sortBy="created"
                  sortOrder=-1
     >

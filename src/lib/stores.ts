@@ -1,10 +1,14 @@
 // TODO: pre-generate postsMetadata in my encrypt10.js.  that way, we don't
 // need to generate it here, and that may do the trick for letting the visitor
 // avoid downloading the JSON.
-import json from '$lib/posts.json'
+import pubMetaJSON from '$lib/pubMeta.json'
+// import privMetaJSON from '$lib/privMeta.json'
+import initRows from '$lib/initRows.json'
+import pubSlugAssocsJSON from '$lib/pubSlugAssocs.json'
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
 
+// DEPRECATED
 export type Post = {
      slug: string
      permalink: string
@@ -24,18 +28,14 @@ export const privateTags = new Set(
      ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
 )
 
-let initMetadata = JSON.parse(JSON.stringify(json))
-// console.log(initMetadata)
-initMetadata = initMetadata.map(post => {
-     post.content = 'Error, sorry'
-     return post
-})
-
 // export const slugAssocs = new Map()
+export const sitemapRows = writable(initRows)
 export const allowedTags = writable([])
-export const publicPosts = writable(json)
-export const posts = writable([])
-export const postsMetadata = writable(initMetadata)
+export const pubMeta = writable(pubMetaJSON)
+export const privMeta = writable([])
+
+const pubSlugAssocsMap = new Map(Object.entries(pubSlugAssocsJSON))
+export const pubSlugAssocs = writable(pubSlugAssocsMap)
 
 // Track which pages the visitor has seen, and persist that
 //

@@ -1,30 +1,25 @@
 export const prerender = false
 export const ssr = false
+
 import { get } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
-import { posts, postsMetadata } from '$lib/stores'
+import { pubMeta, privMeta, allowedTags } from '$lib/stores'
+import { pubPosts, privPosts } from '$lib/postContents'
 
 export function load({ params }) {
-    // User is logged in
-    if (get(posts).length > 0) {
-        const post =
-            get(posts).find((post) => params.permalink === post.permalink) ??
-            get(posts).find((post) => params.permalink === post.slug) ??
-            get(posts).find((post) => params.slug === post.slug)
-        if (post) {
-            // console.log('post found')
-            // console.log(post)
-            return { post }
+    const post =
+        get(pubMeta).find((post) => params.permalink === post.permalink) ??
+        get(pubMeta).find((post) => params.permalink === post.slug) ??
+        get(privMeta).find((post) => params.permalink === post.permalink) ??
+        get(privMeta).find((post) => params.permalink === post.slug)
+    if (post) {
+        // User is logged in
+        if (get(allowedTags).length > 0) {
+            let content = get(pubPosts).get(post.permalink) ?? get(privPosts).get(post.permalink)
+            return { post, content }
         }
-        else throw error(404, 'Not found')
+        // User is not logged in
+        else throw redirect(307, `/${post.permalink}/${post.slug}`)
     }
-    // User is not logged in
-    else {
-        const post =
-            get(postsMetadata).find((post) => params.permalink === post.permalink) ??
-            get(postsMetadata).find((post) => params.permalink === post.slug) ??
-            get(postsMetadata).find((post) => params.slug === post.slug)
-        if (post) throw redirect(307, `/${post.permalink}/${post.slug}`)
-        else throw error(404, 'Not found')
-    }
+    else throw error(404, 'Not found')
 }

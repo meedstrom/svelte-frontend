@@ -1,18 +1,17 @@
 <script lang="ts">
  import './global.scss'
- import { seen, postsMetadata } from '$lib/stores'
+ import { seen, pubMeta, privMeta } from '$lib/stores'
+ import { get } from 'svelte/store'
  let theme = 'auto'
  const colors = [
      "white",
      "tan",
      "pink",
-     // "earth",
-     // "green",
-     // "dark-green",
      "dark-red",
      "dark-amber",
      "auto"
  ]
+ $: postCount = get(pubMeta).length + $privMeta.length
 </script>
 
 <div id="theme-container" class="theme-{theme}">
@@ -24,7 +23,7 @@
                 <a href="/nexus">Nexus</a>
                 <a href="/random">Random</a>
                 <!-- Pre-size to eliminate CLS -->
-                <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {$postsMetadata.length})</a>
+                <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
             </nav>
         </header>
 
