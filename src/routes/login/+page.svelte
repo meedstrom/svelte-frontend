@@ -2,14 +2,20 @@
  export let data // has extraBlob
  // TODO: to avoid sveltekit's data preloading (which usually we like), load it
  // here instead of in +page.ts.
- // import extra from '$lib/privPosts.bin'
+ import extra from '$lib/privPosts.bin'
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
  import { privMeta, pubMeta, allowedTags, sitemapRows } from '$lib/stores'
  import { get } from 'svelte/store'
  import { privPosts } from '$lib/postContents'
+ import { onMount } from 'svelte'
  import origPrivMeta from '$lib/privMeta.json'
- 
+
+ // let extraBlob
+ //
+ // onMount(() =>
+ // fetch(extra).then((x: Response) => extraBlob = x.arrayBuffer()))
+
  let username = ''
  let pass = ''
 
@@ -35,6 +41,8 @@
          ,['encrypt', 'decrypt']
      ).catch(error => alert(error))
      if (!postKey) return
+
+     // const extraBlob = await fetch(extra).then((x: Response) => x.arrayBuffer())
 
      const iv = new Uint8Array(data.extraBlob.slice(0, 16))
      const ciphertext = new Uint8Array(data.extraBlob.slice(16))

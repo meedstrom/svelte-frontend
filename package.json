@@ -21,7 +21,6 @@
 		"@csstools/normalize.css": "github:csstools/normalize.css",
 		"@sveltejs/adapter-node": "^1.3.1",
 		"buffer": "^6.0.3",
-		"normalize.css": "^8.0.1",
 		"svelte-table": "^0.6.1"
 	}
 }

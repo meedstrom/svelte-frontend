@@ -15,7 +15,9 @@
          value: v => v.title,
          sortable: true,
          // case-insensitive search
-         searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
+         // NOTE: the result lacks a label element
+         // is there a searchLabel or some such option?
+         // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
          renderValue: v =>
               (v.hidden ? `<a class="${v.hidden}"` : '<a') +
              ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
@@ -26,22 +28,25 @@
          title: "Links",
          value: v => v.links,
          sortable: true,
+         headerClass: 'links-header',
      },
      {
          key: "wordcount",
          title: "Words",
          value: v => v.wordcount,
          sortable: true,
+         headerClass: 'words-header',
      },
      {
          key: "created",
          title: "Created",
-         value: v => v.created.replaceAll('-', '‑'),
+         value: v => v.created,
+         renderValue: v => v.created_fancy.replaceAll('-', '‑'),
          sortable: true,
      },
  ]
 
-// TODO: just pre-calc this in encrypt10.js, too... and then update in the login page
+ // TODO: just pre-calc this in encrypt10.js, too... and then update in the login page
  // const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
  // let rows = copy.filter(post => !post.tags.includes('stub'))
  //                .map(post => {

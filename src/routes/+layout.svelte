@@ -2,6 +2,7 @@
  import './global.scss'
  import { seen, pubMeta, privMeta } from '$lib/stores'
  import { get } from 'svelte/store'
+ // TODO: apply background-color to body too, due to elastic scroll
  let theme = 'auto'
  const colors = [
      "white",
@@ -11,6 +12,7 @@
      "dark-amber",
      "auto"
  ]
+
  $: postCount = get(pubMeta).length + $privMeta.length
 </script>
 
