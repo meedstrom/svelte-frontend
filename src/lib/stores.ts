@@ -16,7 +16,7 @@ export type Post = {
      links: number
      tags: string[]
      hidden: string | null
-     content: string
+     description: string | null
  }
 
 export const privateTags = new Set(
@@ -24,10 +24,10 @@ export const privateTags = new Set(
 )
 
 // export const slugAssocs = new Map()
-export const sitemapRows = writable(initRows)
+export const bigIndexRows = writable(initRows)
 export const allowedTags = writable([])
-export const pubMeta = writable(pubMetaJSON)
-export const privMeta = writable([])
+export const pubMeta = writable(new Map(Object.entries(pubMetaJSON)))
+export const privMeta = writable(new Map())
 
 // const pubSlugAssocsMap = new Map(Object.entries(pubSlugAssocsJSON))
 // export const pubSlugAssocs = writable(pubSlugAssocsMap)

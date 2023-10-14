@@ -2,11 +2,11 @@
  export let data // has extraBlob
  // TODO: to avoid sveltekit's data preloading (which usually we like), load it
  // here instead of in +page.ts.
- import extra from '$lib/privPosts.bin'
+ // import extra from '$lib/privPosts.bin'
  import { Buffer } from 'buffer'
  import { goto } from '$app/navigation'
- import { privMeta, pubMeta, allowedTags, sitemapRows } from '$lib/stores'
- import { get } from 'svelte/store'
+ import { privMeta, pubMeta, allowedTags, bigIndexRows } from '$lib/stores'
+ import { get as stored } from 'svelte/store'
  import { privPosts } from '$lib/postContents'
  import { onMount } from 'svelte'
  import origPrivMeta from '$lib/privMeta.json'
@@ -57,20 +57,21 @@
      const plaintext = await new Response(decompressed).text()
      let unlocked = new Map(Object.entries(JSON.parse(plaintext)))
 
-     $privMeta = origPrivMeta.filter(post => post.tags.find(
-         tag => $allowedTags.includes(tag)
-     ))
-
-     unlocked.forEach((_, id, map) => {
-         if (!$privMeta.find(post => post.permalink === id))
+     $privMeta = new Map(Object.entries(origPrivMeta))
+     $privMeta.forEach((post, id, map) => {
+         if (!post.tags.find(tag => $allowedTags.includes(tag))) {
              map.delete(id)
+             unlocked.delete(id)
+         }
      })
 
      $privPosts = unlocked
-     // $privMeta = origPrivMeta.filter(post => unlocked.has(post.permalink))
+     console.log(`Unlocked ${$privPosts.size} posts`)
 
-     // order most recently created on top
-     $sitemapRows = [...get(pubMeta), ...$privMeta]
+     // Order recently created on top.  This is not just for the table, which
+     // can sort itself anyway, but it helps finding the next and previous page
+     // in a series, such as the series of daily-pages.
+     $bigIndexRows = [...stored(pubMeta).values(), ...$privMeta.values()]
          .filter(post => !post.tags.includes('stub'))
          .sort((a, b) => b.created.localeCompare(a.created))
 

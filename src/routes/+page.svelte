@@ -1,12 +1,10 @@
 <script lang="ts">
- import { sitemapRows } from '$lib/stores'
- import { get } from 'svelte/store'
+ import { bigIndexRows } from '$lib/stores'
+ import { get as stored } from 'svelte/store'
  import SvelteTable from "svelte-table"
 
- // TODO: switch to https://github.com/mattiash/svelte-tablesort
-
- // well, the search bar is good for people who don't know how to search a page
- // in their phones...
+ // TODO: compare performance with https://github.com/mattiash/svelte-tablesort
+ // ... or just drop in a "datagrid" library
 
  const columns = [
      {
@@ -46,40 +44,18 @@
      },
  ]
 
- // TODO: just pre-calc this in encrypt10.js, too... and then update in the login page
- // const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
- // let rows = copy.filter(post => !post.tags.includes('stub'))
- //                .map(post => {
- //                    if (get(privPosts).size > 0)
- //                    post.permalink = `unlocked/${post.permalink}`
- //                    return post
- //                })
- //
-
- //
- //  // TODO: is this recalculated every access, or does Svelte cache the result?
- //  $: rows = []
- //  ;(async () => {
- //      const copy = JSON.parse(JSON.stringify(get(postsMetadata)))
- //      rows = copy.filter(post => !post.tags.includes('stub'))
- //                 .map(post => {
- //                     post.permalink = `/hidden/{$post.permalink}`
- //                     return post
- //                 })
- //  })()
- //
-
 </script>
 <svelte:head>
 	<title>All posts</title>
     <meta name="description" content="List of blog posts.">
 </svelte:head>
 
-<div id="the-big-index">
+<div id="the-big-index"
+     data-sveltekit-preload-data="off"
+     data-sveltekit-preload-code="off">
     <SvelteTable columns="{columns}"
-                 rows="{get(sitemapRows)}"
+                 rows="{stored(bigIndexRows)}"
                  sortBy="created"
-                 sortOrder=-1
-    >
+                 sortOrder=-1>
     </SvelteTable>
 </div>

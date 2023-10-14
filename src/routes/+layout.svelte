@@ -1,7 +1,7 @@
 <script lang="ts">
  import './global.scss'
  import { seen, pubMeta, privMeta } from '$lib/stores'
- import { get } from 'svelte/store'
+ import { get as stored } from 'svelte/store'
  // TODO: apply background-color to body too, due to elastic scroll
  let theme = 'auto'
  const colors = [
@@ -13,7 +13,7 @@
      "auto"
  ]
 
- $: postCount = get(pubMeta).length + $privMeta.length
+ $: postCount = stored(pubMeta).size + $privMeta.size
 </script>
 
 <div id="theme-container" class="theme-{theme}">
@@ -69,7 +69,8 @@
  #theme-picker {
      display: flex;
      justify-content: center;
-     flex-wrap: wrap-reverse;
-     flex-direction: row-reverse;
+     flex-wrap: wrap;
+     /* flex-wrap: wrap-reverse; */
+     /* flex-direction: row-reverse; */
  }
  </style>

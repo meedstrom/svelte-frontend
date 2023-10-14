@@ -44,15 +44,16 @@
  // $: next = isDaily ? dailies.toReversed().find(post =>
  //     dailySlugs.indexOf(post.slug) < dailySlugs.indexOf(data.post.slug)) : null
  //
+
 </script>
 
 <svelte:head>
     <title>{data.post.title}</title>
-    <!-- TODO: Grab a description from data.post.subtitle when available -->
-    <meta name="description" content="A note.">
+    <meta name="description" content={data.post.description ?? "A note."}>
 </svelte:head>
 
-<article>
+<article data-sveltekit-preload-data="hover"
+         data-sveltekit-preload-code="eager">
  <!--    {#if isDaily}
         <div class="row">
             <div>

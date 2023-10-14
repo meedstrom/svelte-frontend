@@ -115,6 +115,7 @@ html, body, #mandatory-wrapper {
 html {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     font-size: 16px;
+    background-color: #555;
 }
 
 // When it comes to <pre> blocks in articles, I want them to fit 80-character
@@ -141,11 +142,16 @@ body {
 }
 
 article {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+
     // Don't ever let long lines break out of the bounds of the container
     overflow-wrap: anywhere;
+
     // Give tables horizontal scroll, which also lets us undo the above, a bad
     // idea in tables: breaks long numbers in narrow columns
-    .table-container {
+    div.table-container {
         overflow-x: auto;
         overflow-wrap: normal;
     }
@@ -380,6 +386,10 @@ textarea {
     width: 100%;
 }
 
+span.tag {
+    display: none;
+}
+
 .button, button, input[type="submit"], input[type="reset"], input[type="button"], input[type=file]::file-selector-button {
     display: inline-block;
     padding: 5px 10px;
@@ -484,6 +494,7 @@ table {
 // Zebra striping
 tr:nth-child(even) {
     background-color: var(--bg-alt);
+
 }
 
 th {
@@ -495,37 +506,32 @@ th {
 //  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
 td {
     padding: .5em .4em;
+    a { padding: 2px 0; }
  }
-
-article {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-}
 
 #the-big-index {
     overflow-x: auto;
     a { border-bottom: none; }
-    th > input { width: 100%; }
-    th {
-        cursor: pointer;
-    }
-    // tr:nth-child(2) > th:hover {
-    // background-color: var(--bg);
-    // }
-    tr:nth-child(1) > th:hover {
+    th { cursor: pointer; }
+    tr:first-child > th:hover {
         background-color: var(--bg-alt);
+        // outline: var(--blossom) solid 2px;
     }
+    
     // ensure there's space for the sorting-arrow in the Created header
     th:last-child {
         padding-right: 0;
     }
+
+    // compact the table width just a bit
     th.words-header {
         padding-left: 0;
+        padding-right: 0;
+        text-align: center;
     }
     th.links-header {
         padding-left: 0;
-        padding-right: .5em;
+        text-align: center;
     }
 }
 
@@ -538,47 +544,23 @@ article {
     // For "tap-targets" 48px minimum size or clearance.  I won't do this all
     // over the document, it's ok to fail that goal.  Or would it be enough to
     // set line-height 1.5?
-    .toc li {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        margin-top: 6px;
-        margin-bottom: 6px;
+    details.toc li,
+    details.backlinks li {
+        // padding-top: 10px;
+        // padding-bottom: 10px;
+        margin-top: 13px;
+        margin-bottom: 13px;
+        & > a {
+            padding: 2px;
+        }
+    }
+    details.toc li > a {
+        border-bottom: none;
     }
 }
+
 
 @media (min-width: 600px) {
-    #central-column {
-        margin: auto;
-        max-width: 38em; // just slightly over 600px
-        border-radius: .5em;
-        box-shadow: -2px 2px 1em black;
-    }
-    footer {
-        max-width: 38em;
-        margin: auto;
-    }
-    article {
-        padding-left: 1em;
-        padding-right: 1em;
-        padding-bottom: 1em;
-        margin-bottom: 2em;
-    }
-    // slight extra left-pad in first column
-    #the-big-index tr > th:first-child,
-    #the-big-index tr > td:first-child {
-        padding-left: .6em;
-    }
-    #the-big-index tr > td:last-child {
-        padding-right: .6em;
-    }
-    td {
-        // undo tap-target optimization for phone
-        padding-top: .25em;
-        padding-bottom: .25em;
-    }
-
-}
-@media (min-width: 900px) {
     #central-column {
         max-width: 42em;
     }
@@ -592,4 +574,54 @@ article {
         padding-bottom: 3em;
         margin-bottom: 4em;
     }
+
+
+    // #central-column { max-width: 38em; // just slightly over 600px }
+    // article {
+    //     padding-left: 1em;
+    //     padding-right: 1em;
+    //     padding-bottom: 1em;
+    //     margin-bottom: 2em;
+    // }
+
+    #central-column {
+        margin: auto;
+        border-radius: .5em;
+        box-shadow: -2px 2px 1em black;
+    }
+    footer {
+        max-width: 38em;
+        margin: auto;
+    }
+
+    // slight extra left-pad in first column
+    #the-big-index tr > th:first-child,
+    #the-big-index tr > td:first-child {
+        padding-left: .6em;
+    }
+    #the-big-index tr > td:last-child {
+        padding-right: .6em;
+    }
+    td {
+        // undo tap-target optimization for phone
+        padding-top: .25em;
+        padding-bottom: .25em;
+        // a { padding: .25em 0; }
+    }
+
 }
+// @media (min-width: 900px) {
+//     #central-column {
+//         max-width: 42em;
+//     }
+//     header {
+//         padding: .5em;
+//     }
+//     article {
+//         // padding-top: 1em;
+//         padding-left: 3em;
+//         padding-right: 3em;
+//         padding-bottom: 3em;
+//         margin-bottom: 4em;
+//     }
+// }
