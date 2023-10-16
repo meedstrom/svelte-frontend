@@ -1,7 +1,7 @@
 <script lang="ts">
  export let data
- import { get } from 'svelte/store'
- import { seen, allowedTags, privateTags } from '$lib/stores'
+ import { get as stored } from 'svelte/store'
+ import { seen, allowedTags, privateTags, } from '$lib/stores'
  import { afterNavigate } from '$app/navigation'
  afterNavigate(() => {
      seen.update(x => x.add(data.post.permalink))
@@ -15,7 +15,7 @@
      let willUnlink = new Set([...privateTags])
      showTags.forEach(tag => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
-     // Expected safe regex, my html has no nested <a> tags
+     // prolly safe, my html has no nested <a> tags
      const re = new RegExp(
          '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
          'gs'
@@ -35,16 +35,14 @@
           : `${days} days ago`
  }
 
- // const dailies = get(posts).filter(post => post.tags.includes('daily'))
- // const dailySlugs = dailies.map(post => post.slug)
- // $: isDaily = data.post.tags.includes('daily') ? true : false
- // // INFO: They're pre-sorted by creation-date, so that smaller index = newer.
- // $: prev = isDaily ? dailies.find(post =>
- //     dailySlugs.indexOf(post.slug) > dailySlugs.indexOf(data.post.slug)) : null
- // $: next = isDaily ? dailies.toReversed().find(post =>
- //     dailySlugs.indexOf(post.slug) < dailySlugs.indexOf(data.post.slug)) : null
- //
-
+ $: isDaily = data.dailies && data.post.tags.includes('daily') ? true : false
+ // INFO: They're pre-sorted by creation-date, so that smaller index = newer.
+ $: prev = isDaily ? data.dailies.find(post =>
+     data.dailySlugs.indexOf(post.slug) > data.dailySlugs.indexOf(data.post.slug)
+ ) : null
+ $: next = isDaily ? data.dailies.toReversed().find(post =>
+     data.dailySlugs.indexOf(post.slug) < data.dailySlugs.indexOf(data.post.slug)
+ ) : null
 </script>
 
 <svelte:head>
@@ -54,7 +52,7 @@
 
 <article data-sveltekit-preload-data="hover"
          data-sveltekit-preload-code="eager">
- <!--    {#if isDaily}
+    {#if isDaily}
         <div class="row">
             <div>
                 {#if prev}
@@ -67,9 +65,9 @@
                 {/if}
             </div>
         </div>
-    {/if} -->
+    {/if}
     <h1 id={data.post.permalink}>{data.post.title}</h1>
-    {@html stripLinksToHidden(data.content, get(allowedTags))}
+    {@html stripLinksToHidden(data.content, stored(allowedTags))}
     <div class="row">
         <div></div>
         <div>

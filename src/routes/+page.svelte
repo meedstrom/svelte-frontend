@@ -2,9 +2,22 @@
  import { bigIndexRows } from '$lib/stores'
  import { get as stored } from 'svelte/store'
  import SvelteTable from "svelte-table"
-
- // TODO: compare performance with https://github.com/mattiash/svelte-tablesort
- // ... or just drop in a "datagrid" library
+ // import './tabulator.css'
+ // import {TabulatorFull as Tabulator} from 'tabulator-tables';
+ // import {onMount} from 'svelte';
+ //
+ // let tableComponent;
+ //
+ //  onMount(() => {
+ //      new Tabulator(tableComponent, {
+ //          data: stored(bigIndexRows), //link data to table
+ //          reactiveData: true, //enable data reactivity
+ //          // columns: columns, //define table columns
+ //          index: "permalink",
+ //          autoColumns: true,
+ //      })
+ //  })
+ //
 
  const columns = [
      {
@@ -17,8 +30,8 @@
          // is there a searchLabel or some such option?
          // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
          renderValue: v =>
-              (v.hidden ? `<a class="${v.hidden}"` : '<a') +
-             ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
+             (v.hidden ? `<a class="${v.hidden}"` : '<a') +
+                        ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {
@@ -41,6 +54,7 @@
          value: v => v.created,
          renderValue: v => v.created_fancy.replaceAll('-', '‑'),
          sortable: true,
+         headerClass: 'creation-date-header',
      },
  ]
 
@@ -53,6 +67,9 @@
 <div id="the-big-index"
      data-sveltekit-preload-data="off"
      data-sveltekit-preload-code="off">
+    <!-- <div bind:this={tableComponent}></div> -->
+    
+
     <SvelteTable columns="{columns}"
                  rows="{stored(bigIndexRows)}"
                  sortBy="created"

@@ -4,7 +4,6 @@
 
 // Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
 // Check on https://coolors.co/contrast-checker
-// TODO: fix
 
 .theme-auto {
     // same as off-white
@@ -104,31 +103,51 @@ html, body, #mandatory-wrapper {
 }
 
 
-// Font
+// Text
+
+html {
+    font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    // font-size: 17px; font-family: Palatino, serif;
+    line-height: 1.4;
+    text-rendering: optimizeLegibility;
+}
+
+p {
+    margin: .85em 0;
+}
+
+// The default 80% is just slightly too large
+small, sub, sup {
+    font-size: 75%;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
+    font-size: 1.3em;
+}
+
+h1 {
+    font-size: 1.7em;
+}
 
 @font-face {
     font-family: "M+1M";
     font-display: swap;
-    src: url("$lib/mplus-1m-regular-webfont.woff2");
+    src: local("M+1M"), url("$lib/mplus-1m-regular-webfont.woff2");
 }
 
-html {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-    font-size: 16px;
-    background-color: #555;
-}
-
-// When it comes to <pre> blocks in articles, I want them to fit 80-character
+// When it comes to <pre> blocks in articles, I want them to room 80-character
 // line lengths.  No declarative way to specify that in CSS, since there's no
 // font-width property.  The font-size property is about height, and the width
 // depends on the family.  So em, ex, px, pt... the unit doesn't matter as
-// you'll still need to find the right size for each font by trial & error.
+// you'll still need to find the right size for each family by trial & error.
 code, pre {
-    font-family: "M+1M", monospace;
-    font-size: 14px;
+    font-size: 14px; font-family: "M+1M", monospace;
 }
 
 
+// Basic layout
 
 // The "central column", the edges of which disappear on mobile
 #central-column {
@@ -137,8 +156,7 @@ code, pre {
 
 body {
     margin: 0;
-    line-height: 1.35;
-    text-rendering: optimizeLegibility;
+    background-color: #555;
 }
 
 article {
@@ -173,62 +191,54 @@ header > nav {
     }
 }
 
- .row {
-     display: flex;
-     justify-content: space-between;
- }
-
- footer {
-     background-color: var(--bg-alt);
-     text-align: center;
-     padding: 2em;
-     padding-right: 0.2em;
-     padding-bottom: 0;
-     margin-top: auto;
-
-     @media (min-width: 600px) {
-         padding-right: 2em;
-     }
-
-     #theme-picker {
-         label {
-             background-color: var(--bg);
-             padding: 10px;
-             margin: 3px;
-             cursor: pointer;
-             // border-style: groove;
-             // border-width: 3px;
-
-         }
-         // /* Hide the radio buttons */
-         input {
-             position: absolute !important;
-             height: 1px;
-             width: 1px;
-             overflow: hidden;
-             clip: rect(1px, 1px, 1px, 1px);
-         }
-
-
-         //  Highlight currently enabled theme
-         .theme-true, label:focus-within { outline: var(--fade) 2px solid; }
-
-         label:hover {
-             outline: var(--blossom) 2px solid;
-         }
-     }
-
- }
-
- h1, h2, h3, h4, h5, h6 {
-     font-weight: normal;
-     font-size: 1.3em;
- }
-
-h1 {
-    font-size: 1.7em;
+.row {
+    display: flex;
+    justify-content: space-between;
 }
 
+footer {
+    background-color: var(--bg-alt);
+    text-align: center;
+    padding: 2em;
+    padding-right: 0.2em;
+    padding-bottom: 0;
+    margin-top: auto;
+
+    @media (min-width: 600px) {
+        padding-right: 2em;
+    }
+
+    #theme-picker {
+        label {
+            background-color: var(--bg);
+            padding: 10px;
+            margin: 3px;
+            cursor: pointer;
+            // border-style: groove;
+            // border-width: 3px;
+
+        }
+        // Hide the radio buttons
+        // FIXME: keeb focus
+        input {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+        }
+
+        //  Highlight currently enabled theme
+        label.theme-true {
+            outline: var(--fade) 2px solid;
+        }
+        
+        label:hover {
+            outline: var(--blossom) 2px solid;
+        }
+    }
+
+}
 
 summary {
     display: block;
@@ -276,11 +286,6 @@ details > details {
     box-shadow: -2px 2px 7px black;
 }
 
-
-// The default is like 80 or 85%, just slightly too large
-small, sub, sup {
-    font-size: 75%;
-}
 
 hr {
     border-color: var(--bg-alt);
@@ -371,10 +376,6 @@ textarea {
     width: 100%;
 }
 
-span.tag {
-    display: none;
-}
-
 .button, button, input[type="submit"], input[type="reset"], input[type="button"], input[type=file]::file-selector-button {
     display: inline-block;
     padding: 5px 10px;
@@ -457,12 +458,12 @@ div.outline-6 > h6 {
     font-size: 1em;
 }
 
-
 
 // Links
 
 a {
     color: var(--blossom);
+    padding: 1px;
     border-bottom: 1px solid;
     text-decoration: none;
 }
@@ -470,26 +471,28 @@ a {
 a:visited { color: var(--fade); }
 a:focus, a:hover { outline: var(--blossom) solid 2px; }
 
-
 // Indicate "unlocked" links
 a.eyes_therapist:after,
 a.eyes_partner:after,
 a.eyes_friend:after {
-  content: "🗝";
+    content: "🗝";
+}
+
+a.stub {
+    color: #888;
 }
 
 // Indicate external links
 a[href^="http://"]:after,
 a[href^="https://"]:after {
-  content: "↗️";
+    content: "↗️";
 }
 
 // The headline permalinks that look like 🔗
 a.easylink {
-  text-decoration: none;
-  border-bottom: none;
+    text-decoration: none;
+    border-bottom: none;
 }
-
 
 
 // Tables
@@ -500,11 +503,9 @@ table {
     margin-bottom: 2em;
 }
 
-
-// Zebra striping
+// Zebra stripes
 tr:nth-child(even) {
     background-color: var(--bg-alt);
-
 }
 
 th {
@@ -512,28 +513,31 @@ th {
     text-align: left;
 }
 
-// .5em is insane, but it's a tap-target minimum for mobile
-//  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
+// .5em really dilutes the table, but it adds up to a tap-target minimum for
+// mobile.  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
 td {
     padding: .5em .4em;
     a { padding: 2px 0; }
- }
+}
 
 #the-big-index {
     overflow-x: auto;
+
     a { border-bottom: none; }
+
     th { cursor: pointer; }
+
     tr:first-child > th:hover {
         background-color: var(--bg-alt);
         // outline: var(--blossom) solid 2px;
     }
     
     // ensure there's space for the sorting-arrow in the Created header
-    th:last-child {
+    th.creation-date-header {
         padding-right: 0;
     }
 
-    // compact the table width just a bit
+    // compact the table-width just a bit
     th.words-header {
         padding-left: 0;
         padding-right: 0;
@@ -546,18 +550,15 @@ td {
 }
 
 
-
 
 // Breakpoints
 
 @media (max-width: 599px) {
-    // For "tap-targets" 48px minimum size or clearance.  I won't do this all
-    // over the document, it's ok to fail that goal.  Or would it be enough to
-    // set line-height 1.5?
+    // Try to meet "tap-targets" 48px minimum size+clearance per Lighthouse.
+    // I won't do this all over the document, it's ok to fail that goal.
+    // I suspect it's one reason that line-heights have been exploding of late...
     details.toc li,
     details.backlinks li {
-        // padding-top: 10px;
-        // padding-bottom: 10px;
         margin-top: 13px;
         margin-bottom: 13px;
         & > a {
@@ -569,7 +570,6 @@ td {
     }
 }
 
-
 @media (min-width: 600px) {
     #central-column {
         max-width: 42em;
@@ -578,21 +578,11 @@ td {
         padding: .5em;
     }
     article {
-        // padding-top: 1em;
         padding-left: 3em;
         padding-right: 3em;
         padding-bottom: 3em;
         margin-bottom: 4em;
     }
-
-
-    // #central-column { max-width: 38em; // just slightly over 600px }
-    // article {
-    //     padding-left: 1em;
-    //     padding-right: 1em;
-    //     padding-bottom: 1em;
-    //     margin-bottom: 2em;
-    // }
 
     #central-column {
         margin: auto;
@@ -613,25 +603,8 @@ td {
         padding-right: .6em;
     }
     td {
-        // undo tap-target optimization for phone
+        // more dense tables OK on desktop (rarely touch-operated)
         padding-top: .25em;
         padding-bottom: .25em;
-        // a { padding: .25em 0; }
     }
-
 }
-// @media (min-width: 900px) {
-//     #central-column {
-//         max-width: 42em;
-//     }
-//     header {
-//         padding: .5em;
-//     }
-//     article {
-//         // padding-top: 1em;
-//         padding-left: 3em;
-//         padding-right: 3em;
-//         padding-bottom: 3em;
-//         margin-bottom: 4em;
-//     }
-// }

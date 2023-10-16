@@ -85,6 +85,7 @@
 
     <form on:submit|trusted|self|preventDefault={handleSubmit}>
         <label>User
+            <!-- svelte-ignore a11y-autofocus -->
             <input bind:value={username} type="text" autofocus />
         </label>
 

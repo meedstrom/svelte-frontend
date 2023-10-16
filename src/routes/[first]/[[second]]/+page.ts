@@ -6,7 +6,6 @@ export const prerender = false
 // 
 // export const ssr = false
 
-import { match } from '../../../params/known'
 import { get as stored } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
 import { pubMeta, privMeta } from '$lib/stores'
@@ -14,17 +13,18 @@ import { pubMeta, privMeta } from '$lib/stores'
 export function load({ params }) {
     let post
 
-    post = stored(privMeta).get(params.permalink)
+    // If user is logged-in, redirect to the unlocked variant page
+    post = stored(privMeta).get(params.first)
     if (post)
         throw redirect(307, `/unlocked/${post.permalink}/${post.slug}`)
 
     // Redirect from /slug to /id/slug
-    post = [...stored(pubMeta).values()].find(post => post.slug === params.permalink)
+    post = [...stored(pubMeta).values()].find(post => post.slug === params.first)
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)
 
-    // Redirect from old 7-char ids to new 5-char ids
-    post = stored(pubMeta).get(params.permalink.slice(2))
+    // Redirect from old 7-char ids to new 3-char ids
+    post = stored(pubMeta).get(params.first.slice(4))
 
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)

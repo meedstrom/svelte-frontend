@@ -3,12 +3,12 @@
 export const prerender = false
 export const ssr = false
 
-import { get } from 'svelte/store'
+import { get as stored } from 'svelte/store'
 import { error, redirect } from '@sveltejs/kit'
 import { pubMeta } from '$lib/stores'
 
 export function load({ params }) {
-    const post = get(pubMeta).find(post => post.slug === params.slug)
+    const post = [...stored(pubMeta).values()].find(post => post.slug === params.slug)
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)
     else

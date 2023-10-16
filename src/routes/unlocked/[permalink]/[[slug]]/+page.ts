@@ -16,7 +16,11 @@ export function load({ params }) {
         // User is logged in
         if (stored(allowedTags).length > 0) {
             let content = stored(pubPosts).get(post.permalink) ?? stored(privPosts).get(post.permalink)
-            return { post, content, id: post.permalink }
+            const dailies = [...stored(privMeta).values()]
+                                .filter(post => post.tags.includes('daily'))
+                                .sort((a, b) => b.created.localeCompare(a.created))
+            const dailySlugs = dailies.map(post => post.slug)
+            return { post, content, id: post.permalink, dailies, dailySlugs }
         }
         // User is not logged in
         else throw redirect(307, `/${post.permalink}/${post.slug}`)
