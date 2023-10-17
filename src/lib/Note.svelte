@@ -56,12 +56,12 @@
         <div class="row">
             <div>
                 {#if prev}
-                    <a href="/{prev.permalink}/{prev.slug}">← {prev.slug}</a>
+                    <a href="/{prev.permalink}/{prev.slug}">← {prev.title}</a>
                 {/if}
             </div>
             <div>
                 {#if next}
-                    <a href="/{next.permalink}/{next.slug}">{next.slug} →</a>
+                    <a href="/{next.permalink}/{next.slug}">{next.title} →</a>
                 {/if}
             </div>
         </div>
