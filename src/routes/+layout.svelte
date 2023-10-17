@@ -24,36 +24,27 @@
                 <a href="/about">About</a>
                 <a href="/nexus">Nexus</a>
                 <a href="/random">Random</a>
-                <!-- Pre-size to eliminate CLS -->
+                <!-- Pre-sized to eliminate CLS -->
                 <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
             </nav>
         </header>
-
         <main>
-            <!-- like react Outlet -->
             <slot />
         </main>
     </div>
-
     <footer>
         <div id="info">
             <p>
                 Martin Edström
                 <br>
-                <a href="https://github.com/meedstrom"> GitHub </a>
+                <a href="https://github.com/meedstrom">GitHub</a>
             </p>
             <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a>.</p>
             <p><a href="/about">About</a></p>
             <p><a href="/blogroll">"Blogroll"</a></p>
         </div>
-
-        <br>
-        <br>
         <div id="theme-picker">
             {#each colors as color}
-                <!-- <input type="radio" bind:group={theme} value={color} id={color} name="theme-switch"> -->
-                <!-- <label for id={color}>{color}</label> -->
-
                 <label for={color} class={`theme-${color===theme}`} >{color}
                     <input type="radio" bind:group={theme} value={color} id={color} name="theme-switch">
                 </label>
@@ -67,10 +58,11 @@
      text-align: center;
  }
  #theme-picker {
+     margin-top: 2em;
      display: flex;
      justify-content: center;
      flex-wrap: wrap;
      /* flex-wrap: wrap-reverse; */
      /* flex-direction: row-reverse; */
  }
- </style>
+</style>

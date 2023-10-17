@@ -8,10 +8,10 @@ import { pubPosts, privPosts } from '$lib/postContents'
 
 export function load({ params }) {
     const post =
-        stored(pubMeta).get(params.permalink) ??
-        stored(privMeta).get(params.permalink) ??
-        [...stored(pubMeta).values()].find((post) => params.permalink === post.slug) ??
-        [...stored(privMeta).values()].find((post) => params.permalink === post.slug)
+        stored(pubMeta).get(params.first) ??
+        stored(privMeta).get(params.first) ??
+        [...stored(pubMeta).values()].find((post) => post.slug === params.first) ??
+        [...stored(privMeta).values()].find((post) => post.slug === params.first)
     if (post) {
         // User is logged in
         if (stored(allowedTags).length > 0) {

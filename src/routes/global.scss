@@ -12,21 +12,24 @@
     --text    : #222 ;
     --bg      : #f9f5f3 ;
     --bg-alt  : #ddd ;
+    --grey    : #666 ;
     @media (prefers-color-scheme: dark) {
         --blossom : #f66;
         --fade    : #c99;
         --text    : #d9d8dc;
         --bg      : #2f1f24;
         --bg-alt  : #433;
+        --grey    : #888;
     }
 }
 
 .theme-white {
-    --blossom : #45c ;
-    --fade    : #a36 ;
-    --text    : #222 ;
-    --bg      : #f9f5f3 ;
-    --bg-alt  : #ddd ;
+    --blossom : #45c;
+    --fade    : #a36;
+    --text    : #222;
+    --bg      : #f9f5f3;
+    --bg-alt  : #ddd;
+    --grey    : #666;
 }
 
 .theme-dark-red {
@@ -35,6 +38,7 @@
     --text    : #d9d8dc;
     --bg      : #2f1f24;
     --bg-alt  : #433;
+    --grey    : #888;
 }
 
 .theme-tan {
@@ -44,6 +48,7 @@
     --bg      : #dca;
     // --bg      : #b96;
     --bg-alt  : #cba;
+    --grey    : #666;
 }
 
 .theme-dark-amber {
@@ -52,6 +57,7 @@
     --text    : #da7;
     --bg      : #210;
     --bg-alt  : #320;
+    --grey    : #888;
 }
 
 .theme-pink {
@@ -60,6 +66,7 @@
     --text    : #49002d;
     --bg      : #ffe4f5;
     --bg-alt  : #f8d2e9;
+    --grey    : #666;
 }
 
 
@@ -71,6 +78,7 @@
     --text    : #ab7;
     --bg      : #220;
     --bg-alt  : #110;
+    --grey    : #888;
 }
 
 .theme-green {
@@ -129,6 +137,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 1.7em;
+}
+
+// Implicit cloze-deletions.  Encoded in the source as underlines, hence the name.
+span.underline {
+    padding: 2px;
+    // border: 1px solid var(--grey);
+    background-color: var(--bg-alt);
+    // outline: 1px solid var(--grey);
 }
 
 @font-face {
@@ -291,10 +307,17 @@ hr {
     border-color: var(--bg-alt);
 }
 
-ul,ol {
+ul, ol {
+    padding-left: 1em;
+    margin-top: .5em;
+    margin-bottom: 1.5em;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
     padding-left: 1.4em;
-    // margin-top: .5em;
-    // margin-bottom: 1.5em;
 }
 
 li {
@@ -302,9 +325,9 @@ li {
     margin-bottom: .3em;
 }
 
-// any diff between this selector and just ul?
-ul:last-child {
-    margin-bottom: .6em;
+
+details > ul:last-child {
+    margin-bottom: 1em;
 }
 
 blockquote {
@@ -330,10 +353,10 @@ blockquote > p:first-child:before {
 }
 
 img, video {
-    height: auto;
-    max-width: 100%;
-    margin-top: 0px;
-    margin-bottom: 2.5rem;
+    max-height: 20em;
+    max-width: 30em;
+    display: block;
+    margin: 1em auto;
 }
 
 
@@ -479,7 +502,7 @@ a.eyes_friend:after {
 }
 
 a.stub {
-    color: #888;
+    color: var(--grey);
 }
 
 // Indicate external links
@@ -537,15 +560,25 @@ td {
         padding-right: 0;
     }
 
-    // compact the table-width just a bit
-    th.words-header {
-        padding-left: 0;
-        padding-right: 0;
-        text-align: center;
+    // compact the table-width just a bit, every px counts on mobile
+    @media (max-width: 599px) {
+        th.words-header {
+            padding-left: 0;
+            padding-right: 0;
+            text-align: center;
+        }
+        th.links-header {
+            padding-left: 0;
+            text-align: center;
+        }
     }
-    th.links-header {
-        padding-left: 0;
-        text-align: center;
+    // look better on desktop
+    @media (min-width: 600px) {
+        th {
+            border: 3px groove var(--fade);
+            padding: .5em .25em;
+        }
+        th.words-header, th.links-header { text-align: center; }
     }
 }
 
@@ -595,12 +628,13 @@ td {
     }
 
     // slight extra left-pad in first column
+    // (Largely deprecated by the new thead border)
     #the-big-index tr > th:first-child,
     #the-big-index tr > td:first-child {
-        padding-left: .6em;
+        padding-left: .5em;
     }
     #the-big-index tr > td:last-child {
-        padding-right: .6em;
+        padding-right: .5em;
     }
     td {
         // more dense tables OK on desktop (rarely touch-operated)

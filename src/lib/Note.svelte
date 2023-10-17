@@ -77,13 +77,15 @@
                 </time>
                 ({daysSince(data.post.created)})
             </small>
-            <br>
-            <small>Updated
-                <time datetime={data.post.updated} class="dt-updated">
-                    {data.post.updated_fancy}
-                </time>
-                ({daysSince(data.post.updated)})
-            </small>
+            {#if data.post.updated}
+                <br>
+                <small>Updated
+                    <time datetime={data.post.updated} class="dt-updated">
+                        {data.post.updated_fancy}
+                    </time>
+                    ({daysSince(data.post.updated)})
+                </small>
+            {/if}
         </div>
     </div>
 </article>

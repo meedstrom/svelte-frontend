@@ -13,7 +13,7 @@ import { pubMeta, privMeta } from '$lib/stores'
 export function load({ params }) {
     let post
 
-    // If user is logged-in, redirect to the unlocked variant page
+    // Trying to access a hidden ID?  Go to /unlocked.
     post = stored(privMeta).get(params.first)
     if (post)
         throw redirect(307, `/unlocked/${post.permalink}/${post.slug}`)
@@ -23,8 +23,8 @@ export function load({ params }) {
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)
 
-    // Redirect from old 7-char ids to new 3-char ids
-    post = stored(pubMeta).get(params.first.slice(4))
+    // Redirect from old 7-char ids to new 4-char ids
+    post = stored(pubMeta).get(params.first.slice(3))
 
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)

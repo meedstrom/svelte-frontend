@@ -6,6 +6,6 @@
  import { page } from '$app/stores'
  import { goto } from '$app/navigation'
  if (stored(allowedTags).length > 0)
-     goto(`/unlocked/${$page.params.permalink}/${$page.params.slug}`)
+     goto(`/unlocked/${$page.params.first}/${$page.params.second}`)
 </script>
 <Note data={data} />

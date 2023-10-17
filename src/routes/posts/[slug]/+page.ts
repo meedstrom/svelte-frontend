@@ -12,5 +12,5 @@ export function load({ params }) {
     if (post)
         throw redirect(307, `/${post.permalink}/${post.slug}`)
     else
-        throw error(404, 'Not found')
+        throw error(404, 'Slug not found among public posts')
 }
