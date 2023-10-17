@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import '@csstools/normalize.css/normalize.css';
-@import './export-colors-doom-zenburn.scss';
+// @import './export-colors-doom-zenburn.scss';
+@import './export-colors-doom-monokai-machine.scss';
 
 // Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
 // Check on https://coolors.co/contrast-checker

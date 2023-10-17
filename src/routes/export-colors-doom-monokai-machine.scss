@@ -1,0 +1,44 @@
+pre.src,
+pre.agenda {
+        color: #f2fffc;
+        background-color: #273136;
+}
+.org-agenda-date {
+    /* org-agenda-date */
+    color: #baa0f8;
+}
+.org-agenda-date-weekend {
+    /* org-agenda-date-weekend */
+    color: #6f6094;
+}
+.org-agenda-done {
+    /* org-agenda-done */
+    color: #5a6568;
+    font-weight: bold;
+}
+.org-agenda-structure {
+    /* org-agenda-structure */
+    color: #f2fffc;
+}
+.org-done {
+    /* org-done */
+    // color: #5a6568;
+    color: #9FC59F;
+    font-weight: bold;
+}
+.org-tag {
+    /* org-tag */
+    color: #ffed72;
+}
+
+pre.agenda {
+    a {
+        color: inherit;
+        background-color: inherit;
+        font: inherit;
+        text-decoration: inherit;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+}
