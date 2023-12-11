@@ -54,7 +54,7 @@
          value: v => v.created,
          renderValue: v => v.created_fancy.replaceAll('-', '‑'),
          sortable: true,
-         headerClass: 'creation-date-header',
+         headerClass: 'creation-header',
      },
  ]
 

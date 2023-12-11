@@ -565,29 +565,40 @@ td {
     }
     
     // ensure there's space for the sorting-arrow in the Created header
-    th.creation-date-header {
+    th.creation-header {
         padding-right: 0;
     }
 
+    // since these linebreak when you sort on them, ensure the arrow is centered
+    th.words-header, th.links-header { text-align: center; }
+
     // compact the table-width just a bit, every px counts on mobile
     @media (max-width: 599px) {
-        th.words-header {
-            padding-left: 0;
-            padding-right: 0;
-            text-align: center;
-        }
-        th.links-header {
-            padding-left: 0;
-            text-align: center;
+        // th.words-header {
+        //     padding-left: 0;
+        //     padding-right: 0;
+        //     text-align: center;
+        // }
+        // th.links-header {
+        //     padding-left: 0;
+        //     text-align: center;
+        // }
+
+        // thead, td:not(:first-child) {
+        //     display: none;
+        // }
+
+        td:nth-child(2), td:nth-child(3),
+        th:nth-child(2), th:nth-child(3) {
+            display: none;
         }
     }
     // look better on desktop
     @media (min-width: 600px) {
         th {
-            border: 3px groove var(--fade);
+            border: 3px groove var(--bg-alt);
             padding: .5em .25em;
         }
-        th.words-header, th.links-header { text-align: center; }
     }
 }
 
@@ -613,6 +624,10 @@ td {
 }
 
 @media (min-width: 600px) {
+    img, video {
+        max-height: 50vh;
+    }
+
     #central-column {
         max-width: 42em;
     }
