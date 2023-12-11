@@ -3,6 +3,7 @@
  import { get as stored } from 'svelte/store'
  import { seen, allowedTags, privateTags, } from '$lib/stores'
  import { afterNavigate } from '$app/navigation'
+ // import { Temporal } from '@js-temporal/polyfill'
  afterNavigate(() => {
      seen.update(x => x.add(data.post.permalink))
  })

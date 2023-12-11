@@ -21,8 +21,7 @@ export function load() {
         // }
     }
 
-    // NOTE: set-difference coming to JS:
-    // https://github.com/tc39/proposal-set-methods
+    // NOTE: set-difference coming soon: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/difference#browser_compatibility
     for (const seenLink of stored(seen)) {
         links.delete(seenLink)
     }
