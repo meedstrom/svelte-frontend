@@ -71,7 +71,7 @@
     
 
     <SvelteTable columns="{columns}"
-                 rows="{stored(bigIndexRows)}"
+                 rows="{$bigIndexRows}"
                  sortBy="created"
                  sortOrder=-1>
     </SvelteTable>
