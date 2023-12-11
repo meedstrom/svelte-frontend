@@ -1,7 +1,7 @@
-import pubMetaJSON from '$lib/pubMeta.json'
-import initRows from '$lib/initRows.json'
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
+import pubMetaJSON from '$lib/pubMeta.json'
+import initRows from '$lib/initRows.json'
 
 // DEPRECATED
 export type Post = {
@@ -19,40 +19,71 @@ export type Post = {
      description: string | null
  }
 
+export const bigIndexRows = writable(initRows)
+export const pubMeta = writable(new Map(Object.entries(pubMetaJSON)))
+export const privMeta = writable(new Map())
 export const privateTags = new Set(
      ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
 )
 
-// export const slugAssocs = new Map()
-export const bigIndexRows = writable(initRows)
-export const allowedTags = writable([])
-export const pubMeta = writable(new Map(Object.entries(pubMetaJSON)))
-export const privMeta = writable(new Map())
-
-// const pubSlugAssocsMap = new Map(Object.entries(pubSlugAssocsJSON))
-// export const pubSlugAssocs = writable(pubSlugAssocsMap)
-
-// Track which pages the visitor has seen, and persist that
-//
-// TODO: actually, for the sake of eww/lynx, try first to save it in a
-// cookie... then if JS is available, stop trying to use a cookie, because it's
-// slow.  We will have to allocate around 2-3 cookies, bc cookies max at 4kb
-// each so it's really a hack for niche purposes. The alternative is to simply
-// set a tracking id and let the server track who has seen what, but...  Or we
-// can try to compress the array, but given the random characters it may not be
-// so compressible.  Anyway, there's an interesting criterion for how long
-// should be the page IDs: sufficiently few characters that ~2000 IDs add up to
-// less than 4kB.
-//
-// In theory, 4-character IDs would lead me to expect around 1
-// page ID collision per 1000 pages, manageable.  Then if I encode the array as
-// a string sans any quotes signs or commas, and compress or base64-encode it,
-// around 1300 IDs should fit comfortably in 1 cookie.
+// Track which pages the visitor has seen
+// TODO: is there a neater way to express this? Bloody Javascript.
 const storedSeen = browser ? window.localStorage.getItem('seen') : null
-const initSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
-
-export const seen = writable(initSeen)
-
+const initialSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
+export const seen = writable(initialSeen)
+// Keep persisting to localStorage
 seen.subscribe(value => {
-    if (browser) window.localStorage.setItem('seen', JSON.stringify([...value]))
+     if (browser) {
+          window.localStorage.setItem('seen', JSON.stringify([...value]))
+     }
 })
+
+// is there a neater way to express this?
+const stored2 = browser ? window.localStorage.getItem('allowedTags') : null
+const initial2 = stored2 ? JSON.parse(stored2) : []
+export const allowedTags = writable(initial2)
+allowedTags.subscribe(value => {
+     if (browser) {
+          window.localStorage.setItem('allowedTags', JSON.stringify(value))
+     }
+})
+
+// Locally stored crypto key
+export const postKey = writable('')
+export const getHardcodedWrappingKey = async () => {
+     return await crypto.subtle.importKey(
+          'raw'
+          // NOTE: Yes it's plaintext.  Needs not be secret from who reads the
+          // code; the wrapping key is not the encryption key.
+          ,new Uint8Array([30,225,107,217,205,158,108,110,187,158,194,55,203,81,30,84,109,198,83,29,23,130,131,28,110,122,228,24,11,97,140,7])
+          ,'AES-KW'
+          ,false
+          ,['wrapKey', 'unwrapKey']
+     )
+}
+
+export const decrypt = async (blob, origPrivMeta, key, allowedTags) => {
+     const iv = new Uint8Array(blob.slice(0, 16))
+     const ciphertext = new Uint8Array(blob.slice(16))
+
+     const decrypted = await crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: iv }, key, ciphertext
+     ).catch(error => console.log(error))
+
+     if (!decrypted) return alert('Passphrase did not work (old?)')
+
+     const decompressed = await new Response(decrypted)
+          .body.pipeThrough(new DecompressionStream('gzip'))
+     const plaintext = await new Response(decompressed).text()
+
+     let privPosts = new Map(Object.entries(JSON.parse(plaintext)))
+     let privMeta = new Map(Object.entries(origPrivMeta))
+     privMeta.forEach((post, id, map) => {
+          if (!post.tags.find(tag => allowedTags.includes(tag))) {
+               map.delete(id)
+               privPosts.delete(id)
+          }
+     })
+
+     return [privPosts, privMeta]
+}
