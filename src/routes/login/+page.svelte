@@ -12,8 +12,8 @@
      allowedTags,
      bigIndexRows,
      getHardcodedWrappingKey,
-     postKey,
-     decrypt,
+     storedPostKey,
+     decryptExtras,
  } from '$lib/stores'
  import { privPosts } from '$lib/postContents'
  import privMetaJSON from '$lib/privMeta.json'
@@ -34,31 +34,23 @@
      if (!Object.keys(perms).includes(userCategory)) return alert('Unknown user')
      $allowedTags = perms[userCategory]
 
-     const maybeKey = pass.trim().slice(1)
-     $postKey = await crypto.subtle.importKey(
+     const maybeKey = await crypto.subtle.importKey(
          'raw'
-         ,new Uint8Array(Buffer.from(maybeKey, 'base64'))
+         ,new Uint8Array(Buffer.from(pass.trim().slice(1), 'base64'))
          ,'AES-GCM'
          ,true
          ,['encrypt', 'decrypt']
-     ).catch(error => alert(error))
-     if (! $postKey) return
+     ).catch((error) => alert(error))
+     if (!maybeKey) return
 
      // Persist it locally for future site visits
-     // TODO: move all LocalStorage logic to stores.ts, so we can just use
-     // Svelte store here and pretend to know nothing about LocalStorage.  I
-     // guess that the unwrap-and-import steps could become part of the
-     // decrypt() function, since $postKey will be always wrapped,
-     // needing unwrap on every use.
-     const storedPostKey = await crypto.subtle.wrapKey(
+     const wrappedKey = await crypto.subtle.wrapKey(
          'raw'
-         ,$postKey
+         ,maybeKey
          ,await getHardcodedWrappingKey()
          ,'AES-KW'
      )
-     window.localStorage.setItem(
-         'storedPostKey', Buffer.from(storedPostKey).toString('base64')
-     )
+     $storedPostKey = Buffer.from(wrappedKey).toString('base64')
 
      // const extraBlob = await fetch(extra).then((x: Response) => x.arrayBuffer())
 
@@ -67,7 +59,7 @@
      //      // const ciphertext = new Uint8Array(data.extraBlob.slice(16))
      //      //
      //      // const decrypted = await crypto.subtle.decrypt(
-     //      //     { name: 'AES-GCM', iv }, $postKey, ciphertext
+     //      //     { name: 'AES-GCM', iv }, $storedPostKey, ciphertext
      //      // ).catch(error => console.log(error))
      //      // if (!decrypted) return alert('Passphrase did not work (old?)')
      //      //
@@ -85,8 +77,8 @@
      //      // })
 
      // replacement of the above
-     const [privPosts, privMeta] = await decrypt(
-         data.extraBlob, privMetaJSON, $postKey, $allowedTags
+     const [privPosts, privMeta] = await decryptExtras(
+         data.extraBlob, privMetaJSON, $storedPostKey, $allowedTags
      )
 
      $privPosts = privPosts
@@ -98,7 +90,7 @@
      // which can sort itself anyway, but it helps finding the next and
      // previous page in a series, such as the series of daily-pages.
      $bigIndexRows = [...stored(pubMeta).values(), ...$privMeta.values()]
-         .filter(post => !post.tags.includes('stub'))
+         .filter((post) => !post.tags.includes('stub'))
          .sort((a, b) => b.created.localeCompare(a.created))
 
      goto('/')

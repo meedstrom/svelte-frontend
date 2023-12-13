@@ -1,5 +1,6 @@
 import { browser } from '$app/environment'
 import { writable } from 'svelte/store'
+import { Buffer } from 'buffer'
 import pubMetaJSON from '$lib/pubMeta.json'
 import initRows from '$lib/initRows.json'
 
@@ -49,12 +50,19 @@ allowedTags.subscribe(value => {
 })
 
 // Locally stored crypto key
-export const postKey = writable('')
+export const storedPostKey = writable(
+     browser ? window.localStorage.getItem('storedPostKey') : ''
+)
+storedPostKey.subscribe((value: string) => {
+     if (browser) window.localStorage.setItem('storedPostKey', value)
+})
+
+// export const postKey = writable('')
 export const getHardcodedWrappingKey = async () => {
      return await crypto.subtle.importKey(
           'raw'
-          // NOTE: Yes it's plaintext.  Needs not be secret from who reads the
-          // code; the wrapping key is not the encryption key.
+          // NOTE: Yes it's plaintext.  Can't be secret from who reads the
+          // code, but the wrapping key is not the encryption key anyway.
           ,new Uint8Array([30,225,107,217,205,158,108,110,187,158,194,55,203,81,30,84,109,198,83,29,23,130,131,28,110,122,228,24,11,97,140,7])
           ,'AES-KW'
           ,false
@@ -62,25 +70,34 @@ export const getHardcodedWrappingKey = async () => {
      )
 }
 
-export const decrypt = async (blob, origPrivMeta, key, allowedTags) => {
-     const iv = new Uint8Array(blob.slice(0, 16))
-     const ciphertext = new Uint8Array(blob.slice(16))
+export const decryptExtras = async (bytes, fullPrivMeta, storedKey, allowedTags) => {
+     const iv = new Uint8Array(bytes.slice(0, 16))
+     const ciphertext = new Uint8Array(bytes.slice(16))
+     const postKey = await crypto.subtle.unwrapKey(
+             'raw'
+             ,new Uint8Array(Buffer.from(storedKey, 'base64'))
+             ,await getHardcodedWrappingKey()
+             ,'AES-KW'
+             ,'AES-GCM'
+             ,false
+             ,['encrypt', 'decrypt']
+         )
 
-     const decrypted = await crypto.subtle.decrypt(
-          { name: 'AES-GCM', iv: iv }, key, ciphertext
-     ).catch(error => console.log(error))
+     const decryptedBytes = await crypto.subtle.decrypt(
+          { name: 'AES-GCM', iv: iv }, postKey, ciphertext
+     ).catch((error) => console.log(error))
+     if (!decryptedBytes) return alert('Passphrase did not work (old?)')
 
-     if (!decrypted) return alert('Passphrase did not work (old?)')
-
-     const decompressed = await new Response(decrypted)
+     const inflated = await new Response(decryptedBytes)
           .body.pipeThrough(new DecompressionStream('gzip'))
-     const plaintext = await new Response(decompressed).text()
+     const plaintext = await new Response(inflated).text()
 
      let privPosts = new Map(Object.entries(JSON.parse(plaintext)))
-     let privMeta = new Map(Object.entries(origPrivMeta))
-     privMeta.forEach((post, id, map) => {
-          if (!post.tags.find(tag => allowedTags.includes(tag))) {
-               map.delete(id)
+     let privMeta = new Map(Object.entries(fullPrivMeta))
+     privMeta.forEach((post, id, _map) => {
+          if (!post.tags.find((tag) => allowedTags.includes(tag))) {
+               // map.delete(id)
+               privMeta.delete(id)
                privPosts.delete(id)
           }
      })
