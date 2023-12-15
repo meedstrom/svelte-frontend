@@ -10,9 +10,9 @@ export type Post = {
      permalink: string
      title: string
      created: string
+     updated: string | null
      created_fancy: string
-     updated: string
-     updated_fancy: string
+     updated_fancy: string | null
      wordcount: number
      links: number
      tags: string[]
@@ -27,37 +27,35 @@ export const privateTags = new Set(
      ["private", "eyes_therapist", "eyes_partner", "eyes_friend"]
 )
 
-// Track which pages the visitor has seen
-// TODO: is there a neater way to express this? Bloody Javascript.
-const storedSeen = browser ? window.localStorage.getItem('seen') : null
-const initialSeen = storedSeen ? new Set<string>(JSON.parse(storedSeen)) : new Set<string>()
-export const seen = writable(initialSeen)
-// Keep persisting to localStorage
-seen.subscribe(value => {
-     if (browser) {
-          window.localStorage.setItem('seen', JSON.stringify([...value]))
-     }
-})
+// Which pages the visitor has seen
+export const seen = writable(new Set(
+     browser ? JSON.parse(window.localStorage.getItem('seen')) : null
+))
 
-// is there a neater way to express this?
-const stored2 = browser ? window.localStorage.getItem('allowedTags') : null
-const initial2 = stored2 ? JSON.parse(stored2) : []
-export const allowedTags = writable(initial2)
-allowedTags.subscribe(value => {
-     if (browser) {
-          window.localStorage.setItem('allowedTags', JSON.stringify(value))
-     }
-})
+// Which unlocked posts this visitor is privy to
+export const allowedTags = writable(
+     browser ? JSON.parse(window.localStorage.getItem('allowedTags')) ?? [] : []
+)
 
-// Locally stored crypto key
+// Key for unlocking private posts
 export const storedPostKey = writable(
      browser ? window.localStorage.getItem('storedPostKey') : ''
 )
+
+// Sync above Svelte stores to LocalStorage
+seen.subscribe((value: Set<string>) => {
+     if (browser)
+          window.localStorage.setItem('seen', JSON.stringify([...value]))
+})
+allowedTags.subscribe((value) => {
+     if (browser)
+          window.localStorage.setItem('allowedTags', JSON.stringify(value))
+})
 storedPostKey.subscribe((value: string) => {
-     if (browser) window.localStorage.setItem('storedPostKey', value)
+     if (browser)
+          window.localStorage.setItem('storedPostKey', value)
 })
 
-// export const postKey = writable('')
 export const getHardcodedWrappingKey = async () => {
      return await crypto.subtle.importKey(
           'raw'
@@ -70,7 +68,7 @@ export const getHardcodedWrappingKey = async () => {
      )
 }
 
-export const decryptExtras = async (bytes, fullPrivMeta, storedKey, allowedTags) => {
+export const decryptExtras = async (bytes: ArrayBuffer, fullPrivMeta: Post[], storedKey: string, allowedTags: string[]) => {
      const iv = new Uint8Array(bytes.slice(0, 16))
      const ciphertext = new Uint8Array(bytes.slice(16))
      const postKey = await crypto.subtle.unwrapKey(

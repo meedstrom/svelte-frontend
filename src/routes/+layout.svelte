@@ -15,77 +15,36 @@
  import { get as stored } from 'svelte/store'
 
  // TODO: ensure this doesn't download on initial visit
- import extra from '$lib/privPosts.bin'
+ import extrasPath from '$lib/privPosts.bin'
  import privMetaJSON from '$lib/privMeta.json'
  import { privPosts } from '$lib/postContents'
 
  $: postCount = stored(pubMeta).size + $privMeta.size
 
- console.log($privPosts.size)
-
  // On first visit, decrypt extra posts if visitor has a stored key
  // TODO: put in afterNavigate, onMount or some such
  if ($storedPostKey !== '' && $privPosts.size === 0) {
      console.log('fetching')
-     fetch(extra)
+     fetch(extrasPath)
             .then((res: Response) => res.arrayBuffer())
             .then((bytes) => decryptExtras(
                 bytes, privMetaJSON, $storedPostKey, $allowedTags
             ))
-            .then((decryptedExtras) => {
+            .then((decryptedExtras: Array) => {
                 const [posts, meta] = decryptedExtras
                 $privPosts = posts
                 $privMeta = meta
                 // same as in login/+page.svelte
                 // TODO: maybe this can happen automatically in the def for
-                //       bigIndexRows? Or a subscription to privMeta?
+                //       bigIndexRows? Or a subscription to privMeta can
+                //       update bigIndexRows.
                 $bigIndexRows =
                     [...stored(pubMeta).values(), ...$privMeta.values()]
                         .filter(post => !post.tags.includes('stub'))
+                        .filter(post => !post.tags.includes('tag'))
                         .sort((a, b) => b.created.localeCompare(a.created))
             })
  }
-
- // On first visit, recover the stored key if any
- // const storedPostKey = browser ? window.localStorage.getItem('storedPostKey') : null
- // if (storedPostKey && $storedPostKey === '') {
- //     getHardcodedWrappingKey()
- //         .then(wrappingKey => crypto.subtle.unwrapKey(
- //             'raw'
- //             ,new Uint8Array(Buffer.from(storedPostKey, 'base64'))
- //             ,wrappingKey
- //             ,'AES-KW'
- //             ,'AES-GCM'
- //             ,false
- //             ,['encrypt', 'decrypt']
- //         ))
- //         .then(x => {
- //             // console.log('storedPostKey`` set: ' + x)
- //             $storedPostKey = x
- //         })
- //         .then(() => fetch(extra))
- //         .then((x: Response) => x.arrayBuffer())
- //         .then(bytes => {
- //             // console.log(bytes)
- //             // console.log(privMetaJSON)
- //             // console.log($storedPostKey)
- //             // console.log(stored(allowedTags))
- //             return decrypt(bytes, privMetaJSON, $storedPostKey, stored(allowedTags))
- //         })
- //         .then(vec => {
- //             // console.log(vec)
- //             let [posts, meta] = vec
- //             $privPosts = posts
- //             $privMeta = meta
- //             // console.log('privPosts loaded, length ' + posts.length)
- //         })
- //     .then(() => {
- //         // same as in login/+page.svelte
- //         $bigIndexRows = [...stored(pubMeta).values(), ...$privMeta.values()]
- //             .filter(post => !post.tags.includes('stub'))
- //             .sort((a, b) => b.created.localeCompare(a.created))
- //     })
- // }
 
  // TODO: apply background-color to body too, due to elastic scroll revealing
  // white background
@@ -129,7 +88,7 @@
         </div>
         <div id="theme-picker">
             {#each colors as color}
-                <label for={color} class={`theme-${color===theme}`} >{color}
+                <label for={color} class={`theme-${color === theme}`} >{color}
                     <input type="radio" bind:group={theme} value={color} id={color} name="theme-switch">
                 </label>
             {/each}

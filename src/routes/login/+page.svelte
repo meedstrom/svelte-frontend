@@ -91,6 +91,7 @@
      // previous page in a series, such as the series of daily-pages.
      $bigIndexRows = [...stored(pubMeta).values(), ...$privMeta.values()]
          .filter((post) => !post.tags.includes('stub'))
+         .filter(post => !post.tags.includes('tag'))
          .sort((a, b) => b.created.localeCompare(a.created))
 
      goto('/')

@@ -23,13 +23,13 @@
      {
          key: "title",
          title: "Note",
-         value: v => v.title,
+         value: (v: any) => v.title,
          sortable: true,
          // case-insensitive search
          // NOTE: the result lacks a label element
          // is there a searchLabel or some such option?
          // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: v =>
+         renderValue: (v: any) =>
              (v.hidden ? `<a class="${v.hidden}"` : '<a') +
                         ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
@@ -37,22 +37,22 @@
      {
          key: "links",
          title: "Links",
-         value: v => v.links,
+         value: (v: any) => v.links,
          sortable: true,
          headerClass: 'links-header',
      },
      {
          key: "wordcount",
          title: "Words",
-         value: v => v.wordcount,
+         value: (v: any) => v.wordcount,
          sortable: true,
          headerClass: 'words-header',
      },
      {
          key: "created",
          title: "Created",
-         value: v => v.created,
-         renderValue: v => v.created_fancy.replaceAll('-', '‑'),
+         value: (v: any) => v.created,
+         renderValue: (v: any) => v.created_fancy.replaceAll('-', '‑'),
          sortable: true,
          headerClass: 'creation-header',
      },
@@ -73,6 +73,6 @@
     <SvelteTable columns="{columns}"
                  rows="{$bigIndexRows}"
                  sortBy="created"
-                 sortOrder=-1>
+                 sortOrder={-1}>
     </SvelteTable>
 </div>

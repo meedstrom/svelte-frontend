@@ -9,6 +9,9 @@ export function load({ params }) {
     const content = stored(pubPosts).get(params.first)
     const post = stored(pubMeta).get(params.first)
 
-    if (post) return { post, content, id: post.permalink, }
+    if (post) return {
+        // post, content, id: post.permalink, dailies: [], dailySlugs: []
+        post, content, id: post.permalink
+    }
     else throw error(404, 'Known ID, but post not found')
 }

@@ -1,7 +1,16 @@
 <script lang="ts">
+ import type { Post } from '$lib/stores'
+ type postData = {
+     post: Post
+     content: string | undefined
+     id: string
+     dailies: Post[]
+     dailySlugs: string[]
+ }
  export let data
- import { get as stored } from 'svelte/store'
+
  import { seen, allowedTags, privateTags, } from '$lib/stores'
+ import { get as stored } from 'svelte/store'
  import { afterNavigate } from '$app/navigation'
  // import { Temporal } from '@js-temporal/polyfill'
  afterNavigate(() => {
@@ -14,7 +23,7 @@
          return
      }
      let willUnlink = new Set([...privateTags])
-     showTags.forEach(tag => willUnlink.delete(tag))
+     showTags.forEach((tag: string) => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
      // prolly safe, my html has no nested <a> tags
      const re = new RegExp(
@@ -24,6 +33,7 @@
      return markup.replaceAll(re, '$1')
  }
 
+ // TODO: use new Temporal web API
  function daysSince(then: string): string {
      const unixNow = new Date().getTime()
      const unixThen = new Date(then).getTime()
@@ -38,12 +48,18 @@
 
  $: isDaily = data.dailies && data.post.tags.includes('daily') ? true : false
  // INFO: They're pre-sorted by creation-date, so that smaller index = newer.
- $: prev = isDaily ? data.dailies.find(post =>
-     data.dailySlugs.indexOf(post.slug) > data.dailySlugs.indexOf(data.post.slug)
- ) : null
- $: next = isDaily ? data.dailies.toReversed().find(post =>
-     data.dailySlugs.indexOf(post.slug) < data.dailySlugs.indexOf(data.post.slug)
- ) : null
+ $: prev = isDaily ?
+           data.dailies.find(post =>
+               data.dailySlugs.indexOf(post.slug)
+               > data.dailySlugs.indexOf(data.post.slug)
+           )
+         : null
+ $: next = isDaily ?
+           data.dailies.toReversed().find(post =>
+               data.dailySlugs.indexOf(post.slug)
+               < data.dailySlugs.indexOf(data.post.slug)
+           )
+         : null
 </script>
 
 <svelte:head>
