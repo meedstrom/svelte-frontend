@@ -6,15 +6,16 @@ import { get as stored } from 'svelte/store'
 import { pubMeta, privMeta, seen } from '$lib/stores'
 
 export function load() {
-    const merged = [...stored(pubMeta).values(), ...stored(privMeta).values()]
+    const allMeta = [...stored(pubMeta).values(), ...stored(privMeta).values()]
     let links = new Set<string>(
-        merged.filter(x => !x.tags.includes('stub'))
+        allMeta.filter(x => !x.tags.includes('stub'))
             .map(x => x.permalink)
     )
     // maybe reset once seen all
     if (links.size <= stored(seen).size) {
-        // TODO: Check if there are public pages not yet in seen (because visitor had
-        // also seen unlocked posts in the past, or posts deleted, or stubs, or...)
+        // TODO: Check if there are public pages not yet in seen (because
+        // visitor had also seen unlocked posts in the past, or posts deleted,
+        // or stubs, or...)
         // if (!links.find(link => !stored(seen).has(link))) {
         alert('Congrats, you\'ve seen all public pages that aren\'t stubs! Counter reset.')
         seen.set(new Set<string>([]))
@@ -27,7 +28,7 @@ export function load() {
     }
     const unseen = [...links] // convert Set to array
     const randomPermalink = unseen[Math.floor(Math.random() * unseen.length)]
-    const randomPost = merged.find(x => x.permalink === randomPermalink)
+    const randomPost = allMeta.find(x => x.permalink === randomPermalink)
     const slug = randomPost ? randomPost.slug : ''
     throw redirect(307, `/${randomPermalink}/${slug}`)
 }

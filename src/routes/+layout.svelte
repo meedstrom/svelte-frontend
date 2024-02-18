@@ -1,8 +1,8 @@
 <script lang="ts">
  import './global.scss'
  import { browser } from '$app/environment'
- import { goto } from '$app/navigation'
- import { page } from '$app/stores'
+ import { invalidateAll } from '$app/navigation'
+ // import { page } from '$app/stores'
  import { Buffer } from 'buffer'
  import { seen,
           pubMeta,
@@ -26,7 +26,7 @@
  if ($storedPostKey !== '' && $privPosts.size === 0) {
      console.log('fetching')
      fetch(extrasPath)
-            .then((res: Response) => res.arrayBuffer())
+            .then((response) => response.arrayBuffer())
             .then((bytes) => decryptExtras(
                 bytes, privMetaJSON, $storedPostKey, $allowedTags
             ))
@@ -43,6 +43,9 @@
                         .filter(post => !post.tags.includes('stub'))
                         .filter(post => !post.tags.includes('tag'))
                         .sort((a, b) => b.created.localeCompare(a.created))
+                // force reload in case someone cold-visits a priv link
+                // (an '/unlocked/...' path)
+                invalidateAll()
             })
  }
 
@@ -65,7 +68,7 @@
             <nav>
                 <a href="/login">Login</a>
                 <a href="/about">About</a>
-                <a href="/nexus">Nexus</a>
+                <a href="/nexus">Explore</a>
                 <a href="/random">Random</a>
                 <!-- Pre-sized to eliminate CLS -->
                 <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
@@ -80,7 +83,9 @@
             <p>
                 Martin Edström
                 <br>
-                <a href="https://github.com/meedstrom">GitHub</a>
+                <a rel="me" href="https://github.com/meedstrom">GitHub</a>
+                <br>
+                <a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a>
             </p>
             <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a>.</p>
             <p><a href="/about">About</a></p>
