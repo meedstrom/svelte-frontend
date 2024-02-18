@@ -1,110 +1,116 @@
 @charset "utf-8";
-@import '@csstools/normalize.css/normalize.css';
+@import "@csstools/normalize.css/normalize.css";
 // @import './export-colors-doom-zenburn.scss';
-@import './export-colors-doom-monokai-machine.scss';
+@import "./export-colors-doom-monokai-machine.scss";
 
 // Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
 // Check on https://coolors.co/contrast-checker
 
 .theme-auto {
     // same as off-white
-    --blossom : #45c ;
-    --fade    : #a36 ;
-    --text    : #222 ;
-    --bg      : #f9f5f3 ;
-    --bg-alt  : #ddd ;
-    --grey    : #666 ;
+    --blossom: #45c;
+    --fade: #a36;
+    --text: #222;
+    --bg: #f9f5f3;
+    --bg-alt: #ddd;
+    --grey: #666;
     @media (prefers-color-scheme: dark) {
-        --blossom : #f66;
-        --fade    : #c99;
-        --text    : #d9d8dc;
-        --bg      : #2f1f24;
-        --bg-alt  : #433;
-        --grey    : #888;
-        img[src^="/attachments/invertable"] { filter: invert(1); }
+        --blossom: #f66;
+        --fade: #c99;
+        --text: #d9d8dc;
+        --bg: #2f1f24;
+        --bg-alt: #433;
+        --grey: #888;
+        img[src^="/attachments/invertable"] {
+            filter: invert(1);
+        }
     }
 }
 
 .theme-white {
-    --blossom : #45c;
-    --fade    : #a36;
-    --text    : #222;
-    --bg      : #f9f5f3;
-    --bg-alt  : #ddd;
-    --grey    : #666;
+    --blossom: #45c;
+    --fade: #a36;
+    --text: #222;
+    --bg: #f9f5f3;
+    --bg-alt: #ddd;
+    --grey: #666;
 }
 
 .theme-dark-red {
-    --blossom : #f66;
-    --fade    : #c99;
-    --text    : #d9d8dc;
-    --bg      : #2f1f24;
-    --bg-alt  : #433;
-    --grey    : #888;
-    img[src^="/attachments/invertable"] { filter: invert(1); }
+    --blossom: #f66;
+    --fade: #c99;
+    --text: #d9d8dc;
+    --bg: #2f1f24;
+    --bg-alt: #433;
+    --grey: #888;
+    img[src^="/attachments/invertable"] {
+        filter: invert(1);
+    }
 }
 
 .theme-tan {
-    --blossom : #900;
-    --fade    : #502;
-    --text    : #000;
-    --bg      : #dca;
+    --blossom: #900;
+    --fade: #502;
+    --text: #000;
+    --bg: #dca;
     // --bg      : #b96;
-    --bg-alt  : #cba;
-    --grey    : #666;
+    --bg-alt: #cba;
+    --grey: #666;
 }
 
 .theme-dark-amber {
-    --blossom : #ea0;
-    --fade    : #a50; // too low contrast
-    --text    : #da7;
-    --bg      : #210;
-    --bg-alt  : #320;
-    --grey    : #888;
-    img[src^="/attachments/invertable"] { filter: invert(1); }
+    --blossom: #ea0;
+    --fade: #a50; // too low contrast
+    --text: #da7;
+    --bg: #210;
+    --bg-alt: #320;
+    --grey: #888;
+    img[src^="/attachments/invertable"] {
+        filter: invert(1);
+    }
 }
 
 .theme-pink {
-    --blossom : #980255;
-    --fade    : #753851;
-    --text    : #49002d;
-    --bg      : #ffe4f5;
-    --bg-alt  : #f8d2e9;
-    --grey    : #666;
+    --blossom: #980255;
+    --fade: #753851;
+    --text: #49002d;
+    --bg: #ffe4f5;
+    --bg-alt: #f8d2e9;
+    --grey: #666;
 }
-
 
 // unused ------------------
 
 .theme-dark-green {
-    --blossom : #3a0;
-    --fade    : #370;
-    --text    : #ab7;
-    --bg      : #220;
-    --bg-alt  : #110;
-    --grey    : #888;
+    --blossom: #3a0;
+    --fade: #370;
+    --text: #ab7;
+    --bg: #220;
+    --bg-alt: #110;
+    --grey: #888;
 }
 
 .theme-green {
-    --blossom : #390;
-    --fade    : #360;
-    --text    : #020;
-    --bg      : #dea;
-    --bg-alt  : #cdc;
+    --blossom: #390;
+    --fade: #360;
+    --text: #020;
+    --bg: #dea;
+    --bg-alt: #cdc;
 }
 
 .theme-earth {
-    --blossom : #c26c49;
-    --fade    : #bd8869;
-    --text    : #310;
-    --bg      : #d8e3dd;
-    --bg-alt  : #e8c3a8;
+    --blossom: #c26c49;
+    --fade: #bd8869;
+    --text: #310;
+    --bg: #d8e3dd;
+    --bg-alt: #e8c3a8;
 }
-
 
 // Make things themeable
 
-html, body, #mandatory-wrapper {
+html,
+body,
+#mandatory-wrapper {
     height: 100%;
 }
 
@@ -114,27 +120,34 @@ html, body, #mandatory-wrapper {
     background-color: var(--bg-alt);
 }
 
-
 // Text
 
 html {
-    font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, "Noto Sans", sans-serif;
     // font-size: 17px; font-family: Palatino, serif;
     line-height: 1.4;
     text-rendering: optimizeLegibility;
 }
 
 p {
-    margin: .85em 0;
+    margin: 0.85em 0;
 }
 
 // The default 80% is just slightly too large
-small, sub, sup {
+small,
+sub,
+sup {
     font-size: 75%;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-weight: normal;
     font-size: 1.3em;
 }
@@ -162,11 +175,12 @@ span.underline {
 // font-width property.  The font-size property is about height, and the width
 // depends on the family.  So em, ex, px, pt... the unit doesn't matter as
 // you'll still need to find the right size for each family by trial & error.
-code, pre {
-    font-size: 14px; font-family: "M+1M", monospace;
+code,
+pre {
+    font-size: 14px;
+    font-family: "M+1M", monospace;
 }
 
-
 // Basic layout
 
 // The "central column", the edges of which disappear on mobile
@@ -193,6 +207,11 @@ article {
         overflow-x: auto;
         overflow-wrap: normal;
     }
+
+    // Don't let math equations break out of bounds either
+    span.katex {
+        overflow: auto;
+    }
 }
 
 header > nav {
@@ -202,7 +221,7 @@ header > nav {
     a {
         flex-grow: 5;
         text-align: center;
-        padding: 1em .7em;
+        padding: 1em 0.7em;
         text-decoration: none;
         border-bottom: none;
     }
@@ -236,7 +255,6 @@ footer {
             cursor: pointer;
             // border-style: groove;
             // border-width: 3px;
-
         }
         // Hide the radio buttons
         // FIXME: keeb focus
@@ -252,24 +270,30 @@ footer {
         label.theme-true {
             outline: var(--fade) 2px solid;
         }
-        
+
         label:hover {
             outline: var(--blossom) 2px solid;
         }
     }
-
 }
 
 summary {
     display: block;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
     cursor: pointer;
-    h1,h2,h3,h4,h5,h6 { display: inline; }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        display: inline;
+    }
 }
 
 details {
     border-bottom: 1px solid var(--bg-alt);
-    margin-top: .2em;
+    margin-top: 0.2em;
 }
 
 details[open] + details {
@@ -298,23 +322,25 @@ summary + details {
 
 // "Hovering cards" version
 details > details {
-    padding-top: .8em;
+    padding-top: 0.8em;
     padding-left: 1.5em;
-    @media (max-width: 599px) { padding-left: .8em; }
+    @media (max-width: 599px) {
+        padding-left: 0.8em;
+    }
     padding-right: 0.5em;
     border-radius: 3px;
     box-shadow: -2px 2px 7px black;
 }
 
-
 hr {
     border-color: var(--bg-alt);
 }
 
-ul, ol {
+ul,
+ol {
     // padding-left: 1em;
     padding-left: 1.4em;
-    margin-top: .5em;
+    margin-top: 0.5em;
     margin-bottom: 1.5em;
 }
 
@@ -326,10 +352,9 @@ ol ol {
 }
 
 li {
-    margin-top: .3em;
-    margin-bottom: .3em;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
 }
-
 
 details > ul:last-child {
     margin-bottom: 1em;
@@ -345,19 +370,19 @@ blockquote {
     border-left: 5px solid var(--blossom);
     // margin-bottom: 2.5rem;
     background-color: var(--bg-alt);
-
 }
 
 // Add a fancy big quote symbol
 blockquote > p:first-child:before {
     font-size: 4em;
-    content: '“';
+    content: "“";
     line-height: 0;
     margin-right: 0.25em;
     vertical-align: -0.4em;
 }
 
-img, video {
+img,
+video {
     max-height: 80vh;
     max-width: 100%;
     display: block;
@@ -368,7 +393,6 @@ img, video {
 //     img[src^="/attachments/invertable"] { filter: invert(1); }
 // }
 
-
 // Pre and Code
 
 pre {
@@ -380,8 +404,10 @@ pre {
     margin-bottom: 1.5em;
 }
 
-code, kbd, samp {
-    padding: 0 0.5em;
+code,
+kbd,
+samp {
+    padding: 0 0.4em;
     background-color: var(--bg-alt);
     white-space: pre-wrap;
 }
@@ -391,11 +417,10 @@ pre.src {
     padding: 6px 2px;
 }
 
-
-
 // Buttons, forms, input
 
-input, textarea {
+input,
+textarea {
     border: 1px solid var(--text);
     font-size: 100%;
 
@@ -408,7 +433,12 @@ textarea {
     width: 100%;
 }
 
-.button, button, input[type="submit"], input[type="reset"], input[type="button"], input[type=file]::file-selector-button {
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="file"]::file-selector-button {
     display: inline-block;
     padding: 5px 10px;
     text-align: center;
@@ -425,7 +455,7 @@ textarea {
 
     &[disabled] {
         cursor: default;
-        opacity: .5;
+        opacity: 0.5;
     }
 
     &:hover {
@@ -440,7 +470,9 @@ textarea {
     }
 }
 
-textarea, select, input {
+textarea,
+select,
+input {
     color: var(--text);
     padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
     margin-bottom: 10px;
@@ -460,14 +492,14 @@ input[type="checkbox"]:focus {
     outline: 1px dotted var(--blossom);
 }
 
-label, legend, fieldset {
+label,
+legend,
+fieldset {
     display: block;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
-
-
 // Logseq-styled pages
 
 div.outline-2 {
@@ -490,7 +522,6 @@ div.outline-6 > h6 {
     font-size: 1em;
 }
 
-
 // Links
 
 a {
@@ -500,8 +531,13 @@ a {
     text-decoration: none;
 }
 
-a:visited { color: var(--fade); }
-a:focus, a:hover { outline: var(--blossom) solid 2px; }
+a:visited {
+    color: var(--fade);
+}
+a:focus,
+a:hover {
+    outline: var(--blossom) solid 2px;
+}
 
 // Indicate "unlocked" links
 a.eyes_therapist:after,
@@ -516,7 +552,8 @@ a.stub {
 
 // Indicate external links
 a[href^="http://"]:after,
-a[href^="https://"]:after {
+a[href^="https://"]:after
+{
     content: "↗️";
 }
 
@@ -526,7 +563,6 @@ a.easylink {
     border-bottom: none;
 }
 
-
 // Tables
 
 table {
@@ -541,36 +577,45 @@ tr:nth-child(even) {
 }
 
 th {
-    padding: .75em .25em;
+    padding: 0.75em 0.25em;
     text-align: left;
 }
 
 // .5em really dilutes the table, but it adds up to a tap-target minimum for
 // mobile.  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
 td {
-    padding: .5em .4em;
-    a { padding: 2px 0; }
+    padding: 0.5em 0.4em;
+    a {
+        padding: 2px 0;
+    }
 }
 
 #the-big-index {
     overflow-x: auto;
 
-    a { border-bottom: none; }
+    a {
+        border-bottom: none;
+    }
 
-    th { cursor: pointer; }
+    th {
+        cursor: pointer;
+    }
 
     tr:first-child > th:hover {
         background-color: var(--bg-alt);
         // outline: var(--blossom) solid 2px;
     }
-    
+
     // ensure there's space for the sorting-arrow in the Created header
     th.creation-header {
         padding-right: 0;
     }
 
     // since these linebreak when you sort on them, ensure the arrow is centered
-    th.words-header, th.links-header { text-align: center; }
+    th.words-header,
+    th.links-header {
+        text-align: center;
+    }
 
     // compact the table-width just a bit, every px counts on mobile
     @media (max-width: 599px) {
@@ -588,8 +633,10 @@ td {
         //     display: none;
         // }
 
-        td:nth-child(2), td:nth-child(3),
-        th:nth-child(2), th:nth-child(3) {
+        td:nth-child(2),
+        td:nth-child(3),
+        th:nth-child(2),
+        th:nth-child(3) {
             display: none;
         }
     }
@@ -597,13 +644,11 @@ td {
     @media (min-width: 600px) {
         th {
             border: 3px groove var(--bg-alt);
-            padding: .5em .25em;
+            padding: 0.5em 0.25em;
         }
     }
 }
 
-
-
 // Breakpoints
 
 @media (max-width: 599px) {
@@ -624,7 +669,8 @@ td {
 }
 
 @media (min-width: 600px) {
-    img, video {
+    img,
+    video {
         max-height: 50vh;
     }
 
@@ -632,7 +678,7 @@ td {
         max-width: 42em;
     }
     header {
-        padding: .5em;
+        padding: 0.5em;
     }
     article {
         padding-left: 3em;
@@ -643,7 +689,7 @@ td {
 
     #central-column {
         margin: auto;
-        border-radius: .5em;
+        border-radius: 0.5em;
         box-shadow: -2px 2px 1em black;
     }
     footer {
@@ -655,14 +701,14 @@ td {
     // (Largely deprecated by the new thead border)
     #the-big-index tr > th:first-child,
     #the-big-index tr > td:first-child {
-        padding-left: .5em;
+        padding-left: 0.5em;
     }
     #the-big-index tr > td:last-child {
-        padding-right: .5em;
+        padding-right: 0.5em;
     }
     td {
         // more dense tables OK on desktop (rarely touch-operated)
-        padding-top: .25em;
-        padding-bottom: .25em;
+        padding-top: 0.25em;
+        padding-bottom: 0.25em;
     }
 }

@@ -1,7 +1,7 @@
 export const prerender = true
 
 import { get as stored } from 'svelte/store'
-import { error, redirect } from '@sveltejs/kit'
+import { error } from '@sveltejs/kit'
 import { pubMeta } from '$lib/stores'
 import { pubPosts } from '$lib/postContents'
 
