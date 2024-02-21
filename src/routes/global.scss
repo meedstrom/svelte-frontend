@@ -617,6 +617,10 @@ td {
         text-align: center;
     }
 
+    td.created {
+        text-align: right;
+    }
+
     // compact the table-width just a bit, every px counts on mobile
     @media (max-width: 599px) {
         // th.words-header {
@@ -685,6 +689,10 @@ td {
         padding-right: 3em;
         padding-bottom: 3em;
         margin-bottom: 4em;
+    }
+    div.paginator {
+        padding-left: 3em;
+        padding-bottom: 1em;
     }
 
     #central-column {

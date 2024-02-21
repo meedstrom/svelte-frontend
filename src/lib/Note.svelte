@@ -12,7 +12,7 @@
  import { seen, allowedTags, privateTags, } from '$lib/stores'
  import { get as stored } from 'svelte/store'
  import { afterNavigate } from '$app/navigation'
- // import { Temporal } from '@js-temporal/polyfill'
+ import { page } from '$app/stores'
  afterNavigate(() => {
      seen.update(x => x.add(data.post.permalink))
  })
@@ -33,7 +33,7 @@
      return markup.replaceAll(re, '$1')
  }
 
- // TODO: use new Temporal web API
+ // TODO: try new Temporal web API (actually polyfill is several megs so wait)
  function daysSince(then: string): string {
      const unixNow = new Date().getTime()
      const unixThen = new Date(then).getTime()
@@ -60,6 +60,8 @@
                < data.dailySlugs.indexOf(data.post.slug)
            )
          : null
+
+ // console.log($page.url.pathname)
 </script>
 
 <svelte:head>
@@ -68,7 +70,8 @@
 </svelte:head>
 
 <article data-sveltekit-preload-data="hover"
-         data-sveltekit-preload-code="eager">
+         data-sveltekit-preload-code="eager"
+         class="h-entry">
     {#if isDaily}
         <div class="row">
             <div>
@@ -83,8 +86,17 @@
             </div>
         </div>
     {/if}
-    <h1 id={data.post.permalink}>{data.post.title}</h1>
-    {@html stripLinksToHidden(data.content, stored(allowedTags))}
+    <h1 class="p-name" id={data.post.permalink}>
+        <!-- Linkify titles only on the /recent page.  Should probably refactor instead of checking the URL directly -->
+        {#if $page.url.pathname === '/'}
+            <a href={`/${data.post.permalink}/${data.post.slug}`}>{data.post.title}</a>
+        {:else}
+            {data.post.title}
+        {/if}
+    </h1>
+    <div class="e-content">
+        {@html stripLinksToHidden(data.content, stored(allowedTags))}
+    </div>
     <div class="row">
         <div></div>
         <div>

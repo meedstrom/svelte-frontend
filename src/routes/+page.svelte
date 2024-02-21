@@ -1,78 +1,77 @@
 <script lang="ts">
- import { bigIndexRows } from '$lib/stores'
  import { get as stored } from 'svelte/store'
- import SvelteTable from "svelte-table"
- // import './tabulator.css'
- // import {TabulatorFull as Tabulator} from 'tabulator-tables';
- // import {onMount} from 'svelte';
- //
- // let tableComponent;
- //
- //  onMount(() => {
- //      new Tabulator(tableComponent, {
- //          data: stored(bigIndexRows), //link data to table
- //          reactiveData: true, //enable data reactivity
- //          // columns: columns, //define table columns
- //          index: "permalink",
- //          autoColumns: true,
- //      })
- //  })
- //
+ import { pubMeta, privMeta } from '$lib/stores'
+ import { pubPosts, privPosts } from '$lib/postContents'
+ import Note from '$lib/Note.svelte'
+ import type { Post, NoteData } from '$lib/stores'
+ // type NoteData = {
+ //     post: Post,
+ //     content: string,
+ //     id: string,
+ // }
 
- const columns = [
-     {
-         key: "title",
-         title: "Note",
-         value: (v: any) => v.title,
-         sortable: true,
-         // case-insensitive search
-         // NOTE: the result lacks a label element
-         // is there a searchLabel or some such option?
-         // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
-         renderValue: (v: any) =>
-             (v.hidden ? `<a class="${v.hidden}"` : '<a') +
-                        ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
-         parseHTML: true,
-     },
-     {
-         key: "links",
-         title: "Links",
-         value: (v: any) => v.links,
-         sortable: true,
-         headerClass: 'links-header',
-     },
-     {
-         key: "wordcount",
-         title: "Words",
-         value: (v: any) => v.wordcount,
-         sortable: true,
-         headerClass: 'words-header',
-     },
-     {
-         key: "created",
-         title: "Created",
-         value: (v: any) => v.created,
-         renderValue: (v: any) => v.created_fancy.replaceAll('-', '‑'),
-         sortable: true,
-         headerClass: 'creation-header',
-     },
- ]
-
+ let orderedByCreation = [...stored(pubMeta).values()]
+     .filter((post) => !post.tags.find((tag) => ['daily', 'stub', 'tag'].includes(tag)))
+     .sort((a, b) => (b.updated ?? b.created).localeCompare((a.updated ?? a.created)))
+ let skip = 0
+ $: notesToShow = orderedByCreation
+     .slice(0 + skip, 4 + skip)
+     .map((meta) => new Object({
+         post: meta,
+         content: $pubPosts.get(meta.permalink),
+         id: meta.permalink,
+     }))
 </script>
+
 <svelte:head>
-	<title>All posts</title>
-    <meta name="description" content="List of blog posts.">
+    <title>Recent pages</title>
 </svelte:head>
 
-<div id="the-big-index"
-     data-sveltekit-preload-data="off"
-     data-sveltekit-preload-code="off">
-    <!-- <div bind:this={tableComponent}></div> -->
-    
+<!-- TODO: Cut the central column into sections -->
+<!-- TODO: Attach the pagination as metadata on the
+     URL, so visitor can use back-button -->
 
-    <SvelteTable columns="{columns}"
-                 rows="{$bigIndexRows}"
-                 sortBy="created"
-                 sortOrder={-1}>
-    </SvelteTable>
+<div class="paginator">
+    {#if (skip >= 4) }
+        <button on:click={() => skip += -4}>Newer</button>
+    {:else}
+        <button disabled>Newer</button>
+    {/if}
+    Showing {skip + 1} to {skip + 4}
+    {#if (skip <= orderedByCreation.length - 4)}
+        <button on:click={() => skip += 4}>Older</button>
+    {:else}
+        <button disabled>Older</button>
+    {/if}
 </div>
+
+{#each notesToShow as data}
+    <Note data={data} />
+{/each}
+
+<div class="paginator">
+    {#if skip >= 4 }
+        <button on:click={() => skip += -4}>Newer</button>
+    {:else}
+        <button disabled>Newer</button>
+    {/if}
+    Showing {skip + 1} to {skip + 4}
+    {#if skip <= orderedByCreation.length - 4}
+        <button on:click={() => skip += 4}>Older</button>
+    {:else}
+        <button disabled>Older</button>
+    {/if}
+</div>
+
+<style>
+ button:disabled {
+     background: grey;
+     border-color: grey;
+ }
+ div.paginator button:first-child {
+     /* margin-left: 50%; */
+ }
+ div.paginator button:last-child {
+     /* margin-right: 50%; */
+ }
+</style>

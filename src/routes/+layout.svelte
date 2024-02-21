@@ -66,12 +66,17 @@
     <div id="central-column">
         <header>
             <nav>
-                <a href="/login">Login</a>
+                {#if $allowedTags.length === 0}
+                    <a href="/login">Login</a>
+                {:else}
+                    <a href="/logout">Logout</a>
+                {/if}
                 <a href="/about">About</a>
                 <a href="/nexus">Explore</a>
                 <a href="/random">Random</a>
                 <!-- Pre-sized to eliminate CLS -->
-                <a href="/" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
+                <a href="/all" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
+                <a href="/">Recent</a>
             </nav>
         </header>
         <main>
@@ -80,12 +85,14 @@
     </div>
     <footer>
         <div id="info">
-            <p>
-                Martin Edström
+            <p class="h-card p-author">
+                <span class="p-name">Martin Edström</span>
                 <br>
                 <a rel="me" href="https://github.com/meedstrom">GitHub</a>
                 <br>
                 <a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a>
+                <!-- <br>
+                     <a rel="me" href="https://reddthat.com/u/mstrom">Lemmy</a> -->
             </p>
             <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a>.</p>
             <p><a href="/about">About</a></p>
