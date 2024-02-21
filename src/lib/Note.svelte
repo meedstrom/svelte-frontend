@@ -17,23 +17,35 @@
      seen.update(x => x.add(data.post.permalink))
  })
 
- function stripLinksToHidden(markup, showTags) {
+ function reformat(markup, showTags) {
      if (!markup) {
          console.log('no post provided')
          return
      }
+     let result: string
+
+     // Strip links to hidden posts
      let willUnlink = new Set([...privateTags])
      showTags.forEach((tag: string) => willUnlink.delete(tag))
      const willUnlinkRegex = [...willUnlink].join('|')
-     // prolly safe, my html has no nested <a> tags
-     const re = new RegExp(
+     // Prolly safe, my html has no nested <a> tags
+     const stripRe = new RegExp(
          '<a +?class="[^\"]*?(?:' + willUnlinkRegex + ').*?>(.*?)</a>',
          'gs'
      )
-     return markup.replaceAll(re, '$1')
+     result = markup.replaceAll(stripRe, '$1')
+
+     // Indicate 'unlocked' links with a 🗝 (dungeon key icon)
+     const privateLinkRe = new RegExp(
+         '(<a +?class="[^\"]*?(?:' + [...privateTags].join('|') + ').*?)</a>',
+         'gs'
+     )
+     result = result.replaceAll(privateLinkRe, '$1</a><iconify-icon icon="noto:old-key"></iconify-icon>')
+
+     return result
  }
 
- // TODO: try new Temporal web API (actually polyfill is several megs so wait)
+ // TODO: try new Temporal web API (actually multi-meg polyfill so wait)
  function daysSince(then: string): string {
      const unixNow = new Date().getTime()
      const unixThen = new Date(then).getTime()
@@ -86,16 +98,17 @@
             </div>
         </div>
     {/if}
+
+    <!-- Would have given this a normal hash-link but the Note component is
+    sometimes rendered elsewhere (the /recent page), where it's useful to get a
+    full link.  -->
     <h1 class="p-name" id={data.post.permalink}>
-        <!-- Linkify titles only on the /recent page.  Should probably refactor instead of checking the URL directly -->
-        {#if $page.url.pathname === '/'}
-            <a href={`/${data.post.permalink}/${data.post.slug}`}>{data.post.title}</a>
-        {:else}
+        <a href={`/${data.post.permalink}/${data.post.slug}`}>
             {data.post.title}
-        {/if}
+        </a>
     </h1>
     <div class="e-content">
-        {@html stripLinksToHidden(data.content, stored(allowedTags))}
+        {@html reformat(data.content, stored(allowedTags))}
     </div>
     <div class="row">
         <div></div>

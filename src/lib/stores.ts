@@ -30,12 +30,7 @@ export type NoteData = {
 export const bigIndexRows = writable(initRows)
 export const pubMeta = writable(new Map(Object.entries(pubMetaJSON)))
 export const privMeta = writable(new Map())
-export const privateTags = new Set([
-     "private",
-     "eyes_therapist",
-     "eyes_partner",
-     "eyes_friend",
-])
+export const privateTags = new Set(["fren", "gri", "lover", "privy", "shrink"])
 
 // Which pages the visitor has seen
 export const seen = writable(

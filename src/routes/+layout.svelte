@@ -1,5 +1,6 @@
 <script lang="ts">
  import './global.scss'
+ import 'iconify-icon'
  import { browser } from '$app/environment'
  import { invalidateAll } from '$app/navigation'
  // import { page } from '$app/stores'
@@ -88,13 +89,15 @@
             <p class="h-card p-author">
                 <span class="p-name">Martin Edström</span>
                 <br>
-                <a rel="me" href="https://github.com/meedstrom">GitHub</a>
+                <iconify-icon icon="mdi:github"></iconify-icon> <a rel="me" href="https://github.com/meedstrom">GitHub</a>
                 <br>
-                <a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a>
+                <iconify-icon icon="mdi:mastodon"></iconify-icon> <a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a>
+                <br>
+                <iconify-icon icon="mdi:key"></iconify-icon> <a rel="gpgkey" href="/static/pubkey-meedstrom.gpg">GPG key</a>
                 <!-- <br>
                      <a rel="me" href="https://reddthat.com/u/mstrom">Lemmy</a> -->
             </p>
-            <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a>.</p>
+            <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p>
             <p><a href="/about">About</a></p>
             <p><a href="/blogroll">"Blogroll"</a></p>
         </div>

@@ -30,8 +30,8 @@
          // is there a searchLabel or some such option?
          // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
          renderValue: (v: any) =>
-             (v.hidden ? `<a class="${v.hidden}"` : '<a') +
-                        ` href="/${v.permalink}/${v.slug}">${v.title}</a>`,
+             (v.hidden ? '<iconify-icon icon="noto:old-key"></iconify-icon>' : '') +
+             `<a href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {
@@ -53,7 +53,7 @@
          title: "Created",
          value: (v: any) => v.created,
          // non-breaking hyphen
-         renderValue: (v: any) => v.created_fancy.replaceAll('-', '‑'),
+         // renderValue: (v: any) => v.created_fancy.replaceAll('-', '‑'),
          // non-breaking space
          // renderValue: (v: any) => v.created_fancy.replaceAll(' ', ' '), //.replace(/^..? /, ''),
          class: 'created',

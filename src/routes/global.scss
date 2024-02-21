@@ -520,6 +520,15 @@ div.outline-5 > h5,
 div.outline-6 > h6 {
     display: list-item;
     font-size: 1em;
+    // (TODO refactor) Re-apply the same link style I have elsewhere bc it gets
+    // overwritten by an unset rule in this file
+    & > a {
+        color: var(--blossom);
+        border-bottom: 1px solid;
+    }
+    & > a:visited {
+        color: var(--fade);
+    }
 }
 
 // Links
@@ -539,13 +548,6 @@ a:hover {
     outline: var(--blossom) solid 2px;
 }
 
-// Indicate "unlocked" links
-a.eyes_therapist:after,
-a.eyes_partner:after,
-a.eyes_friend:after {
-    content: "🗝";
-}
-
 a.stub {
     color: var(--grey);
 }
@@ -555,12 +557,21 @@ a[href^="http://"]:after,
 a[href^="https://"]:after
 {
     content: "↗️";
+    // content: '<iconify-icon icon="fa:external-link"></iconify-icon>';
 }
 
-// The headline permalinks that look like 🔗
-a.easylink {
-    text-decoration: none;
-    border-bottom: none;
+// Headline self-links better not look like links
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    & > a,
+    & > a:visited {
+        color: unset;
+        border-bottom: unset;
+    }
 }
 
 // Tables
@@ -581,8 +592,8 @@ th {
     text-align: left;
 }
 
-// .5em really dilutes the table, but it adds up to a tap-target minimum for
-// mobile.  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
+// .5em padding dilutes the table, but it adds up to a tap-target minimum for
+// mobile:  https://developer.chrome.com/docs/lighthouse/seo/tap-targets/
 td {
     padding: 0.5em 0.4em;
     a {
@@ -619,6 +630,7 @@ td {
 
     td.created {
         text-align: right;
+        white-space: nowrap;
     }
 
     // compact the table-width just a bit, every px counts on mobile

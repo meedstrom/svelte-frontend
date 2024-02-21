@@ -20,7 +20,9 @@
      .filter((post) => !post.tags.includes('tag'))
      .sort((a, b) => b.created.localeCompare(a.created))
 </script>
-
+<svelte:head>
+    <title>Logged out</title>
+</svelte:head>
 <h1>Logged out</h1>
 <style>
  h1 {

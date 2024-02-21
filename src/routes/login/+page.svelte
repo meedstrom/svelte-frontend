@@ -24,9 +24,9 @@
  // access level, same as they wouldn't peek into a physical diary ;-)
  // Everyone else is missing a key in the first place.
  const perms = {
-     't': ['eyes_friend', 'eyes_partner', 'eyes_therapist'],
-     'p': ['eyes_friend', 'eyes_partner'],
-     'f': ['eyes_friend'],
+     't': ['fren', 'privy', 'shrink'],
+     'p': ['fren', 'privy', 'lover', 'gri'],
+     'f': ['fren'],
  }
 
  const handleSubmit = async () => {
@@ -100,6 +100,7 @@
 <svelte:head>
     <title>Log in</title>
     <meta name="description" content="Log-in page">
+    <noscript>Login requires Javascript</noscript>
 </svelte:head>
 
 <form on:submit|trusted|self|preventDefault={handleSubmit}>
