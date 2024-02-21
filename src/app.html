@@ -1,15 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<link rel="pgpkey" href="%sveltekit.assets%/pubkey-meedstrom.gpg" />
+		<link rel="pingback" href="https://webmention.io/edstrom.dev/xmlrpc" />
+		<link
+			rel="webmention"
+			href="https://webmention.io/edstrom.dev/webmention"
+		/>
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>
-	
+
 	<body>
-		<div id="mandatory-wrapper" style="display: contents;">
-			%sveltekit.body%
-		</div>
+		<div id="mandatory-wrapper" style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
