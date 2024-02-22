@@ -1,9 +1,11 @@
 <script lang="ts">
  import { get as stored } from 'svelte/store'
+ import { page } from '$app/stores'
+ import { pushState } from '$app/navigation'
  import { pubMeta, privMeta } from '$lib/stores'
  import { pubPosts, privPosts } from '$lib/postContents'
  import Note from '$lib/Note.svelte'
- import type { Post, NoteData } from '$lib/stores'
+ import type { Post, NoteData } from '$lib/types'
  // type NoteData = {
  //     post: Post,
  //     content: string,
@@ -13,7 +15,10 @@
  let orderedByCreation = [...stored(pubMeta).values()]
      .filter((post) => !post.tags.find((tag) => ['daily', 'stub', 'tag'].includes(tag)))
      .sort((a, b) => (b.updated ?? b.created).localeCompare((a.updated ?? a.created)))
- let skip = 0
+ let skip =  0
+ if ($page.state && $page.state.skip) {
+     skip = $page.state.skip
+ }
  $: notesToShow = orderedByCreation
      .slice(0 + skip, 4 + skip)
      .map((meta) => new Object({
@@ -21,6 +26,15 @@
          content: $pubPosts.get(meta.permalink),
          id: meta.permalink,
      }))
+
+
+ const back = () => {
+     skip += -4
+     pushState('', { skip })
+     console.log($page.state)
+ }
+
+
 </script>
 
 <svelte:head>
@@ -51,7 +65,7 @@
 
 <div class="paginator">
     {#if skip >= 4 }
-        <button on:click={() => skip += -4}>Newer</button>
+        <button on:click={back}>Newer</button>
     {:else}
         <button disabled>Newer</button>
     {/if}

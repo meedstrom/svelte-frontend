@@ -24,10 +24,10 @@ export function load({ params }) {
         }
         // User is not logged in (and probably trying to access a known pageid)
         else {
-            throw redirect(307, `/${post.permalink}/${post.slug}`)
+            redirect(307, `/${post.permalink}/${post.slug}`);
         }
     }
-    else throw redirect(307, `/${params.first}/${params.second}`)
+    else redirect(307, `/${params.first}/${params.second}`);
     console.log(`redirecting to ${params.first}`)
     // else throw error(404, 'Not found')
 }

@@ -10,7 +10,7 @@ import { pubMeta } from '$lib/stores'
 export function load({ params }) {
     const post = [...stored(pubMeta).values()].find(post => post.slug === params.slug)
     if (post)
-        throw redirect(307, `/${post.permalink}/${post.slug}`)
+        redirect(307, `/${post.permalink}/${post.slug}`);
     else
-        throw error(404, 'Slug not found among public posts')
+        error(404, 'Slug not found among public posts');
 }

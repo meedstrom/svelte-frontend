@@ -13,5 +13,5 @@ export function load({ params }) {
         // post, content, id: post.permalink, dailies: [], dailySlugs: []
         post, content, id: post.permalink
     }
-    else throw error(404, 'Known ID, but post not found')
+    else error(404, 'Known ID, but post not found');
 }

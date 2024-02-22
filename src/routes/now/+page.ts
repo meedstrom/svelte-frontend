@@ -3,5 +3,5 @@ import { redirect } from "@sveltejs/kit"
 
 /** @type {import('./$types').LayoutServerLoad} */
 export function load() {
-    throw redirect(307, "/htvbn/portal-on-my-mind")
+    redirect(307, "/htvbn/portal-on-my-mind");
 }

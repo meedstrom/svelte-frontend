@@ -17,14 +17,14 @@ export function load({ params }) {
 
     // Trying to access a hidden ID?  Go to /unlocked.
     post = stored(privMeta).get(params.first)
-    if (post) throw redirect(307, `/unlocked/${post.permalink}/${post.slug}`)
+    if (post) redirect(307, `/unlocked/${post.permalink}/${post.slug}`);
 
     // Redirect from /slug to /id/slug
     const slugMaybe = params.first
     post =
         [...stored(pubMeta).values()].find((post) => post.slug === slugMaybe) ??
         [...stored(privMeta).values()].find((post) => post.slug === slugMaybe)
-    if (post) throw redirect(307, `/${post.permalink}/${post.slug}`)
+    if (post) redirect(307, `/${post.permalink}/${post.slug}`);
 
     // Redirect from v1 id (7-char base62) to v2 id (4-char base62).
     const oldID =
@@ -34,14 +34,14 @@ export function load({ params }) {
     post =
         stored(pubMeta).get(idMappings[`${oldID}`]) ??
         stored(privMeta).get(idMappings[`${oldID}`])
-    if (post) throw redirect(307, `/${post.permalink}/${post.slug}`)
+    if (post) redirect(307, `/${post.permalink}/${post.slug}`);
 
     // Redirect from an ID that has since become a subheading in another page
     const idMaybe = params.first
     post =
         stored(pubMeta).get(idsInPages[`${idMaybe}`]) ??
         stored(privMeta).get(idsInPages[`${idMaybe}`])
-    if (post) throw redirect(307, `/${post.permalink}/${post.slug}#${idMaybe}`)
+    if (post) redirect(307, `/${post.permalink}/${post.slug}#${idMaybe}`);
 
-    throw error(404, "Not found")
+    error(404, "Not found");
 }

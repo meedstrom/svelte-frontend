@@ -21,6 +21,7 @@
         --bg: #2f1f24;
         --bg-alt: #433;
         --grey: #888;
+        --quoteblock: #333;
         img[src^="/attachments/invertable"] {
             filter: invert(1);
         }
@@ -34,6 +35,7 @@
     --bg: #f9f5f3;
     --bg-alt: #ddd;
     --grey: #666;
+    --quoteblock: #bbb;
 }
 
 .theme-dark-red {
@@ -216,12 +218,15 @@ article {
 
 header > nav {
     display: flex;
-    flex-wrap: wrap-reverse;
-    flex-direction: row-reverse;
+    // flex-wrap: wrap-reverse;
+    flex-wrap: wrap;
+    // flex-direction: row-reverse;
+    // flex-direction: row;
     a {
         flex-grow: 5;
         text-align: center;
-        padding: 1em 0.7em;
+        // padding: 1em 0.7em;
+        padding: 1em 1em;
         text-decoration: none;
         border-bottom: none;
     }
@@ -277,61 +282,6 @@ footer {
     }
 }
 
-summary {
-    display: block;
-    margin-bottom: 0.5em;
-    cursor: pointer;
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        display: inline;
-    }
-}
-
-details {
-    border-bottom: 1px solid var(--bg-alt);
-    margin-top: 0.2em;
-}
-
-details[open] + details {
-    margin-top: 1em;
-}
-
-:not(details) + details:first-of-type {
-    margin-top: 2em;
-}
-
-// heading with no text, just direct subheading
-summary + details {
-    margin-top: 1em !important;
-}
-
-// summary + :not(details):last-of-type {
-//     margin-bottom: 2em;
-// }
-
-// Old version
-// details > details {
-//     margin-top: 1em;
-//     margin-left: 1.5em;
-//     @media (max-width: 599px) { margin-left: .8em; }
-// }
-
-// "Hovering cards" version
-details > details {
-    padding-top: 0.8em;
-    padding-left: 1.5em;
-    @media (max-width: 599px) {
-        padding-left: 0.8em;
-    }
-    padding-right: 0.5em;
-    border-radius: 3px;
-    box-shadow: -2px 2px 7px black;
-}
-
 hr {
     border-color: var(--bg-alt);
 }
@@ -369,7 +319,8 @@ blockquote {
     padding-right: 0.8em;
     border-left: 5px solid var(--blossom);
     // margin-bottom: 2.5rem;
-    background-color: var(--bg-alt);
+    // background-color: var(--bg-alt);
+    background-color: var(--quoteblock);
 }
 
 // Add a fancy big quote symbol
@@ -727,8 +678,37 @@ td {
         padding-right: 0.5em;
     }
     td {
-        // more dense tables OK on desktop (rarely touch-operated)
+        // tighter tables OK on desktop (rarely touch-operated)
         padding-top: 0.25em;
         padding-bottom: 0.25em;
+    }
+
+    // Unset on wide screen bc now we will rely on sections setting the bg color
+    // themselves and having visual separation
+    #central-column {
+        background-color: unset;
+    }
+    nav,
+    article {
+        background-color: var(--bg);
+    }
+    article,
+    section {
+        border-bottom: 1px solid var(--bg-alt);
+        margin-top: 0.2em;
+        padding-top: 0.8em;
+        padding-left: 1.5em;
+        @media (max-width: 599px) {
+            padding-left: 0.8em;
+        }
+        padding-right: 0.5em;
+        border-radius: 3px;
+        box-shadow: -2px 2px 7px black;
+    }
+    section.odd {
+        background-color: var(--bg);
+    }
+    section.even {
+        background-color: var(--bg-alt);
     }
 }

@@ -67,17 +67,17 @@
     <div id="central-column">
         <header>
             <nav>
+                <a href="/">Recent</a>
+                <a href="/all" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
+                <a href="/random">Random</a>
+                <a href="/nexus">Portals</a>
+                <a href="/about">About</a>
                 {#if $allowedTags.length === 0}
                     <a href="/login">Login</a>
                 {:else}
                     <a href="/logout">Logout</a>
                 {/if}
-                <a href="/about">About</a>
-                <a href="/nexus">Explore</a>
-                <a href="/random">Random</a>
                 <!-- Pre-sized to eliminate CLS -->
-                <a href="/all" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
-                <a href="/">Recent</a>
             </nav>
         </header>
         <main>
@@ -86,20 +86,26 @@
     </div>
     <footer>
         <div id="info">
-            <p class="h-card p-author">
+            <div class="h-card p-author">
+                <p>
                 <span class="p-name">Martin Edström</span>
-                <br>
-                <iconify-icon icon="mdi:github"></iconify-icon> <a rel="me" href="https://github.com/meedstrom">GitHub</a>
-                <br>
-                <iconify-icon icon="mdi:mastodon"></iconify-icon> <a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a>
-                <br>
-                <iconify-icon icon="mdi:key"></iconify-icon> <a rel="gpgkey" href="/static/pubkey-meedstrom.gpg">GPG key</a>
-                <!-- <br>
-                     <a rel="me" href="https://reddthat.com/u/mstrom">Lemmy</a> -->
-            </p>
-            <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p>
-            <p><a href="/about">About</a></p>
-            <p><a href="/blogroll">"Blogroll"</a></p>
+                </p>
+                <div class="row">
+                    <div><iconify-icon icon="mdi:github"></iconify-icon></div>
+                    <div><a rel="me" href="https://github.com/meedstrom">GitHub</a></div>
+                </div>
+                <div class="row">
+                    <div><iconify-icon icon="mdi:mastodon"></iconify-icon></div>
+                    <div><a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a></div>
+                </div>
+                <div class="row">
+                    <div><iconify-icon icon="mdi:key"></iconify-icon></div>
+                    <div><a rel="gpgkey" href="/static/pubkey-meedstrom.gpg">GPG key</a></div>
+                </div>
+            </div>
+            <!-- <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p> -->
+            <!-- <p><a href="/about">About</a></p> -->
+            <!-- <p><a href="/blogroll">"Blogroll"</a></p> -->
         </div>
         <div id="theme-picker">
             {#each colors as color}
@@ -112,8 +118,29 @@
 </div>
 
 <style>
- #info {
-     text-align: center;
+ #info .row {
+     /* display: flex; */
+     justify-content: unset;
+ }
+ .row > div {
+     /* margin: 0 1em; */
+     /* padding: 0 1em; */
+     width: 50%;
+ }
+ .row > div:nth-child(1) {
+     /* text-align: right; */
+     width: 40%;
+ }
+ .row > div:nth-child(2) {
+     text-align: left;
+ }
+ .h-card {
+     width: 10em;
+     margin-left: auto;
+     margin-right: auto;
+ }
+ #info iconify-icon {
+     font-size: 27px;
  }
  #theme-picker {
      margin-top: 2em;

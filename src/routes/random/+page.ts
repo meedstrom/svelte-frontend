@@ -30,5 +30,5 @@ export function load() {
     const randomPermalink = unseen[Math.floor(Math.random() * unseen.length)]
     const randomPost = allMeta.find(x => x.permalink === randomPermalink)
     const slug = randomPost ? randomPost.slug : ''
-    throw redirect(307, `/${randomPermalink}/${slug}`)
+    redirect(307, `/${randomPermalink}/${slug}`);
 }

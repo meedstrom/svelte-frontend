@@ -1,5 +1,6 @@
 <script lang="ts">
- import type { Post } from '$lib/stores'
+
+ import type { Post } from '$lib/types'
  type postData = {
      post: Post
      content: string | undefined
@@ -17,6 +18,7 @@
      seen.update(x => x.add(data.post.permalink))
  })
 
+ // TODO: Speed this  up
  function reformat(markup, showTags) {
      if (!markup) {
          console.log('no post provided')
