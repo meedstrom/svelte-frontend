@@ -29,13 +29,13 @@
         <!-- <button on:click={newer}>Newer</button> -->
         <a href={`/recent/${offset - 4}`}>Newer</a>
     {:else}
-        Newer
+        <span>Newer</span>
     {/if}
     Showing {offset + 1} to {offset + 4}
     {#if (offset <= orderedByCreation.length - 4)}
         <a href={`/recent/${offset + 4}`}>Older</a>
     {:else}
-        Older
+        <span>Older</span>
     {/if}
 </div>
 
@@ -43,30 +43,44 @@
     <Note data={data} />
 {/each}
 
-<div class="paginator">
+<div class="paginator" id="paginator2">
     {#if (offset >= 4) }
         <!-- <button on:click={newer}>Newer</button> -->
         <a href={`/recent/${offset - 4}`}>Newer</a>
     {:else}
-        Newer
+        <span>Newer</span>
     {/if}
     Showing {offset + 1} to {offset + 4}
     {#if (offset <= orderedByCreation.length - 4)}
         <a href={`/recent/${offset + 4}`}>Older</a>
     {:else}
-        Older
+        <span>Older</span>
     {/if}
 </div>
 
 <style>
- button:disabled {
-     background: grey;
-     border-color: grey;
+ /*
+    button:disabled {
+    background: grey;
+    border-color: grey;
+    }
+  */
+ div.paginator {
+     /* margin-left: auto; */
+     margin-left: auto;
+     margin-right: auto;
+     width: fit-content;
+     background-color: var(--bg);
+     padding: .5em;
+     margin-bottom: .5em;
  }
- div.paginator button:first-child {
-     /* margin-left: 50%; */
+
+ div.paginator > a,
+ div.paginator > span {
+     padding: .5em;
  }
- div.paginator button:last-child {
-     /* margin-right: 50%; */
+ #paginator2 {
+     margin-top: -2em;
  }
+
 </style>

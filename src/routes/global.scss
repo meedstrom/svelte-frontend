@@ -14,6 +14,7 @@
     --bg: #f9f5f3;
     --bg-alt: #ddd;
     --grey: #666;
+    --quoteblock: #bbb;
     @media (prefers-color-scheme: dark) {
         --blossom: #f66;
         --fade: #c99;
@@ -45,6 +46,7 @@
     --bg: #2f1f24;
     --bg-alt: #433;
     --grey: #888;
+    --quoteblock: #333;
     img[src^="/attachments/invertable"] {
         filter: invert(1);
     }
@@ -58,6 +60,7 @@
     // --bg      : #b96;
     --bg-alt: #cba;
     --grey: #666;
+    --quoteblock: #bbb;
 }
 
 .theme-dark-amber {
@@ -67,6 +70,7 @@
     --bg: #210;
     --bg-alt: #320;
     --grey: #888;
+    --quoteblock: #333;
     img[src^="/attachments/invertable"] {
         filter: invert(1);
     }
@@ -79,6 +83,7 @@
     --bg: #ffe4f5;
     --bg-alt: #f8d2e9;
     --grey: #666;
+    --quoteblock: #bbb;
 }
 
 // unused ------------------
@@ -306,10 +311,6 @@ li {
     margin-bottom: 0.3em;
 }
 
-details > ul:last-child {
-    margin-bottom: 1em;
-}
-
 blockquote {
     margin-left: 0px;
     margin-right: 0px;
@@ -347,7 +348,7 @@ video {
 // Pre and Code
 
 pre {
-    background-color: var(--bg-alt);
+    background-color: var(--quoteblock);
     display: block;
     padding: 1em;
     overflow-x: auto;
@@ -646,6 +647,9 @@ td {
     }
     header {
         padding: 0.5em;
+        background-color: var(--bg);
+        border-radius: 2px;
+        box-shadow: -1px 1px 3px black;
     }
     article {
         padding-left: 3em;
@@ -654,15 +658,16 @@ td {
         margin-bottom: 4em;
     }
     div.paginator {
-        padding-left: 3em;
-        padding-bottom: 1em;
+        border-radius: 2px;
+        box-shadow: -1px 1px 3px black;
     }
 
     #central-column {
         margin: auto;
-        border-radius: 0.5em;
-        box-shadow: -2px 2px 1em black;
+        // border-radius: 0.5em;
+        // box-shadow: -2px 2px 1em black;
     }
+
     footer {
         max-width: 38em;
         margin: auto;

@@ -2,17 +2,19 @@
  import './global.scss'
  import 'iconify-icon'
  import { browser } from '$app/environment'
+ import { assets } from '$app/paths'
+ // import '/pubkey-meedstrom.gpg'
  import { invalidateAll } from '$app/navigation'
  // import { page } from '$app/stores'
  import { Buffer } from 'buffer'
  import { seen,
-          pubMeta,
-          privMeta,
-          storedPostKey,
-          decryptExtras,
-          allowedTags,
-          bigIndexRows,
- } from '$lib/stores'
+        pubMeta,
+        privMeta,
+        storedPostKey,
+        decryptExtras,
+        allowedTags,
+        bigIndexRows,
+        } from '$lib/stores'
  import { get as stored } from 'svelte/store'
 
  // TODO: ensure this doesn't download on initial visit
@@ -54,9 +56,9 @@
  // white background
  let theme = 'auto'
  const colors = [
-     // "white",
+     "white",
      "tan",
-     "pink",
+     // "pink",
      "dark-red",
      "dark-amber",
      "auto"
@@ -99,11 +101,15 @@
                     <div><a rel="me" href="https://emacs.ch/@meedstrom">Mastodon</a></div>
                 </div>
                 <div class="row">
+                    <div><iconify-icon icon="mdi:rss"></iconify-icon></div>
+                    <div><a target="_self" type="application/atom+xml" href="{assets}/atom.xml">Feed</a></div>
+                </div>
+                <div class="row">
                     <div><iconify-icon icon="mdi:key"></iconify-icon></div>
-                    <div><a rel="gpgkey" href="/static/pubkey-meedstrom.gpg">GPG key</a></div>
+                    <div><a rel="gpgkey" target="_self" type="application/pgp-keys" href="{assets}/pubkey-meedstrom.gpg">GPG key</a></div>
                 </div>
             </div>
-            <!-- <p>All code licensed under the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p> -->
+            <!-- <p>All code snippets licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p> -->
             <!-- <p><a href="/about">About</a></p> -->
             <!-- <p><a href="/blogroll">"Blogroll"</a></p> -->
         </div>
