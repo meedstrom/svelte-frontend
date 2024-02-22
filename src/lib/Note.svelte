@@ -78,11 +78,6 @@
  // console.log($page.url.pathname)
 </script>
 
-<svelte:head>
-    <title>{data.post.title}</title>
-    <meta name="description" content={data.post.description ?? "A note."}>
-</svelte:head>
-
 <article data-sveltekit-preload-data="hover"
          data-sveltekit-preload-code="eager"
          class="h-entry">
