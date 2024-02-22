@@ -1,7 +1,8 @@
 <script lang="ts">
+ export let data
  import RecentNotes from '$lib/RecentNotes.svelte'
 </script>
 <svelte:head>
-    <title>Martin Edström</title>
+    <title>Recent pages</title>
 </svelte:head>
-<RecentNotes data={ { params: { offset: 0 } } } />
+<RecentNotes data={data} />

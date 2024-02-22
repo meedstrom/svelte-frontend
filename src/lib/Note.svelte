@@ -1,13 +1,5 @@
 <script lang="ts">
-
- import type { Post } from '$lib/types'
- type postData = {
-     post: Post
-     content: string | undefined
-     id: string
-     dailies: Post[]
-     dailySlugs: string[]
- }
+ import type { Post, NoteData } from '$lib/types'
  export let data
 
  import { seen, allowedTags, privateTags, } from '$lib/stores'

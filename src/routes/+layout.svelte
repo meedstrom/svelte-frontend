@@ -54,7 +54,7 @@
  // white background
  let theme = 'auto'
  const colors = [
-     "white",
+     // "white",
      "tan",
      "pink",
      "dark-red",
@@ -70,7 +70,7 @@
                 <a href="/">Recent</a>
                 <a href="/all" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
                 <a href="/random">Random</a>
-                <a href="/nexus">Portals</a>
+                <a href="/portals">Portals</a>
                 <a href="/about">About</a>
                 {#if $allowedTags.length === 0}
                     <a href="/login">Login</a>
