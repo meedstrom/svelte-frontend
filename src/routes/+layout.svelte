@@ -89,9 +89,7 @@
     <footer>
         <div id="info">
             <div class="h-card p-author">
-                <p>
-                <span class="p-name">Martin Edström</span>
-                </p>
+                <p><a rel="me" class="p-name u-uid u-url undecorated-link" href="https://edstrom.dev">Martin Edström</a></p>
                 <div class="row">
                     <div><iconify-icon icon="mdi:github"></iconify-icon></div>
                     <div><a rel="me" href="https://github.com/meedstrom">GitHub</a></div>
@@ -106,7 +104,7 @@
                 </div>
                 <div class="row">
                     <div><iconify-icon icon="mdi:key"></iconify-icon></div>
-                    <div><a rel="gpgkey" target="_self" type="application/pgp-keys" href="{assets}/pubkey-meedstrom.gpg">GPG key</a></div>
+                    <div><a rel="gpgkey" target="_self" type="application/pgp-keys" href="{assets}/pubkey-meedstrom.gpg">OpenPGP</a></div>
                 </div>
             </div>
             <!-- <p>All code snippets licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p> -->
@@ -129,12 +127,9 @@
      justify-content: unset;
  }
  .row > div {
-     /* margin: 0 1em; */
-     /* padding: 0 1em; */
      width: 50%;
  }
  .row > div:nth-child(1) {
-     /* text-align: right; */
      width: 40%;
  }
  .row > div:nth-child(2) {
@@ -153,7 +148,5 @@
      display: flex;
      justify-content: center;
      flex-wrap: wrap;
-     /* flex-wrap: wrap-reverse; */
-     /* flex-direction: row-reverse; */
  }
 </style>
