@@ -99,7 +99,7 @@
     <div class="e-content">
         {@html reformat(data.content, stored(allowedTags))}
     </div>
-    <div class="row">
+    <div id="datestamp" class="row">
         <div></div>
         <div>
             <small>Created
@@ -120,3 +120,9 @@
         </div>
     </div>
 </article>
+<style>
+ #datestamp {
+     margin-top: .4em;
+     margin-right: .8em;
+ }
+</style>

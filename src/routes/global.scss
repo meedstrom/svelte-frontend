@@ -526,6 +526,18 @@ h6 {
     }
 }
 
+.undecorated-link {
+    color: unset !important;
+    border-bottom: unset !important;
+}
+.undecorated-link:after {
+    content: unset !important;
+}
+
+a.u-uid {
+    font-size: 120%;
+}
+
 // Tables
 
 table {
@@ -654,7 +666,7 @@ td {
     article {
         padding-left: 3em;
         padding-right: 3em;
-        padding-bottom: 3em;
+        // padding-bottom: 3em;
         margin-bottom: 4em;
     }
     div.paginator {
@@ -694,7 +706,8 @@ td {
         background-color: unset;
     }
     nav,
-    article {
+    article,
+    #the-big-index {
         background-color: var(--bg);
     }
     article,
@@ -702,13 +715,54 @@ td {
         border-bottom: 1px solid var(--bg-alt);
         margin-top: 0.2em;
         padding-top: 0.8em;
-        padding-left: 1.5em;
+        padding-right: 0;
+        // Now that sections have minimal left-right padding, ensure that the
+        // content will provide its own margins.
+        // it'd be simpler with just an inner div.
+        p,
+        ol,
+        ul,
+        blockquote,
+        hr,
+        pre {
+            margin-right: 1em;
+            margin-left: 1em;
+        }
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin-left: 0.5em;
+        }
+        // p,
+        // h1,
+        // h2,
+        // h3,
+        // h4,
+        // h5,
+        // h6,
+        // ol,
+        // ul,
+        // blockquote {
+        //     margin-left: 1em;
+        // }
+        // blockquote {
+        //     margin-right: 1em;
+        //     p,
+        //     li {
+        //         margin-right: 0.4em;
+        //     }
+        // }
+
+        padding-left: 1em;
         @media (max-width: 599px) {
             padding-left: 0.8em;
         }
-        padding-right: 0.5em;
         border-radius: 3px;
         box-shadow: -2px 2px 7px black;
+        // margin-bottom: 9px;
     }
     section.odd {
         background-color: var(--bg);

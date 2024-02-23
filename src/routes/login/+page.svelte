@@ -119,8 +119,12 @@
 
 <style>
  form {
+     background-color: var(--bg);
+     box-shadow: -2px 2px 7px black;
      margin-left: auto;
-     margin-right: 1em;
+     margin-top: .2em;
+     margin-bottom: 9px;
+     /* margin-right: 1em; */
      /* right: 0; */
      padding: 2em;
      width: 15em;
