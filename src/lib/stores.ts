@@ -7,7 +7,17 @@ import initRows from "$lib/initRows.json"
 export const bigIndexRows = writable(initRows)
 export const pubMeta = writable(new Map(Object.entries(pubMetaJSON)))
 export const privMeta = writable(new Map())
-export const privateTags = new Set(["fren", "gri", "lover", "privy", "shrink"])
+export const privateTags = new Set([
+     "fren",
+     "gri",
+     "lover",
+     "privy",
+     "shrink",
+     "noexport",
+     "private",
+     "censor",
+     "archive",
+])
 
 // Which pages the visitor has seen
 export const seen = writable(
