@@ -8,13 +8,14 @@
  import idMappings from '$lib/idMappings.json'
 
  if (stored(allowedTags).length > 0)
-     goto(`/unlocked/${$page.params.first}/${$page.params.second}`)
+     goto(
+         `/unlocked/${$page.params.first}/${$page.params.second}${$page.url.hash}`,
+         { replaceState: true }
+     )
 
- // console.log(`hash is ${$page.url.hash}`)
  const updatedHash = idMappings[`${$page.url.hash.slice(1)}`]
- // console.log(`new hash is ${updatedHash}`)
  if (updatedHash)
-     goto(`#${updatedHash}`)
+     goto(`#${updatedHash}`, { replaceState: true })
 </script>
 
 <svelte:head>
