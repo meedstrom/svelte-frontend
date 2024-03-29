@@ -25,13 +25,13 @@
 <div class="paginator" id="paginator1">
     <div>
     {#if (offset >= 4) }
-        <a href={`/recent/${offset - 4}`}>Older</a>
+        <a rel="prev" href={`/recent/${offset - 4}`}>Older</a>
     {:else}
         <span>Older</span>
     {/if}
     Showing {offset + 1} to {offset + 4}
     {#if (offset < orderedByCreation.length - 4)}
-        <a href={`/recent/${offset + 4}`}>Newer</a>
+        <a rel="next" href={`/recent/${offset + 4}`}>Newer</a>
     {:else}
         <span>Newer</span>
     {/if}
@@ -39,18 +39,27 @@
 </div>
 
 {#each notesToShow as data}
-    <Note data={data} />
+    <article data-sveltekit-preload-data="hover"
+             data-sveltekit-preload-code="eager"
+             class="h-entry">
+        <h1 class="p-name" id={data.post.permalink}>
+            <a href={`/${data.post.permalink}/${data.post.slug}`}>
+                {data.post.title}
+            </a>
+        </h1>
+        <Note data={data} />
+    </article>
 {/each}
 
 <div class="paginator" id="paginator2">
     {#if (offset >= 4) }
-        <a href={`/recent/${offset - 4}`}>Older</a>
+        <a rel="prev" href={`/recent/${offset - 4}`}>Older</a>
     {:else}
         <span>Older</span>
     {/if}
     Showing {offset + 1} to {offset + 4}
     {#if (offset < orderedByCreation.length - 4)}
-        <a href={`/recent/${offset + 4}`}>Newer</a>
+        <a rel="next" href={`/recent/${offset + 4}`}>Newer</a>
     {:else}
         <span>Newer</span>
     {/if}

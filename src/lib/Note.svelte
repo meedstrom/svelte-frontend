@@ -1,7 +1,7 @@
 <script lang="ts">
  import type { Post, NoteData } from '$lib/types'
  export let data
-
+ import 'iconify-icon'
  import { seen, allowedTags, privateTags, } from '$lib/stores'
  import { get as stored } from 'svelte/store'
  import { afterNavigate } from '$app/navigation'
@@ -28,12 +28,18 @@
          'gs'
      )
      result = markup.replaceAll(stripRe, '$1')
+     //
+     //      console.log(stored(allowedTags))
+     //      console.log(stripRe)
+     //      console.log(result)
+     //
 
      // Indicate 'unlocked' links with a 🗝 (dungeon key icon)
      const privateLinkRe = new RegExp(
          '(<a +?class="[^\"]*?(?:' + [...privateTags].join('|') + ').*?)</a>',
          'gs'
      )
+     // result = result.replaceAll(privateLinkRe, '$1</a><NotoKey />')
      result = result.replaceAll(privateLinkRe, '$1</a><iconify-icon icon="noto:old-key"></iconify-icon>')
 
      return result
@@ -67,62 +73,57 @@
            )
          : null
 
- // console.log($page.url.pathname)
+ const extraClasses = data.post.tags.includes("logseq") ? " logseq" : ''
 </script>
 
-<article data-sveltekit-preload-data="hover"
-         data-sveltekit-preload-code="eager"
-         class="h-entry">
-    {#if isDaily}
-        <div class="row">
-            <div>
-                {#if prev}
-                    <a href="/{prev.permalink}/{prev.slug}">← {prev.title}</a>
-                {/if}
-            </div>
-            <div>
-                {#if next}
-                    <a href="/{next.permalink}/{next.slug}">{next.title} →</a>
-                {/if}
-            </div>
-        </div>
-    {/if}
-
-    <!-- Would have given this a normal hash-link but the Note component is
-    sometimes rendered elsewhere (the /recent page), where it's useful to get a
-    full link.  -->
-    <h1 class="p-name" id={data.post.permalink}>
-        <a href={`/${data.post.permalink}/${data.post.slug}`}>
-            {data.post.title}
-        </a>
-    </h1>
-    <div class="e-content">
-        {@html reformat(data.content, stored(allowedTags))}
-    </div>
-    <div id="datestamp" class="row">
-        <div></div>
+{#if isDaily}
+    <div class="row series">
         <div>
-            <small>Created
-                <time datetime={data.post.created} class="dt-published">
-                    {data.post.created_fancy}
-                </time>
-                ({daysSince(data.post.created)})
-            </small>
-            {#if data.post.updated}
-                <br>
-                <small>Updated
-                    <time datetime={data.post.updated} class="dt-updated">
-                        {data.post.updated_fancy}
-                    </time>
-                    ({daysSince(data.post.updated)})
-                </small>
+            {#if prev}
+                <a rel="prev" href="/{prev.permalink}/{prev.slug}">
+                    ← {prev.title}
+                </a>
+            {/if}
+        </div>
+        <div>
+            {#if next}
+                <a rel="next" href="/{next.permalink}/{next.slug}">
+                    {next.title} →
+                </a>
             {/if}
         </div>
     </div>
-</article>
+{/if}
+
+<div class={`e-content ${extraClasses}`}>
+    {@html reformat(data.content, stored(allowedTags))}
+</div>
+
+<div id="datestamp" class="row">
+    <div></div>
+    <div>
+        <small>Created
+            <time datetime={data.post.created} class="dt-published">
+                {data.post.created_fancy}
+            </time>
+            ({daysSince(data.post.created)})
+        </small>
+        {#if data.post.updated}
+            <br>
+            <small>Updated
+                <time datetime={data.post.updated} class="dt-updated">
+                    {data.post.updated_fancy}
+                </time>
+                ({daysSince(data.post.updated)})
+            </small>
+        {/if}
+    </div>
+</div>
+
 <style>
  #datestamp {
      margin-top: .4em;
      margin-right: .8em;
+     padding-bottom: .2em;
  }
 </style>

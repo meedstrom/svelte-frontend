@@ -9,12 +9,12 @@
 .theme-auto {
     // same as off-white
     --blossom: #45c;
-    --fade: #a36;
+    --fade: #a3a;
     --text: #222;
     --bg: #f9f5f3;
     --bg-alt: #ddd;
     --grey: #666;
-    --quoteblock: #bbb;
+    --quoteblock: #ccb;
     @media (prefers-color-scheme: dark) {
         --blossom: #f66;
         --fade: #c99;
@@ -24,7 +24,7 @@
         --grey: #888;
         --quoteblock: #333;
         img[src^="/attachments/invertable"] {
-            filter: invert(1);
+            filter: hue-rotate(180deg) invert(1);
         }
     }
 }
@@ -36,7 +36,8 @@
     --bg: #f9f5f3;
     --bg-alt: #ddd;
     --grey: #666;
-    --quoteblock: #bbb;
+    --quoteblock: #ccb;
+    // --quoteblock: #bbb;
 }
 
 .theme-dark-red {
@@ -48,7 +49,7 @@
     --grey: #888;
     --quoteblock: #333;
     img[src^="/attachments/invertable"] {
-        filter: invert(1);
+        filter: hue-rotate(180deg) invert(1);
     }
 }
 
@@ -72,7 +73,7 @@
     --grey: #888;
     --quoteblock: #333;
     img[src^="/attachments/invertable"] {
-        filter: invert(1);
+        filter: hue-rotate(180deg) invert(1);
     }
 }
 
@@ -161,14 +162,26 @@ h6 {
 
 h1 {
     font-size: 1.7em;
+    padding-right: 0.5em;
 }
 
-// Implicit cloze-deletions.  Encoded in the source as underlines, hence the name.
+// Implicit cloze-deletions from inline-anki.  Encoded in the source as
+// underlines, hence the name.
 span.underline {
     padding: 2px;
     // border: 1px solid var(--grey);
     background-color: var(--bg-alt);
     // outline: 1px solid var(--grey);
+}
+
+section.even > .text-in-section {
+    span.underline,
+    code,
+    kbd,
+    samp,
+    hr {
+        background-color: var(--bg);
+    }
 }
 
 @font-face {
@@ -190,20 +203,21 @@ pre {
 
 // Basic layout
 
-// The "central column", the edges of which disappear on mobile
-#central-column {
-    background-color: var(--bg);
-}
-
 body {
     margin: 0;
     background-color: #555;
 }
 
+// // The "central column", the edges of which disappear on mobile
+// #central-column {
+//     background-color: var(--bg);
+// }
+
 article {
     padding-left: 5px;
     padding-right: 5px;
     padding-bottom: 5px;
+    margin-bottom: 4em;
 
     // Don't ever let long lines break out of the bounds of the container
     overflow-wrap: anywhere;
@@ -219,6 +233,78 @@ article {
     span.katex {
         overflow: auto;
     }
+}
+
+section.even {
+    background-color: var(--bg-alt);
+}
+section.odd {
+    background-color: var(--bg);
+}
+
+article,
+section.even,
+section.odd {
+    padding-top: 0.8em;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 1.2em;
+
+    margin-top: 0.6em;
+    margin-right: 0;
+    // margin-bottom: 0;
+    margin-left: 0;
+
+    border-radius: 3px;
+    box-shadow: -2px 2px 7px black;
+    @media (max-width: 599px) {
+        padding-top: 0.6em;
+        padding-right: 2px;
+        padding-bottom: 2px;
+        padding-left: 0.8em;
+    }
+}
+#the-big-index {
+    border-radius: 3px;
+    box-shadow: -2px 2px 7px black;
+    margin-bottom: 10px; // space for shadow
+    margin-top: 0.6em;
+}
+
+// Now that sections have minimal padding, ensure that the
+//  will provide its own.
+.text-in-section {
+    margin-left: 0.5em;
+    margin-right: 1em;
+    // idk why margin-bottom does not do the trick
+    padding-bottom: 0.5em;
+    margin-bottom: 0;
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0.5em 0;
+    }
+    @media (max-width: 599px) {
+        margin-left: 0.4em;
+        margin-right: 0.5em;
+    }
+}
+// Bring h1 into visual alignment since it's not part of .text-in-section.
+h1 {
+    margin-left: 0.5rem;
+    @media (max-width: 599px) {
+        margin-left: 0.4rem;
+    }
+}
+// Bring the daily-series paginator into visual alignment too.
+.series {
+    padding: 0 1em;
+}
+
+nav.toc {
+    margin: 1em;
 }
 
 header > nav {
@@ -359,7 +445,7 @@ pre {
 code,
 kbd,
 samp {
-    padding: 0 0.4em;
+    padding: 0 0.3em;
     background-color: var(--bg-alt);
     white-space: pre-wrap;
 }
@@ -452,37 +538,6 @@ fieldset {
     font-weight: 600;
 }
 
-// Logseq-styled pages
-
-div.outline-2 {
-    margin-left: 1em;
-}
-
-div.outline-3,
-div.outline-4,
-div.outline-5,
-div.outline-6 {
-    margin-left: 2em;
-}
-
-div.outline-2 > h2,
-div.outline-3 > h3,
-div.outline-4 > h4,
-div.outline-5 > h5,
-div.outline-6 > h6 {
-    display: list-item;
-    font-size: 1em;
-    // (TODO refactor) Re-apply the same link style I have elsewhere bc it gets
-    // overwritten by an unset rule in this file
-    & > a {
-        color: var(--blossom);
-        border-bottom: 1px solid;
-    }
-    & > a:visited {
-        color: var(--fade);
-    }
-}
-
 // Links
 
 a {
@@ -512,17 +567,32 @@ a[href^="https://"]:after
     // content: '<iconify-icon icon="fa:external-link"></iconify-icon>';
 }
 
+// Undo some rules for images that are links.
+// Thank you CSS-gods for :has()
+a:has(img) {
+    &:after {
+        content: unset !important;
+    }
+    &:hover {
+        outline: none;
+    }
+}
+
 // Headline self-links better not look like links
-h1,
+// h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    & > a,
-    & > a:visited {
+    // & > a,
+    // & > a:visited {
+    // }
+    & > a.heading-permalink {
+        float: right;
         color: unset;
         border-bottom: unset;
+        // margin-right: 0.5em;
     }
 }
 
@@ -565,6 +635,7 @@ td {
     }
 }
 
+// TODO: integrate sass with svelte and move to the .svelte file
 #the-big-index {
     overflow-x: auto;
 
@@ -620,54 +691,60 @@ td {
             display: none;
         }
     }
-    // look better on desktop
+
     @media (min-width: 600px) {
         th {
-            border: 3px groove var(--bg-alt);
-            padding: 0.5em 0.25em;
+            // border: 3px solid var(--quoteblock);
+            // padding: 0.5em 0.25em;
+            padding: 0.7em 0.25em;
         }
     }
+}
+
+nav,
+article,
+#the-big-index,
+header {
+    background-color: var(--bg);
 }
 
 // Breakpoints
 
 @media (max-width: 599px) {
-    // Try to meet "tap-targets" 48px minimum size+clearance per Lighthouse.
-    // I won't do this all over the document, it's ok to fail that goal.
-    // I suspect it's one reason that line-heights have been exploding of late...
-    details.toc li,
-    details.backlinks li {
+    // Try to meet "tap-targets" 48px minimum size+clearance per Lighthouse.  I
+    // won't do this all over the document, it's ok to fail that goal.  I
+    // suspect it's one reason that line-heights have been exploding online of
+    // late...
+    .toc li,
+    .backlinks li {
         margin-top: 13px;
         margin-bottom: 13px;
         & > a {
             padding: 2px;
         }
     }
-    details.toc li > a {
-        border-bottom: none;
+
+    // article,
+    // div.paginator,
+    // header,
+    // #the-big-index,
+    section.even,
+    section.odd {
+        box-shadow: none;
     }
+}
+.toc li > a {
+    border-bottom: none;
 }
 
 @media (min-width: 600px) {
-    img,
-    video {
-        max-height: 50vh;
-    }
-
     #central-column {
         max-width: 42em;
     }
     header {
         padding: 0.5em;
-        background-color: var(--bg);
         border-radius: 2px;
         box-shadow: -1px 1px 3px black;
-    }
-    article {
-        padding-left: 3em;
-        padding-right: 3em;
-        // padding-bottom: 3em;
-        margin-bottom: 4em;
     }
     div.paginator {
         border-radius: 2px;
@@ -699,75 +776,34 @@ td {
         padding-top: 0.25em;
         padding-bottom: 0.25em;
     }
+}
 
-    // Unset on wide screen bc now we will rely on sections setting the bg color
-    // themselves and having visual separation
-    #central-column {
-        background-color: unset;
-    }
-    nav,
-    article,
-    #the-big-index {
-        background-color: var(--bg);
-    }
-    article,
-    section {
-        border-bottom: 1px solid var(--bg-alt);
-        margin-top: 0.2em;
-        padding-top: 0.8em;
-        padding-right: 0;
-        // Now that sections have minimal left-right padding, ensure that the
-        // content will provide its own margins.
-        // it'd be simpler with just an inner div.
-        p,
-        ol,
-        ul,
-        blockquote,
-        hr,
-        pre {
-            margin-right: 1em;
-            margin-left: 1em;
-        }
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            margin-left: 0.5em;
-        }
-        // p,
-        // h1,
-        // h2,
-        // h3,
-        // h4,
-        // h5,
-        // h6,
-        // ol,
-        // ul,
-        // blockquote {
-        //     margin-left: 1em;
-        // }
-        // blockquote {
-        //     margin-right: 1em;
-        //     p,
-        //     li {
-        //         margin-right: 0.4em;
-        //     }
-        // }
+// Logseq-styled pages
 
-        padding-left: 1em;
-        @media (max-width: 599px) {
-            padding-left: 0.8em;
-        }
-        border-radius: 3px;
-        box-shadow: -2px 2px 7px black;
-        // margin-bottom: 9px;
-    }
-    section.odd {
-        background-color: var(--bg);
-    }
+.logseq {
+    section.odd,
     section.even {
-        background-color: var(--bg-alt);
+        margin-left: 2em;
     }
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        display: list-item;
+        font-size: 1em;
+        // (TODO refactor) Re-apply the same link style I have elsewhere bc it gets
+        // overwritten by an unset rule in this file
+        & > a {
+            color: var(--blossom);
+            border-bottom: 1px solid;
+        }
+        & > a:visited {
+            color: var(--fade);
+        }
+    }
+}
+
+div.figure {
+    padding: 1em;
 }

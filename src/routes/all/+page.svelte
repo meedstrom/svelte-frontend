@@ -1,4 +1,5 @@
 <script lang="ts">
+ import 'iconify-icon'
  import { bigIndexRows } from '$lib/stores'
  import { get as stored } from 'svelte/store'
  import SvelteTable from "svelte-table"
@@ -30,14 +31,16 @@
          // is there a searchLabel or some such option?
          // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
          renderValue: (v: any) =>
+             // (v.hidden ? '<NotoKey />' : '') +
              (v.hidden ? '<iconify-icon icon="noto:old-key"></iconify-icon>' : '') +
-             `<a href="/${v.permalink}/${v.slug}">${v.title}</a>`,
+                               `<a href="/${v.permalink}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {
          key: "links",
          title: "Links",
          value: (v: any) => v.links,
+         renderValue: (v: any) => v.links === 0 ? '' : v.links,
          sortable: true,
          headerClass: 'links-header',
      },
@@ -52,10 +55,6 @@
          key: "created",
          title: "Created",
          value: (v: any) => v.created,
-         // non-breaking hyphen
-         // renderValue: (v: any) => v.created_fancy.replaceAll('-', '‑'),
-         // non-breaking space
-         // renderValue: (v: any) => v.created_fancy.replaceAll(' ', ' '), //.replace(/^..? /, ''),
          class: 'created',
          sortable: true,
          headerClass: 'creation-header',

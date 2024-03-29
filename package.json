@@ -21,11 +21,14 @@
 	"type": "module",
 	"dependencies": {
 		"@csstools/normalize.css": "github:csstools/normalize.css",
+		"@iconify-json/mdi": "^1.1.64",
+		"@iconify-json/noto": "^1.1.18",
 		"@sveltejs/adapter-node": "^2.0.0",
 		"buffer": "^6.0.3",
 		"iconify-icon": "^2.0.0",
 		"prettier": "^3.2.5",
 		"sass": "^1.71.1",
-		"svelte-table": "^0.6.1"
+		"svelte-table": "^0.6.1",
+		"unplugin-icons": "^0.18.5"
 	}
 }

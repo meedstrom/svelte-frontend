@@ -5,7 +5,11 @@
  import { allowedTags } from '$lib/stores'
  import { page } from '$app/stores'
  import { goto } from '$app/navigation'
- import idMappings from '$lib/idMappings.json'
+
+ // TODO: pregenerate list of ids in +page.server.ts instead of importing these
+ //       fat(-ish) objects
+ import { pubMeta, privMeta } from '$lib/stores'
+ // import { match } from '$params/knownID'
 
  if (stored(allowedTags).length > 0)
      goto(
@@ -13,14 +17,27 @@
          { replaceState: true }
      )
 
- const updatedHash = idMappings[`${$page.url.hash.slice(1)}`]
- if (updatedHash)
-     goto(`#${updatedHash}`, { replaceState: true })
+ const hash = $page.url.hash.slice(1)
+ const relocated = stored(pubMeta).get(hash) ?? stored(privMeta).get(hash)
+ if (relocated)
+     goto(
+         `/${relocated.permalink}/${relocated.slug}`
+     )
+
 </script>
 
 <svelte:head>
     <title>{data.post.title}</title>
-    <meta name="description" content={data.post.description ?? "A note."}>
+    {#if data.post.description}
+        <meta name="description" content={data.post.description}>
+    {/if}
 </svelte:head>
 
-<Note data={data} />
+<article data-sveltekit-preload-data="hover"
+         data-sveltekit-preload-code="eager"
+         class="h-entry">
+    <h1 class="p-name" id={data.post.permalink}>
+        {data.post.title}
+    </h1>
+    <Note data={data} />
+</article>

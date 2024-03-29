@@ -4,5 +4,5 @@ import { assets } from "$app/paths"
 
 /** @type {import('./$types').LayoutServerLoad} */
 export function load() {
-    redirect(307, `${assets}/atom.xml`)
+    redirect(307, `${assets}/posts.atom`)
 }
