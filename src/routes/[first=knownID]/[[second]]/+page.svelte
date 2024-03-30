@@ -9,7 +9,7 @@
  // TODO: pregenerate list of ids in +page.server.ts instead of importing these
  //       fat(-ish) objects
  import { pubMeta, privMeta } from '$lib/stores'
- // import { match } from '$params/knownID'
+ // import { match } from '$params/knownID
 
  if (stored(allowedTags).length > 0)
      goto(
@@ -19,10 +19,7 @@
 
  const hash = $page.url.hash.slice(1)
  const relocated = stored(pubMeta).get(hash) ?? stored(privMeta).get(hash)
- if (relocated)
-     goto(
-         `/${relocated.permalink}/${relocated.slug}`
-     )
+ if (relocated) goto(`/${relocated.permalink}/${relocated.slug}`)
 
 </script>
 
