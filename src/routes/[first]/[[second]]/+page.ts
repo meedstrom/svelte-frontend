@@ -21,7 +21,7 @@ export function load({ params, url }) {
 
     // Trying to access a hidden ID?  Go to /unlocked.
     post = stored(privMeta).get(params.first)
-    if (post) redirect(308, `/unlocked/${post.permalink}/${post.slug}${hash}`)
+    if (post) redirect(308, `/unlocked/${post.pageid}/${post.slug}${hash}`)
 
     error(404, "Not found")
 }

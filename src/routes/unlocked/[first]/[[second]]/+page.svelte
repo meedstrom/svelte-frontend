@@ -13,7 +13,7 @@
 <article data-sveltekit-preload-data="hover"
          data-sveltekit-preload-code="eager"
          class="h-entry">
-    <h1 class="p-name" id={data.post.permalink}>
+    <h1 class="p-name" id={data.post.pageid}>
     {data.post.title}
 </h1>
 <Note data={data} />

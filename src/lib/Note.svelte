@@ -7,7 +7,7 @@
  import { afterNavigate } from '$app/navigation'
  import { page } from '$app/stores'
  afterNavigate(() => {
-     seen.update(x => x.add(data.post.permalink))
+     seen.update(x => x.add(data.post.pageid))
  })
 
  // TODO: Speed this  up
@@ -80,14 +80,14 @@
     <div class="row series">
         <div>
             {#if prev}
-                <a rel="prev" href="/{prev.permalink}/{prev.slug}">
+                <a rel="prev" href="/{prev.pageid}/{prev.slug}">
                     ← {prev.title}
                 </a>
             {/if}
         </div>
         <div>
             {#if next}
-                <a rel="next" href="/{next.permalink}/{next.slug}">
+                <a rel="next" href="/{next.pageid}/{next.slug}">
                     {next.title} →
                 </a>
             {/if}

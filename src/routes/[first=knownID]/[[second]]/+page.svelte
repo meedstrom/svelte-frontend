@@ -19,7 +19,7 @@
 
  const hash = $page.url.hash.slice(1)
  const relocated = stored(pubMeta).get(hash) ?? stored(privMeta).get(hash)
- if (relocated) goto(`/${relocated.permalink}/${relocated.slug}`)
+ if (relocated) goto(`/${relocated.pageid}/${relocated.slug}`)
 
 </script>
 
@@ -33,7 +33,7 @@
 <article data-sveltekit-preload-data="hover"
          data-sveltekit-preload-code="eager"
          class="h-entry">
-    <h1 class="p-name" id={data.post.permalink}>
+    <h1 class="p-name" id={data.post.pageid}>
         {data.post.title}
     </h1>
     <Note data={data} />

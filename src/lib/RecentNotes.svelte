@@ -17,8 +17,8 @@
      .toReversed()
      .map((meta) => new Object({
          post: meta,
-         content: $pubPosts.get(meta.permalink),
-         id: meta.permalink,
+         content: $pubPosts.get(meta.pageid),
+         id: meta.pageid,
      }))
 </script>
 
@@ -42,8 +42,8 @@
     <article data-sveltekit-preload-data="hover"
              data-sveltekit-preload-code="eager"
              class="h-entry">
-        <h1 class="p-name" id={data.post.permalink}>
-            <a href={`/${data.post.permalink}/${data.post.slug}`}>
+        <h1 class="p-name" id={data.post.pageid}>
+            <a href={`/${data.post.pageid}/${data.post.slug}`}>
                 {data.post.title}
             </a>
         </h1>

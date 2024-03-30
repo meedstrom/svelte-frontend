@@ -14,7 +14,7 @@
  //          data: stored(bigIndexRows), //link data to table
  //          reactiveData: true, //enable data reactivity
  //          // columns: columns, //define table columns
- //          index: "permalink",
+ //          index: "pageid",
  //          autoColumns: true,
  //      })
  //  })
@@ -33,7 +33,7 @@
          renderValue: (v: any) =>
              // (v.hidden ? '<NotoKey />' : '') +
              (v.hidden ? '<iconify-icon icon="noto:old-key"></iconify-icon>' : '') +
-                               `<a href="/${v.permalink}/${v.slug}">${v.title}</a>`,
+                               `<a href="/${v.pageid}/${v.slug}">${v.title}</a>`,
          parseHTML: true,
      },
      {
