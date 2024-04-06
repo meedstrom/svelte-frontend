@@ -78,8 +78,8 @@
                 <!-- Pre-sized to eliminate CLS -->
                 <a href="/all" style="width: 9.25em;">All (seen {$seen.size} of {postCount})</a>
                 <a href="/random">Random</a>
-                <a href="/portals">Portals</a>
-                <a href="/about">About</a>
+                <a href="/csxfp/portals">Portals</a>
+                <a href="/vbjmn/about">About</a>
                 {#if $allowedTags.length === 0}
                     <a href="/login">Login</a>
                 {:else}
@@ -123,8 +123,8 @@
                 </div>
             </div>
             <!-- <p>All code snippets licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GNU GPLv3+</a></p> -->
-            <!-- <p><a href="/about">About</a></p> -->
-            <!-- <p><a href="/blogroll">"Blogroll"</a></p> -->
+            <!-- <p><a href="/vbjmn/about">About</a></p> -->
+            <!-- <p><a href="/wrrmc/blogroll">"Blogroll"</a></p> -->
         </div>
         <div id="theme-picker">
             {#each colors as color}

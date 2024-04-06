@@ -174,7 +174,7 @@ span.underline {
     // outline: 1px solid var(--grey);
 }
 
-section.even > .text-in-section {
+section.even > div.text-in-section {
     span.underline,
     code,
     kbd,
@@ -224,6 +224,8 @@ article {
 
     // Give tables horizontal scroll, which also lets us undo the above, a bad
     // idea in tables: breaks long numbers in narrow columns
+    // TODO: do something similar for images but on the y axis, so
+    // they get a div that's 90vh high that can be scrolled
     div.table-container {
         overflow-x: auto;
         overflow-wrap: normal;
@@ -570,6 +572,7 @@ a[href^="https://"]:after
 // Undo some rules for images that are links.
 // Thank you CSS-gods for :has()
 a:has(img) {
+    border-bottom: none;
     &:after {
         content: unset !important;
     }

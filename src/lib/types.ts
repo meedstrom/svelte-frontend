@@ -7,7 +7,7 @@ export type Post = {
     created_fancy: string
     updated_fancy: string | null
     tags: string[]
-    hidden: string | null
+    hidden: boolean | null
     description: string | null
 }
 

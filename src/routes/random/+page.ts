@@ -8,9 +8,17 @@ import { pubMeta, privMeta, seen } from "$lib/stores"
 export function load() {
     const allMeta = [...stored(pubMeta).values(), ...stored(privMeta).values()]
     let links = new Set<string>(
-        allMeta.filter((x) => !x.tags.includes("stub")).map((x) => x.pageid)
+        // IDEA: Actually do permit showing the stubs and stuff, just after the
+        // rest are exhausted
+        allMeta
+            .filter(
+                (x) => !x.tags.includes("stub") && !x.tags.includes("daily")
+            )
+            .map((x) => x.pageid)
     )
     // maybe reset once seen all
+    // TODO: don't only do this on the /random route!
+    // TODO: check that the actual ids still exist in privMeta or pubMeta (maybe when the store is initalized) and don't belong to dailies
     if (links.size <= stored(seen).size) {
         // TODO: Check if there are public pages not yet in seen (because
         // visitor had also seen unlocked posts in the past, or posts deleted,

@@ -11,7 +11,8 @@ const config = {
     }),
     csp: {
       directives: {
-        "script-src": ["self"],
+        "script-src": ["self", "https://gc.zgo.at"],
+        "connect-src": ["self", "https://edstromdev.goatcounter.com/count"],
         "object-src": ["none"],
         "base-uri": ["none"],
       },

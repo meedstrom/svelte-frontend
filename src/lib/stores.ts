@@ -19,7 +19,12 @@ export const privateTags = new Set([
      "archive",
 ])
 
+// function filterSeen(seen: Set<string>) {
+//      seen.delete
+// }
+
 // Which pages the visitor has seen
+// TODO: the counter in the nav bar should only count the ids currently known, altho there's no need to clean out invalids from the store
 export const seen = writable(
      new Set(browser ? JSON.parse(window.localStorage.getItem("seen")) : null)
 )
