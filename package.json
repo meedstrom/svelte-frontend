@@ -27,7 +27,9 @@
 		"buffer": "^6.0.3",
 		"iconify-icon": "^2.0.0",
 		"prettier": "^3.2.5",
+		"prettier-plugin-svelte": "^3.2.2",
 		"sass": "^1.71.1",
+		"svelte-inview": "^4.0.2",
 		"svelte-table": "^0.6.1",
 		"unplugin-icons": "^0.18.5"
 	}
