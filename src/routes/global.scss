@@ -2,131 +2,7 @@
 @import "@csstools/normalize.css/normalize.css";
 // @import './export-colors-doom-zenburn.scss';
 @import "./export-colors-doom-monokai-machine.scss";
-
-// Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
-// Check on https://coolors.co/contrast-checker
-
-.theme-auto {
-    // same as off-white
-    --blossom: #45c;
-    --fade: #a3a;
-    --text: #222;
-    --bg: #f9f5f3;
-    --bg-alt: #ddd;
-    --grey: #666;
-    --quoteblock: #ccb;
-    @media (prefers-color-scheme: dark) {
-        --blossom: #f66;
-        --fade: #c99;
-        --text: #d9d8dc;
-        --bg: #2f1f24;
-        --bg-alt: #433;
-        --grey: #888;
-        --quoteblock: #333;
-        img[src^="/attachments/invertable"] {
-            filter: hue-rotate(180deg) invert(1);
-        }
-    }
-}
-
-.theme-white {
-    --blossom: #45c;
-    --fade: #a36;
-    --text: #222;
-    --bg: #f9f5f3;
-    --bg-alt: #ddd;
-    --grey: #666;
-    --quoteblock: #ccb;
-    // --quoteblock: #bbb;
-}
-
-.theme-dark-red {
-    --blossom: #f66;
-    --fade: #c99;
-    --text: #d9d8dc;
-    --bg: #2f1f24;
-    --bg-alt: #433;
-    --grey: #888;
-    --quoteblock: #333;
-    img[src^="/attachments/invertable"] {
-        filter: hue-rotate(180deg) invert(1);
-    }
-}
-
-.theme-tan {
-    --blossom: #900;
-    --fade: #502;
-    --text: #000;
-    --bg: #dca;
-    // --bg      : #b96;
-    --bg-alt: #cba;
-    --grey: #666;
-    --quoteblock: #bbb;
-}
-
-.theme-dark-amber {
-    --blossom: #ea0;
-    --fade: #a50; // too low contrast
-    --text: #da7;
-    --bg: #210;
-    --bg-alt: #320;
-    --grey: #888;
-    --quoteblock: #333;
-    img[src^="/attachments/invertable"] {
-        filter: hue-rotate(180deg) invert(1);
-    }
-}
-
-.theme-pink {
-    --blossom: #980255;
-    --fade: #753851;
-    --text: #49002d;
-    --bg: #ffe4f5;
-    --bg-alt: #f8d2e9;
-    --grey: #666;
-    --quoteblock: #bbb;
-}
-
-// unused ------------------
-
-.theme-dark-green {
-    --blossom: #3a0;
-    --fade: #370;
-    --text: #ab7;
-    --bg: #220;
-    --bg-alt: #110;
-    --grey: #888;
-}
-
-.theme-green {
-    --blossom: #390;
-    --fade: #360;
-    --text: #020;
-    --bg: #dea;
-    --bg-alt: #cdc;
-}
-
-.theme-earth {
-    --blossom: #c26c49;
-    --fade: #bd8869;
-    --text: #310;
-    --bg: #d8e3dd;
-    --bg-alt: #e8c3a8;
-}
-
-// Make things themeable
-
-html,
-body,
-#mandatory-wrapper {
-    height: 100%;
-}
-
-#theme-container {
-    min-height: 100%;
-    color: var(--text);
-    background-color: var(--bg-alt);
-}
+@import "./theming.scss";
 
 // Text
 
@@ -150,7 +26,6 @@ sup {
     font-size: 75%;
 }
 
-h1,
 h2,
 h3,
 h4,
@@ -161,8 +36,9 @@ h6 {
 }
 
 h1 {
+    font-weight: normal;
     font-size: 1.7em;
-    padding-right: 0.5em;
+    // padding-right: 0.5em;
 }
 
 // Implicit cloze-deletions from inline-anki.  Encoded in the source as
@@ -174,6 +50,12 @@ span.underline {
     // outline: 1px solid var(--grey);
 }
 
+section.even > div.outline-text-1,
+section.even > div.outline-text-2,
+section.even > div.outline-text-3,
+section.even > div.outline-text-4,
+section.even > div.outline-text-5,
+section.even > div.outline-text-6,
 section.even > div.text-in-section {
     span.underline,
     code,
@@ -244,12 +126,19 @@ section.odd {
     background-color: var(--bg);
 }
 
+#the-big-index {
+    border-radius: 3px;
+    box-shadow: -2px 2px 7px black;
+    margin-bottom: 10px; // space for shadow
+    margin-top: 0.6em;
+}
+
 article,
-section.even,
-section.odd {
+section {
     padding-top: 0.8em;
     padding-right: 0;
     padding-bottom: 0;
+    // padding-bottom: 0.5em;
     padding-left: 1.2em;
 
     margin-top: 0.6em;
@@ -266,55 +155,75 @@ section.odd {
         padding-left: 0.8em;
     }
 }
-#the-big-index {
-    border-radius: 3px;
-    box-shadow: -2px 2px 7px black;
-    margin-bottom: 10px; // space for shadow
-    margin-top: 0.6em;
+section {
+    padding-bottom: 0.5em;
+    margin-top: 1.5em;
+}
+section + section {
+    margin-top: 0.5em;
 }
 
-// Now that sections have minimal padding, ensure that the
-//  will provide its own.
-.text-in-section {
-    margin-left: 0.5em;
-    margin-right: 1em;
-    // idk why margin-bottom does not do the trick
-    padding-bottom: 0.5em;
-    margin-bottom: 0;
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        margin: 0.5em 0;
-    }
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0.5em;
     @media (max-width: 599px) {
         margin-left: 0.4em;
         margin-right: 0.5em;
     }
 }
-// Bring h1 into visual alignment since it's not part of .text-in-section.
-h1 {
-    margin-left: 0.5rem;
+
+// nav.toc {
+//     margin: 1em;
+// }
+
+nav.toc,
+div.outline-text-2,
+div.outline-text-3,
+div.outline-text-4,
+div.outline-text-5,
+div.outline-text-6 {
+    margin-left: 0.5em;
+    margin-right: 1em;
     @media (max-width: 599px) {
-        margin-left: 0.4rem;
+        margin-left: 0.4em;
+        margin-right: 0.5em;
     }
 }
+
+// The initial text before first heading (there is no .outline-text-1)
+div.e-content {
+    & > p,
+    & > blockquote,
+    & > div,
+    & > li {
+        margin-left: 0.5em;
+        margin-right: 1em;
+        @media (max-width: 599px) {
+            margin-left: 0.4em;
+            margin-right: 0.5em;
+        }
+    }
+}
+
+h1 {
+    margin-left: 0.5em;
+    margin-right: 1em;
+    @media (max-width: 599px) {
+        margin-left: 0.4em;
+    }
+}
+
 // Bring the daily-series paginator into visual alignment too.
 .series {
     padding: 0 1em;
 }
 
-nav.toc {
-    margin: 1em;
-}
-
 header > nav {
     display: flex;
-    // flex-wrap: wrap-reverse;
     flex-wrap: wrap;
-    // flex-direction: row-reverse;
-    // flex-direction: row;
     a {
         flex-grow: 5;
         text-align: center;
@@ -778,32 +687,6 @@ header {
         // tighter tables OK on desktop (rarely touch-operated)
         padding-top: 0.25em;
         padding-bottom: 0.25em;
-    }
-}
-
-// Logseq-styled pages
-
-.logseq {
-    section.odd,
-    section.even {
-        margin-left: 2em;
-    }
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        display: list-item;
-        font-size: 1em;
-        // (TODO refactor) Re-apply the same link style I have elsewhere bc it gets
-        // overwritten by an unset rule in this file
-        & > a {
-            color: var(--blossom);
-            border-bottom: 1px solid;
-        }
-        & > a:visited {
-            color: var(--fade);
-        }
     }
 }
 

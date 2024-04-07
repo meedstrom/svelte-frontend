@@ -2,7 +2,7 @@
  export let data
  import Note from '$lib/Note.svelte'
  import { get as stored } from 'svelte/store'
- import { allowedTags } from '$lib/stores'
+ import { allowedTags, seen } from '$lib/stores'
  import { page } from '$app/stores'
  import { goto } from '$app/navigation'
 
@@ -10,6 +10,11 @@
  //       fat(-ish) objects
  import { pubMeta, privMeta } from '$lib/stores'
  // import { match } from '$params/knownID
+
+  import { afterNavigate } from '$app/navigation'
+ afterNavigate(() => {
+     seen.update(x => x.add(data.post.pageid))
+ })
 
  if (stored(allowedTags).length > 0)
      goto(

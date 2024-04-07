@@ -4,8 +4,8 @@ export type Post = {
     title: string
     created: string
     updated: string | null
-    created_fancy: string
-    updated_fancy: string | null
+    createdFancy: string
+    updatedFancy: string | null
     tags: string[]
     hidden: boolean | null
     description: string | null

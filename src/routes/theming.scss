@@ -1,0 +1,124 @@
+// Color bg and bg-alt MUST both have good contrast per WCAG against each of the rest!
+// Check on https://coolors.co/contrast-checker
+
+.theme-auto {
+    // same as off-white
+    --blossom: #45c;
+    --fade: #a3a;
+    --text: #222;
+    --bg: #f9f5f3;
+    --bg-alt: #ddd;
+    --grey: #666;
+    --quoteblock: #ccb;
+    @media (prefers-color-scheme: dark) {
+        --blossom: #f66;
+        --fade: #c99;
+        --text: #d9d8dc;
+        --bg: #2f1f24;
+        --bg-alt: #433;
+        --grey: #888;
+        --quoteblock: #333;
+        img[src^="/attachments/invertable"] {
+            filter: hue-rotate(180deg) invert(1);
+        }
+    }
+}
+
+.theme-white {
+    --blossom: #45c;
+    --fade: #a36;
+    --text: #222;
+    --bg: #f9f5f3;
+    --bg-alt: #ddd;
+    --grey: #666;
+    --quoteblock: #ccb;
+    // --quoteblock: #bbb;
+}
+
+.theme-dark-red {
+    --blossom: #f66;
+    --fade: #c99;
+    --text: #d9d8dc;
+    --bg: #2f1f24;
+    --bg-alt: #433;
+    --grey: #888;
+    --quoteblock: #333;
+    img[src^="/attachments/invertable"] {
+        filter: hue-rotate(180deg) invert(1);
+    }
+}
+
+.theme-tan {
+    --blossom: #900;
+    --fade: #502;
+    --text: #000;
+    --bg: #dca;
+    // --bg      : #b96;
+    --bg-alt: #cba;
+    --grey: #666;
+    --quoteblock: #bbb;
+}
+
+.theme-dark-amber {
+    --blossom: #ea0;
+    --fade: #a50; // too low contrast
+    --text: #da7;
+    --bg: #210;
+    --bg-alt: #320;
+    --grey: #888;
+    --quoteblock: #333;
+    img[src^="/attachments/invertable"] {
+        filter: hue-rotate(180deg) invert(1);
+    }
+}
+
+.theme-pink {
+    --blossom: #980255;
+    --fade: #753851;
+    --text: #49002d;
+    --bg: #ffe4f5;
+    --bg-alt: #f8d2e9;
+    --grey: #666;
+    --quoteblock: #bbb;
+}
+
+// unused ------------------
+
+.theme-dark-green {
+    --blossom: #3a0;
+    --fade: #370;
+    --text: #ab7;
+    --bg: #220;
+    --bg-alt: #110;
+    --grey: #888;
+}
+
+.theme-green {
+    --blossom: #390;
+    --fade: #360;
+    --text: #020;
+    --bg: #dea;
+    --bg-alt: #cdc;
+}
+
+.theme-earth {
+    --blossom: #c26c49;
+    --fade: #bd8869;
+    --text: #310;
+    --bg: #d8e3dd;
+    --bg-alt: #e8c3a8;
+}
+
+// Make things themeable
+
+html,
+body,
+#mandatory-wrapper {
+    height: 100%;
+}
+
+#theme-container {
+    min-height: 100%;
+    color: var(--text);
+    background-color: var(--bg-alt);
+}

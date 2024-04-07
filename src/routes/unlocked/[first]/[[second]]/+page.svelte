@@ -1,6 +1,11 @@
 <script lang="ts">
  export let data
  import Note from '$lib/Note.svelte'
+ import { seen } from '$lib/stores'
+ import { afterNavigate } from '$app/navigation'
+ afterNavigate(() => {
+     seen.update(x => x.add(data.post.pageid))
+ })
 </script>
 
 <svelte:head>

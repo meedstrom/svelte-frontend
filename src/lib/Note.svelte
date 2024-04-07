@@ -6,11 +6,11 @@
  import { get as stored } from 'svelte/store'
  import { afterNavigate } from '$app/navigation'
  import { page } from '$app/stores'
- afterNavigate(() => {
-     seen.update(x => x.add(data.post.pageid))
- })
+ // afterNavigate(() => {
+ //     seen.update(x => x.add(data.post.pageid))
+ // })
 
- // TODO: Speed this  up
+ // TODO: Speed this up
  function reformat(markup, showTags) {
      if (!markup) {
          console.log('no post provided')
@@ -95,7 +95,7 @@
     </div>
 {/if}
 
-<div class={`e-content ${extraClasses}`}>
+<div class={"e-content" + extraClasses}>
     {@html reformat(data.content, stored(allowedTags))}
 </div>
 
@@ -104,7 +104,7 @@
     <div>
         <small>Created
             <time datetime={data.post.created} class="dt-published">
-                {data.post.created_fancy}
+                {data.post.createdFancy}
             </time>
             ({daysSince(data.post.created)})
         </small>
@@ -112,7 +112,7 @@
             <br>
             <small>Updated
                 <time datetime={data.post.updated} class="dt-updated">
-                    {data.post.updated_fancy}
+                    {data.post.updatedFancy}
                 </time>
                 ({daysSince(data.post.updated)})
             </small>
