@@ -168,10 +168,11 @@ h3,
 h4,
 h5,
 h6 {
-    margin: 0.5em;
+    margin: 0.5rem;
+    margin-right: 1rem;
     @media (max-width: 599px) {
-        margin-left: 0.4em;
-        margin-right: 0.5em;
+        margin-left: 0.4rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -198,7 +199,9 @@ div.e-content {
     & > p,
     & > blockquote,
     & > div,
-    & > li {
+    & > ul,
+    & > ol,
+    & > dl {
         margin-left: 0.5em;
         margin-right: 1em;
         @media (max-width: 599px) {
@@ -209,10 +212,11 @@ div.e-content {
 }
 
 h1 {
-    margin-left: 0.5em;
-    margin-right: 1em;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
     @media (max-width: 599px) {
-        margin-left: 0.4em;
+        margin-left: 0.4rem;
+        margin-right: 0.5rem;
     }
 }
 
@@ -657,10 +661,14 @@ header {
         padding: 0.5em;
         border-radius: 2px;
         box-shadow: -1px 1px 3px black;
+        // border-radius: 3px;
+        // box-shadow: -2px 2px 7px black;
     }
     div.paginator {
-        border-radius: 2px;
-        box-shadow: -1px 1px 3px black;
+        // border-radius: 2px;
+        // box-shadow: -1px 1px 3px black;
+        border-radius: 3px;
+        box-shadow: -2px 2px 7px black;
     }
 
     #central-column {

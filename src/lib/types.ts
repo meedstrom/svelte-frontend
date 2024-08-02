@@ -8,6 +8,8 @@ export type Post = {
     updatedFancy: string | null
     tags: string[]
     hidden: boolean | null
+    wordcount: number
+    linkcount: number
     description: string | null
 }
 
