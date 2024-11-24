@@ -1,8 +1,8 @@
 @charset "utf-8";
-@import "@csstools/normalize.css/normalize.css";
-// @import './export-colors-doom-zenburn.scss';
-@import "./export-colors-doom-monokai-machine.scss";
-@import "./theming.scss";
+@use "@csstools/normalize.css/normalize.css";
+// @use './export-colors-doom-zenburn.scss';
+@use "./export-colors-doom-monokai-machine.scss";
+@use "./theming.scss";
 
 // Text
 
@@ -41,8 +41,7 @@ h1 {
     // padding-right: 0.5em;
 }
 
-// Implicit cloze-deletions from inline-anki.  Encoded in the source as
-// underlines, hence the name.
+// Implicit cloze-deletions from inline-anki. Yes, quite unspecific class name.
 span.underline {
     padding: 2px;
     // border: 1px solid var(--grey);
@@ -128,7 +127,7 @@ section.odd {
 
 #the-big-index {
     border-radius: 3px;
-    box-shadow: -2px 2px 7px black;
+    box-shadow: -2px 2px 7px rgba(0, 0, 0, 0.6);
     margin-bottom: 10px; // space for shadow
     margin-top: 0.6em;
 }
@@ -147,7 +146,7 @@ section {
     margin-left: 0;
 
     border-radius: 3px;
-    box-shadow: -2px 2px 7px black;
+    box-shadow: -2px 2px 7px rgba(0, 0, 0, 0.6);
     @media (max-width: 599px) {
         padding-top: 0.6em;
         padding-right: 2px;
@@ -197,6 +196,7 @@ div.outline-text-6 {
 // The initial text before first heading (there is no .outline-text-1)
 div.e-content {
     & > p,
+    & > pre,
     & > blockquote,
     & > div,
     & > ul,
@@ -660,7 +660,7 @@ header {
     header {
         padding: 0.5em;
         border-radius: 2px;
-        box-shadow: -1px 1px 3px black;
+        box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
         // border-radius: 3px;
         // box-shadow: -2px 2px 7px black;
     }
@@ -668,7 +668,7 @@ header {
         // border-radius: 2px;
         // box-shadow: -1px 1px 3px black;
         border-radius: 3px;
-        box-shadow: -2px 2px 7px black;
+        box-shadow: -2px 2px 7px rgba(0, 0, 0, 0.6);
     }
 
     #central-column {
@@ -700,4 +700,16 @@ header {
 
 div.figure {
     padding: 1em;
+}
+
+// https://iconify.design/docs/usage/css/
+span.dungeon-key {
+    /* Add dimensions to span */
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    /* Add background image */
+    background-image: url("/old-key.svg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }

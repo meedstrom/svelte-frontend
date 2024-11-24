@@ -1,7 +1,7 @@
 <script lang="ts">
  import type { Post, NoteData } from '$lib/types'
  export let data
- import 'iconify-icon'
+  // import 'iconify-icon'
  import { seen, allowedTags, privateTags, } from '$lib/stores'
  import { get as stored } from 'svelte/store'
  import { afterNavigate } from '$app/navigation'
@@ -40,7 +40,8 @@
          'gs'
      )
      // result = result.replaceAll(privateLinkRe, '$1</a><NotoKey />')
-     result = result.replaceAll(privateLinkRe, '$1</a><iconify-icon icon="noto:old-key"></iconify-icon>')
+     // result = result.replaceAll(privateLinkRe, '$1</a><iconify-icon icon="noto:old-key"></iconify-icon>')
+     result = result.replaceAll(privateLinkRe, '$1</a><span class="dungeon-key"></span>')
 
      return result
  }
@@ -95,7 +96,7 @@
     </div>
 {/if}
 
-<div class={"e-content" + extraClasses}>
+<div class={"e-content " + extraClasses}>
     {@html reformat(data.content, stored(allowedTags))}
 </div>
 
@@ -120,10 +121,11 @@
     </div>
 </div>
 
-<style>
- #datestamp {
-     margin-top: .4em;
-     margin-right: .8em;
-     padding-bottom: .2em;
- }
-</style>
+         <style>
+         #datestamp {
+           margin-top: .4em;
+           margin-right: .8em;
+           padding-bottom: .2em;
+         }
+
+         </style>

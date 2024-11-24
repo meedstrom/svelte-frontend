@@ -1,6 +1,6 @@
 # ------------------ build environment -----------------------------------
 
-FROM node:21-alpine as build
+FROM node:22-alpine as build
 WORKDIR /app
 COPY . .
 RUN apk --no-cache -U upgrade
@@ -13,7 +13,7 @@ RUN npm run build
 # Don't forget to add ./node_modules to .dockerignore, since the whole point of
 # using two images was to reduce the waste done by docker images.
 
-FROM node:21-alpine
+FROM node:22-alpine
 WORKDIR /app
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/build ./

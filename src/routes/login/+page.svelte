@@ -1,10 +1,12 @@
 <script lang="ts">
   export let data // data.extraBlob will set privPosts
-  // TODO: to avoid sveltekit's data preloading (which usually we like), load it
+  // TODO: To avoid sveltekit's data preloading (which usually we like), load it
   // here instead of in +page.ts.
   // import extra from '$lib/privPosts.bin'
   import { Buffer } from "buffer"
   import { goto } from "$app/navigation"
+  // TODO: Just write store.get() for clarity, or rather, subscribe Svelte 5 readonly.
+  // import "svelte/store"
   import { get as stored } from "svelte/store"
   import {
     privMeta,
@@ -78,15 +80,15 @@
     //      // })
 
     // replacement of the above
-    const [privPosts, privMeta] = await decryptExtras(
+    const [_privPosts, _privMeta] = await decryptExtras(
       data.extraBlob,
       privMetaJSON,
       $storedPostKey,
       $allowedTags
     )
 
-    $privPosts = privPosts
-    $privMeta = privMeta
+    $privPosts = _privPosts
+    $privMeta = _privMeta
 
     console.log(`Unlocked ${$privPosts.size} posts`)
 
@@ -98,7 +100,11 @@
       .filter((post) => !post.tags.includes("tag"))
       .sort((a, b) => b.created.localeCompare(a.created))
 
-    goto("/all")
+    if (userCategory === "t") {
+      goto("/unlocked/xhlpk/new-info-to-modigo")
+    } else {
+      goto("/all")
+    }
   }
 </script>
 

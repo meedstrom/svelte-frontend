@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "iconify-icon"
+  // import "iconify-icon"
   import { bigIndexRows } from "$lib/stores"
   import { get as stored } from "svelte/store"
   import SvelteTable from "svelte-table"
@@ -31,9 +31,9 @@
       // is there a searchLabel or some such option?
       // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
       renderValue: (v: any) =>
-        // (v.hidden ? '<NotoKey />' : '') +
         (v.hidden ? '<iconify-icon icon="noto:old-key"></iconify-icon>' : "") +
         `<a href="/${v.pageid}/${v.slug}">${v.title}</a>`,
+      // `<a href="/${v.pageid}/${v.slug}">${v.title}</a>`,
       parseHTML: true,
     },
     {
