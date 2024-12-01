@@ -7,13 +7,9 @@
   import { pubPosts, privPosts } from "$lib/postContents"
   import Note from "$lib/Note.svelte"
 
-  const orderedByCreation = [...stored(pubMeta).values()]
-    .filter(
-      (post) => !post.tags.find((tag) => ["daily", "stub", "tag"].includes(tag))
-    )
-    .sort((b, a) =>
-      (b.updated ?? b.created).localeCompare(a.updated ?? a.created)
-    )
+  const orderedByCreation = [...stored(pubMeta).values()].sort((b, a) =>
+    (b.updated ?? b.created).localeCompare(a.updated ?? a.created)
+  )
   const max = orderedByCreation.length
 
   $: offset = data.params.offset ? Number(data.params.offset) : max - 4
