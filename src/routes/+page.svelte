@@ -4,7 +4,7 @@
   import { get as stored } from "svelte/store"
   import { allowedTags } from "$lib/stores"
   if (stored(allowedTags).includes("shrink")) {
-    goto("/unlocked/xhlpk/new-info-to-modigo")
+    goto("/unlocked/vtnyq/till-arbetsterapeut")
   }
 </script>
 

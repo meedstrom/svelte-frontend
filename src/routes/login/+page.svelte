@@ -101,7 +101,7 @@
       .sort((a, b) => b.created.localeCompare(a.created))
 
     if (userCategory === "t") {
-      goto("/unlocked/xhlpk/new-info-to-modigo")
+      goto("/unlocked/vtnyq/till-arbetsterapeut")
     } else {
       goto("/all")
     }

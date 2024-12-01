@@ -1,5 +1,4 @@
 <script lang="ts">
-  // import "iconify-icon"
   import { bigIndexRows } from "$lib/stores"
   import { get as stored } from "svelte/store"
   import SvelteTable from "svelte-table"
@@ -26,9 +25,9 @@
       title: "Note",
       value: (v: any) => v.title,
       sortable: true,
-      // case-insensitive search
-      // NOTE: the result lacks a label element
-      // is there a searchLabel or some such option?
+      // Case-insensitive search.
+      // NOTE: The result lacks a label element
+      // Is there a searchLabel or some such option?
       // searchValue: (v, s) => v.title.toLowerCase().includes(s.toLowerCase()),
       renderValue: (v: any) =>
         (v.hidden ? '<iconify-icon icon="noto:old-key"></iconify-icon>' : "") +
